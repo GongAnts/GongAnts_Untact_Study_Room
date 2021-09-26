@@ -11,12 +11,10 @@ import {
 } from 'redux/types';
 
 const initialState = {
-  isAuthenticated: null,
+  isAuthenticated: false,
   isLoading: false,
-  user: '',
-  userId: '',
+  userEmail: '',
   userName: '',
-  userRole: '',
   errorMsg: '',
   successMsg: '',
 };
@@ -31,6 +29,46 @@ const authReducer = (state = initialState, action) => {
         errorMsg: '',
         isLoading: true,
       };
+
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        isLoading: false,
+        userName: action.payload.user_name,
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        isLoading: false,
+        userName: action.payload.user_name,
+        userEmail: action.payload,
+        user_email,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        isAuthenticated: false,
+        isLoading: false,
+        userEmail: null,
+        userName: null,
+        errorMsg: '',
+      };
+
+    case LOGIN_FAILURE:
+    case REGISTER_FAILURE:
+    case LOGOUT_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: false,
+        isLoading: false,
+        errorMsg: action.payload.data.msg,
+      };
+    default:
+      return state;
   }
 };
 
