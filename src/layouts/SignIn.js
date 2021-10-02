@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useSelector } from 'react';
+import { useDispatch } from 'react-redux';
+import { LOGIN_REQUEST } from 'redux/types.js';
 
 // UI components //
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -15,6 +17,30 @@ import 'assets/css/style.css';
 import signinimg from 'assets/images/signin-image.jpg';
 
 function SignIn() {
+  const [form, setValue] = useState({
+    user_name: '',
+    user_password: '',
+  });
+
+  //const {} = useSelector((state) => state.auth);
+  const onChangeValue = (e) => {
+    setValue({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const dispatch = useDispatch();
+  const onSubmit = () => {
+    const { user_name, user_password } = form;
+    console.log(user_name, user_password);
+
+    dispatch({
+      type: LOGIN_REGUEST,
+      payload: { user_name, user_password },
+    });
+  };
+
   return (
     <Page>
       <section class="sign-in mt-4">
@@ -32,27 +58,34 @@ function SignIn() {
             <div class="signin-form">
               <p>'공개미'에 온 것을 환영합니다.</p>
               <h2 class="form-title">로그인</h2>
-              <form method="POST" class="register-form" id="login-form">
+              <form
+                method="POST"
+                class="register-form"
+                id="login-form"
+                onSubmit={onSubmit}
+              >
                 <div class="form-group">
-                  <label for="your_name">
+                  <label for="user_name">
                     <AccountBoxIcon></AccountBoxIcon>
                   </label>
                   <input
                     type="text"
-                    name="your_name"
-                    id="your_name"
+                    name="user_name"
+                    id="user_name"
                     placeholder="Your Name"
+                    onChange={onChangeValue}
                   />
                 </div>
                 <div class="form-group">
-                  <label for="your_pass">
+                  <label for="user_password">
                     <LockIcon></LockIcon>
                   </label>
                   <input
                     type="password"
-                    name="your_pass"
-                    id="your_pass"
+                    name="user_password"
+                    id="user_password"
                     placeholder="Password"
+                    onChange={onChangeValue}
                   />
                 </div>
                 <FormGroup

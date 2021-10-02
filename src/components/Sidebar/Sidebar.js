@@ -15,24 +15,24 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component } from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import React, { Component } from 'react';
+import { useLocation, NavLink } from 'react-router-dom';
 
-import { Nav } from "react-bootstrap";
+import { Nav } from 'react-bootstrap';
 
-import logo from "assets/img/reactlogo.png";
+import logo from 'assets/img/reactlogo.png';
 
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
   const activeRoute = (routeName) => {
-    return location.pathname.indexOf(routeName) > -1 ? "active" : "";
+    return location.pathname.indexOf(routeName) > -1 ? 'active' : '';
   };
   return (
     <div className="sidebar" data-image={image} data-color={color}>
       <div
         className="sidebar-background"
         style={{
-          backgroundImage: "url(" + image + ")",
+          backgroundImage: 'url(' + image + ')',
         }}
       />
       <div className="sidebar-wrapper">
@@ -42,14 +42,14 @@ function Sidebar({ color, image, routes }) {
             className="simple-text logo-mini mx-1"
           >
             <div className="logo-img">
-              <img
-                src={require("assets/img/reactlogo.png").default}
+              {/* <img
+                src={require('assets/img/reactlogo.png').default}
                 alt="..."
-              />
+              /> */}
             </div>
           </a>
-          <a className="simple-text" href="http://www.creative-tim.com">
-            Creative Tim
+          <a className="simple-text" href="#">
+            GongAnts
           </a>
         </div>
         <Nav>
@@ -59,7 +59,7 @@ function Sidebar({ color, image, routes }) {
                 <li
                   className={
                     prop.upgrade
-                      ? "active active-pro"
+                      ? 'active active-pro'
                       : activeRoute(prop.layout + prop.path)
                   }
                   key={key}

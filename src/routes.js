@@ -15,63 +15,55 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "views/Dashboard.js";
-import UserProfile from "views/UserProfile.js";
-import TableList from "views/TableList.js";
-import Typography from "views/Typography.js";
-import Icons from "views/Icons.js";
-import Maps from "views/Maps.js";
-import Notifications from "views/Notifications.js";
+import Dashboard from 'views/Dashboard.js';
+import UserProfile from 'views/UserProfile.js';
+import Room from 'views/Room.js';
+import CalendarApp from 'views/Calendar/Calendar.js';
+import Memo from 'views/Memo.js';
+import Notifications from 'views/Notifications.js';
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-chart-pie-35",
+    path: '/dashboard',
+    name: 'Dashboard',
+    icon: 'nc-icon nc-chart-pie-35',
     component: Dashboard,
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/user",
-    name: "User Profile",
-    icon: "nc-icon nc-circle-09",
+    path: '/user',
+    name: 'User Profile',
+    icon: 'nc-icon nc-circle-09',
     component: UserProfile,
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/table",
-    name: "Table List",
-    icon: "nc-icon nc-notes",
-    component: TableList,
-    layout: "/admin",
+    path: '/room',
+    name: 'Room',
+    icon: 'nc-icon nc-tag-content',
+    component: Room,
+    layout: '/admin',
   },
   {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-paper-2",
-    component: Typography,
-    layout: "/admin",
+    path: '/calendar',
+    name: 'Calendar',
+    icon: 'nc-icon nc-time-alarm',
+    component: CalendarApp,
+    layout: '/admin',
   },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-atom",
-    component: Icons,
-    layout: "/admin",
+    path: '/memo',
+    name: 'Memo',
+    icon: 'nc-icon nc-single-copy-04',
+    component: Memo,
+    layout: '/admin',
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
+    path: '/notifications',
+    name: 'Notifications',
+    icon: 'nc-icon nc-bell-55',
     component: Notifications,
-    layout: "/admin",
+    layout: '/admin',
   },
 ];
 

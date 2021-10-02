@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { REGISTER_REQUEST } from 'redux/types.js';
 
 import { Page } from './styles';
 
@@ -8,6 +10,41 @@ import 'assets/css/style.css';
 import signupimg from 'assets/images/signup-image.jpg';
 
 function SignIn() {
+  const [form, setValue] = useState({
+    user_name: '',
+    user_email: '',
+    user_password: '',
+    passwordCheck: '',
+  });
+
+  const onChangeValue = (e) => {
+    setValue({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const { user_name, user_email, user_password, passwordCheck } = form;
+      console.log(user_name, user_email, user_password);
+
+      if (user_password !== passwordCheck) {
+        alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
+      } else {
+        const user = { user_name, user_email, user_password };
+
+        dispatch({
+          type: REGISTER_REQUEST,
+          payload: { user_name, user_email, user_password },
+        });
+      }
+    },
+    [form, dispatch],
+  );
+
   return (
     <Page>
       <section class="signup mt-4">
@@ -17,47 +54,51 @@ function SignIn() {
               <h2 class="form-title">회원가입</h2>
               <form method="POST" class="register-form" id="register-form">
                 <div class="form-group">
-                  <label for="name">
-                    <i class="zmdi zmdi-account material-icons-name"></i>
+                  <label for="user_name">
+                    <i class="zmdi zmdi-account material-icons-user_name"></i>
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="user_name"
+                    id="user_name"
                     placeholder="Your Name"
+                    onChange={onChangeValue}
                   />
                 </div>
                 <div class="form-group">
-                  <label for="email">
+                  <label for="user_email">
                     <i class="zmdi zmdi-email"></i>
                   </label>
                   <input
                     type="email"
-                    name="email"
-                    id="email"
+                    name="user_email"
+                    id="user_email"
                     placeholder="Your Email"
+                    onChange={onChangeValue}
                   />
                 </div>
                 <div class="form-group">
-                  <label for="pass">
+                  <label for="user_password">
                     <i class="zmdi zmdi-lock"></i>
                   </label>
                   <input
                     type="password"
-                    name="pass"
-                    id="pass"
+                    name="user_password"
+                    id="user_password"
                     placeholder="Password"
+                    onChange={onChangeValue}
                   />
                 </div>
                 <div class="form-group">
-                  <label for="re-pass">
+                  <label for="passwordCheck">
                     <i class="zmdi zmdi-lock-outline"></i>
                   </label>
                   <input
                     type="password"
-                    name="re_pass"
-                    id="re_pass"
+                    name="passwordCheck"
+                    id="passwordCheck"
                     placeholder="Repeat your password"
+                    onChange={onChangeValue}
                   />
                 </div>
                 <div class="form-group">
@@ -84,6 +125,7 @@ function SignIn() {
                     id="signup"
                     class="form-submit"
                     value="Register"
+                    onClick={onSubmit}
                   />
                 </div>
               </form>

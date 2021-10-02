@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+// css //
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/animate.min.css';
 import './assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0';
 import './assets/css/demo.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+
+import 'antd/dist/antd.css';
 
 import AdminLayout from 'layouts/Admin.js';
 import SignIn from 'layouts/SignIn.js';
@@ -18,20 +21,16 @@ const App = () => {
 
   return (
     <Switch>
-      {console.log(isAuthenticated)}
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
-      <Route
-        path="/"
-        render={() => {
-          isAuthenticated ? (
-            <Redirect to="/admin/dashboard" />
-          ) : (
-            <Redirect to="/signin" />
-          );
-        }}
-      />
+      <Route exact path="/">
+        {isAuthenticated ? (
+          <Redirect to="/admin/dashboard" />
+        ) : (
+          <Redirect to="/signin" />
+        )}
+      </Route>
     </Switch>
   );
 };

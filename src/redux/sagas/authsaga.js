@@ -21,7 +21,7 @@ const loginUserAPI = (loginData) => {
     },
   };
 
-  return axios.post('signin/onsignin', loginData, config);
+  return axios.post('http://localhost:4000/signin', loginData, config);
 };
 
 function* loginUser(loginaction) {
@@ -51,7 +51,7 @@ const signUpAPI = (registerData) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.post('signin/onsignup', registerData, config);
+  return axios.post('http://localhost:4000/signup', registerData, config);
 };
 
 function* registerUser(action) {
