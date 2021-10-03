@@ -38,7 +38,7 @@ function SignIn() {
 
         dispatch({
           type: REGISTER_REQUEST,
-          payload: { user_name, user_email, user_password },
+          payload: user,
         });
       }
     },

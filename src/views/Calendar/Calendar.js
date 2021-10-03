@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import Day from './Day';
+import EditSchedule from './EditSchedule';
 
 // style
 import { CalendarWrap, Header, DateBody, Weekend, DOTW } from './styles';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { openEditPopup } from 'redux/reducers/modules/calendar';
 
 // import 'react-calendar/dist/Calendar.css';
 // import Calendar from 'react-calendar';
@@ -18,7 +20,15 @@ function CalendarApp() {
     (state) => state.schedule,
   );
 
-  const generate = () => {
+  const PrevMonth = () => {
+    setCurrent(current.clone().subtract(1, 'month'));
+  };
+
+  const NextMonth = () => {
+    setCurrent(current.clone().add(1, 'month'));
+  };
+
+  const daygenerate = () => {
     const startWeek = current.clone().startOf('month').week(); // 1년 주 계산
     const endWeek =
       current.clone().endOf('month').week() === 1
@@ -74,10 +84,11 @@ function CalendarApp() {
   return (
     <div>
       <CalendarWrap>
+        {isOpenEditPopup && <EditSchedule />}
         <Header>
-          <LeftOutlined className="arrow" />
-          <span className="month">09</span>
-          <RightOutlined className="arrow" />
+          <LeftOutlined className="arrow" onClick={PrevMonth} />
+          <span className="month">{current.format('MM')}</span>
+          <RightOutlined className="arrow" onClick={NextMonth} />
         </Header>
         <DateBody>
           <Weekend className="row">
@@ -102,7 +113,7 @@ function CalendarApp() {
             <DOTW style={{ color: '#4b87ff' }}>
               <span>S</span>
             </DOTW>
-            {generate()}
+            {daygenerate()}
           </Weekend>
         </DateBody>
       </CalendarWrap>

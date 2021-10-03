@@ -35,11 +35,12 @@ export const DateBody = styled.div`
 
 export const Weekend = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 export const DOTW = styled.div`
   border-bottom: 1px solid gray;
-  width: 14.2%;
+  width: 14.27%;
   height: 35px;
   text-align: center;
 `;
@@ -56,12 +57,31 @@ export const DayItem = styled.div`
   flex-wrap: nowrap;
   overflow: hidden;
 
-  & > .title {
+  & > .day_title {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    width: 30px;
+    width: 14%;
     height: 30px;
+  }
+`;
+
+export const Plan = styled.span`
+  text-align: center;
+  //background-color: ${(props) => props.color};
+  font-size: 0.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 1px 0;
+  height: 20px;
+  width: 100%;
+  border-radius: 7px;
+  background-color: #ff9aa3;
+  color: white;
+  cursor: pointer;
+  &.completed {
+    background-color: #bfbfbf;
   }
 `;

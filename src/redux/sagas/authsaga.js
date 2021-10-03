@@ -21,7 +21,7 @@ const loginUserAPI = (loginData) => {
     },
   };
 
-  return axios.post('http://localhost:4000/signin', loginData, config);
+  return axios.post('/signin', loginData, config);
 };
 
 function* loginUser(loginaction) {
@@ -51,19 +51,20 @@ const signUpAPI = (registerData) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.post('http://localhost:4000/signup', registerData, config);
+  return axios.post('/signup', registerData, config);
 };
 
 function* registerUser(action) {
   try {
-    console.log(action);
     const result = yield call(signUpAPI, action.payload);
 
     yield put({
       type: REGISTER_SUCCESS,
-      payload: result.data,
+      payload: result,
     });
   } catch (e) {
+    alert(`${e.response.data.msg}`);
+
     yield put({
       type: REGISTER_FAILURE,
       payload: e.response,

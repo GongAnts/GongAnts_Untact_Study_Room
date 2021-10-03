@@ -1,15 +1,10 @@
 import React from 'react';
 
 // react-bootstrap components
-import {
-  Badge,
-  Button,
-  Navbar,
-  Nav,
-  Container,
-  Row,
-  Col,
-} from 'react-bootstrap';
+import { Badge, Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
+import TextField from '@mui/material/TextField';
+import { Button } from 'antd';
+import { TodoArea } from './styles';
 
 import { FaUserCircle } from 'react-icons/fa';
 import { Checkbox, Card } from 'antd';
@@ -33,6 +28,18 @@ function Room() {
                   <Checkbox onChange={onChange}>할 일1</Checkbox>
                 </p>
               </div>
+              <TodoArea>
+                <TextField
+                  id="standard-basic"
+                  label="To do"
+                  variant="standard"
+                  placeholder="Wrtie To do"
+                  sx={{ width: '27ch' }}
+                />
+                <Button type="primary" className="save mt-3">
+                  저장
+                </Button>
+              </TodoArea>
             </Card>
           </Col>
           <Col md="2">
