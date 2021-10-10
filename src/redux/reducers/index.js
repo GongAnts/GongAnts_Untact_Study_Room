@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import authReducer from 'redux/reducers/authReducer';
+import authReducer from './authreducer';
 import schedule from './modules/calendar';
 
 const rootReducer = combineReducers({

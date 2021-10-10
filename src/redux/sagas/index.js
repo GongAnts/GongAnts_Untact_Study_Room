@@ -2,7 +2,7 @@ import { all, fork } from 'redux-saga/effects';
 import axios from 'axios';
 
 import dotenv from 'dotenv';
-import authSaga from './authSaga';
+import authSaga from './authsaga';
 dotenv.config();
 
 axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL;
