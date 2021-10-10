@@ -11,6 +11,9 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  USER_LOADING_REQUEST,
+  USER_LOADING_SUCCESS,
+  USER_LOADING_FAILURE
 } from 'redux/types';
 
 // signin
@@ -20,6 +23,7 @@ const loginUserAPI = (loginData) => {
       'Content-Type': 'application/json',
     },
   };
+  console.log(loginData);
 
   return axios.post('/signin', loginData, config);
 };
@@ -27,11 +31,12 @@ const loginUserAPI = (loginData) => {
 function* loginUser(loginaction) {
   try {
     const result = yield call(loginUserAPI, loginaction.payload);
-
+    console.log(result);
     yield put({
       type: LOGIN_SUCCESS,
       payload: result.data,
     });
+    yield push('/admin/dashboard');
   } catch (e) {
     yield put({
       type: LOGIN_FAILURE,
@@ -94,11 +99,43 @@ function* watchlogout() {
   yield takeEvery(LOGOUT_REQUEST, logout);
 }
 
+// User Loading
+const userLoadingAPI = (token) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  return axios.get('/', config);
+};
+
+function* userLoading(action) {
+  try {
+    const result = yield call(userLoadingAPI, action.payload);
+    console.log(result);
+    yield put({
+      type: USER_LOADING_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: USER_LOADING_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchuserLoading() {
+  yield takeEvery(USER_LOADING_REQUEST, userLoading);
+}
+
 export default function* authSaga() {
   yield all([
     // User Auth
     fork(watchLoginUser),
     fork(watchregisterUser),
     fork(watchlogout),
+    fork(watchuserLoading),
   ]);
 }

@@ -8,6 +8,9 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  USER_LOADING_REQUEST,
+  USER_LOADING_SUCCESS,
+  USER_LOADING_FAILURE
 } from 'redux/types';
 
 const initialState = {
@@ -24,12 +27,14 @@ const authReducer = (state = initialState, action) => {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
     case LOGOUT_REQUEST:
+    case USER_LOADING_REQUEST:
       return {
         ...state,
         errorMsg: '',
         isLoading: true,
       };
 
+    case USER_LOADING_SUCCESS:
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -65,6 +70,14 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         isLoading: false,
         errorMsg: action.payload.data.msg,
+      };
+    
+    case USER_LOADING_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: false,
+        isLoading: false,
       };
     default:
       return state;

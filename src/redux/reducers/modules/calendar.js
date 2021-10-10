@@ -1,7 +1,4 @@
 import { createReducer, createAction } from '@reduxjs/toolkit';
-import { firestore } from 'firebase.js';
-
-const db = firestore.collection('schedule');
 
 export const initialState = {
   fullSchedule: [],

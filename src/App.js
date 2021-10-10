@@ -21,14 +21,14 @@ const App = () => {
 
   return (
     <Switch>
+      {console.log(isAuthenticated)}
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route exact path="/">
         {isAuthenticated ? (
           <Redirect to="/admin/dashboard" />
         ) : (
-          <Redirect to="/signin" />
+          <SignIn />
         )}
       </Route>
     </Switch>

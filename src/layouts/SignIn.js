@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useSelector } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST } from 'redux/types.js';
 
 // UI components //
@@ -16,7 +16,9 @@ import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
 import 'assets/css/style.css';
 import signinimg from 'assets/images/signin-image.jpg';
 
-function SignIn() {
+function SignIn(req) {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   const [form, setValue] = useState({
     user_name: '',
     user_password: '',

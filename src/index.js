@@ -23,7 +23,9 @@ import store from 'store';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.js';
+import LoadUser from 'components/Auth/LoadUser';
 
+// LoadUser();
 
 ReactDOM.render(
   <Provider store={store}>
