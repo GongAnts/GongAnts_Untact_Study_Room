@@ -4,6 +4,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import authsaga from './authsaga';
 import memosaga from './memosaga';
+
 dotenv.config();
 
 axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL;

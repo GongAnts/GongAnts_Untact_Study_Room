@@ -112,7 +112,8 @@ function SignIn(req) {
                 <span class="social-label">Or login with</span>
                 <ul class="socials">
                   <li>
-                    <a href="#">
+                    <a href="http://localhost:4000/auth/google">
+                      {/* 서버 URL 변경 시 수정 필요*/}
                       <i class="display-flex-center zmdi zmdi-google"></i>
                     </a>
                   </li>

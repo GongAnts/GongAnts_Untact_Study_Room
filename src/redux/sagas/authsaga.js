@@ -13,7 +13,7 @@ import {
   LOGOUT_FAILURE,
   USER_LOADING_REQUEST,
   USER_LOADING_SUCCESS,
-  USER_LOADING_FAILURE
+  USER_LOADING_FAILURE,
 } from 'redux/types';
 
 // signin
@@ -102,25 +102,29 @@ function* watchlogout() {
 
 // User Loading
 const userLoadingAPI = (token) => {
+  console.log('결과0');
   const config = {
     withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
     },
   };
-
-  return axios.get('/', config);
+  axios.get('http://localhost:4000/').then((res) => {
+    console.log(res.data);
+  });
+  return axios.get('http://localhost:4000/', config);
 };
 
 function* userLoading(action) {
   try {
     const result = yield call(userLoadingAPI, action.payload);
-    console.log(result);
+    console.log('결과1', result);
     yield put({
       type: USER_LOADING_SUCCESS,
       payload: result.data,
     });
   } catch (e) {
+    console.log('err 결과2');
     yield put({
       type: USER_LOADING_FAILURE,
       payload: e.response,
