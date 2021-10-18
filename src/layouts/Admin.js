@@ -21,6 +21,7 @@ import { useLocation, Route, Switch } from 'react-router-dom';
 import AdminNavbar from 'components/Navbars/AdminNavbar';
 import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
+import MemoWrite from 'views/Memo/MemoWrite';
 
 import routes from 'routes.js';
 
@@ -38,6 +39,7 @@ function Admin() {
         return (
           <Route
             path={prop.layout + prop.path}
+            exact
             render={(props) => <prop.component {...props} />}
             key={key}
           />
@@ -67,7 +69,10 @@ function Admin() {
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
           <div className="content">
-            <Switch>{getRoutes(routes)}</Switch>
+            <Switch>
+              {getRoutes(routes)}
+              <Route path={`/admin/memo/write`} exact component={MemoWrite} />
+            </Switch>
           </div>
           <Footer />
         </div>

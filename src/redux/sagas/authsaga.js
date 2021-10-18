@@ -19,6 +19,7 @@ import {
 // signin
 const loginUserAPI = (loginData) => {
   const config = {
+    withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -102,6 +103,7 @@ function* watchlogout() {
 // User Loading
 const userLoadingAPI = (token) => {
   const config = {
+    withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -130,7 +132,7 @@ function* watchuserLoading() {
   yield takeEvery(USER_LOADING_REQUEST, userLoading);
 }
 
-export default function* authSaga() {
+export default function* authsaga() {
   yield all([
     // User Auth
     fork(watchLoginUser),

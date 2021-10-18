@@ -10,7 +10,7 @@ import {
   LOGOUT_FAILURE,
   USER_LOADING_REQUEST,
   USER_LOADING_SUCCESS,
-  USER_LOADING_FAILURE
+  USER_LOADING_FAILURE,
 } from 'redux/types';
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
   successMsg: '',
 };
 
-const authReducer = (state = initialState, action) => {
+const authreducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
@@ -71,7 +71,7 @@ const authReducer = (state = initialState, action) => {
         isLoading: false,
         errorMsg: action.payload.data.msg,
       };
-    
+
     case USER_LOADING_FAILURE:
       return {
         ...state,
@@ -84,4 +84,4 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export default authReducer;
+export default authreducer;
