@@ -23,6 +23,7 @@ import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LOGOUT_REQUEST } from 'redux/types';
 
+import axios from 'axios';
 import routes from 'routes.js';
 
 function Header() {
@@ -56,6 +57,7 @@ function Header() {
       dispatch({
         type: LOGOUT_REQUEST,
       });
+      window.location.pathname = '/';
     }
   };
 

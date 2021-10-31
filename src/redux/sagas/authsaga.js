@@ -82,14 +82,8 @@ function* watchregisterUser() {
 }
 
 // Logout
-const logoutAPI = () => {
-  return axios.get('/signout');
-};
-
 function* logout() {
   try {
-    const result = yield call(logoutAPI);
-    console.log(result);
     yield put({
       type: LOGOUT_SUCCESS,
       payload: result.data,
@@ -125,11 +119,21 @@ const userLoadingAPI = (token) => {
 function* userLoading(action) {
   try {
     const result = yield call(userLoadingAPI, action.payload);
-    yield put({
-      type: USER_LOADING_SUCCESS,
-      payload: result.data,
-    });
+    console.log(result.data);
+    if (result.data.msg !== 'logout') {
+      yield put({
+        type: USER_LOADING_SUCCESS,
+        payload: result.data,
+      });
+      console.log('유저 로딩');
+    } else {
+      yield put({
+        type: USER_LOADING_FAILURE,
+        payload: e.response,
+      });
+    }
   } catch (e) {
+    console.log('유저로딩 실패');
     yield put({
       type: USER_LOADING_FAILURE,
       payload: e.response,
