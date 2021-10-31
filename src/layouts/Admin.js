@@ -73,7 +73,7 @@ function Admin() {
             <Switch>
               {getRoutes(routes)}
               <Route path={`/admin/memo/write`} exact component={MemoWrite} />
-              <Route path={`admin/memo/:id/edit`} exact component={MemoEdit} />
+              <Route path={`/admin/memo/:id/edit`} exact component={MemoEdit} />
             </Switch>
           </div>
           <Footer />

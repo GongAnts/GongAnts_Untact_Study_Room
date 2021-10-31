@@ -78,7 +78,7 @@ function* watchmemoLoad() {
 
 // memo editpage
 const memoeditAPI = (data) => {
-  return axios.get(`/memo/detail?id=${data}`);
+  return axios.get(`/memo/detail?id=${data}`, data);
 };
 
 function* memoedit(action) {
@@ -134,7 +134,12 @@ function* watchmemoupdate() {
 
 // memo delete //
 const memodeleteAPI = (data) => {
-  return axios.delete(`/delete?id=${data}`);
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  return axios.delete(`/delete?id=${data}`, data, config);
 };
 
 function* memoDelete(action) {

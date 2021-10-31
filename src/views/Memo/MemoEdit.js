@@ -1,5 +1,7 @@
 import React, { createRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { WriteArea } from './styles';
+import { Button, Input } from 'antd';
 
 // Editor
 import '@toast-ui/editor/dist/toastui-editor.css';
