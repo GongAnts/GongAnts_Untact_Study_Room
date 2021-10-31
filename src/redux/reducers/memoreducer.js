@@ -29,6 +29,7 @@ const memoreducer = (state = initialState, action) => {
     case MEMO_LIST_SUCCESS:
       return {
         ...state,
+        memo: action.payload,
       };
     default:
       return state;
