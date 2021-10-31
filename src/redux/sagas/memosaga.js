@@ -8,6 +8,15 @@ import {
   MEMO_LIST_REQUEST,
   MEMO_LIST_SUCCESS,
   MEMO_LIST_FAILURE,
+  MEMO_EDIT_REQUEST,
+  MEMO_EDIT_SUCCESS,
+  MEMO_EDIT_FAILURE,
+  MEMO_UPDATE_REQUEST,
+  MEMO_UPDATE_SUCCESS,
+  MEMO_UPDATE_FAILURE,
+  MEMO_DELETE_REQUEST,
+  MEMO_DELETE_SUCCESS,
+  MEMO_DELETE_FAILURE,
 } from 'redux/types';
 
 // memowrite
@@ -67,6 +76,92 @@ function* watchmemoLoad() {
   yield takeEvery(MEMO_LIST_REQUEST, memoLoad);
 }
 
+// memo editpage
+const memoeditAPI = (data) => {
+  return axios.get(`/memo/detail?id=${data}`);
+};
+
+function* memoedit(action) {
+  try {
+    const result = yield call(memoeditAPI, action.payload);
+    console.log(result);
+    yield put({
+      type: MEMO_EDIT_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: MEMO_EDIT_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchmemoedit() {
+  yield takeEvery(MEMO_EDIT_REQUEST, memoedit);
+}
+
+// memo update //
+const memoupdateAPI = (data) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  return axios.post('/modify', data, config);
+};
+
+function* memoupdate(action) {
+  try {
+    const result = yield call(memoupdateAPI, action.payload);
+
+    yield put({
+      type: MEMO_UPDATE_SUCCESS,
+      payload: result.data,
+    });
+    yield put(push('/admin/memo'));
+  } catch (e) {
+    yield put({
+      type: MEMO_UPDATE_FAILURE,
+      payload: ejs,
+    });
+  }
+}
+
+function* watchmemoupdate() {
+  yield takeEvery(MEMO_UPDATE_REQUEST, memoupdate);
+}
+
+// memo delete //
+const memodeleteAPI = (data) => {
+  return axios.delete(`/delete?id=${data}`);
+};
+
+function* memoDelete(action) {
+  try {
+    const result = yield call(memodeleteAPI, action.payload);
+    yield put({
+      type: MEMO_DELETE_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: MEMO_DELETE_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchmemodelete() {
+  yield takeEvery(MEMO_DELETE_REQUEST, memoDelete);
+}
+
 export default function* memosaga() {
-  yield all([fork(watchmemowrite), fork(watchmemoLoad)]);
+  yield all([
+    fork(watchmemowrite),
+    fork(watchmemoLoad),
+    fork(watchmemoedit),
+    fork(watchmemoupdate),
+    fork(watchmemodelete),
+  ]);
 }
