@@ -51,7 +51,6 @@ const memoloadAPI = (data) => {
 function* memoLoad() {
   try {
     const result = yield call(memoloadAPI);
-    console.log(result);
     yield put({
       type: MEMO_LIST_SUCCESS,
       payload: result.data,
