@@ -68,7 +68,7 @@ function* registerUser(action) {
       payload: result,
     });
   } catch (e) {
-    alert(`${e.response.data.msg}`);
+    // alert(`${e.response.data.msg}`);
 
     yield put({
       type: REGISTER_FAILURE,
@@ -86,12 +86,12 @@ function* logout() {
   try {
     yield put({
       type: LOGOUT_SUCCESS,
-      payload: result.data,
     });
 
     yield put(push(`/`));
   } catch (e) {
-    console.log('에러');
+    console.log('실패');
+    console.log(e);
     yield put({
       type: LOGOUT_FAILURE,
       payload: e,
@@ -120,18 +120,18 @@ function* userLoading(action) {
   try {
     const result = yield call(userLoadingAPI, action.payload);
     console.log(result.data);
-    if (result.data.msg !== 'logout') {
-      yield put({
-        type: USER_LOADING_SUCCESS,
-        payload: result.data,
-      });
-      console.log('유저 로딩');
-    } else {
+    if (result.data.msg !== undefined) {
+      console.log('유저로딩 실패');
       yield put({
         type: USER_LOADING_FAILURE,
         payload: e.response,
       });
     }
+    yield put({
+      type: USER_LOADING_SUCCESS,
+      payload: result.data,
+    });
+    console.log('유저 로딩');
   } catch (e) {
     console.log('유저로딩 실패');
     yield put({

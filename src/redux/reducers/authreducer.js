@@ -69,7 +69,7 @@ const authreducer = (state = initialState, action) => {
         ...action.payload,
         isAuthenticated: false,
         isLoading: false,
-        errorMsg: action.payload.data.msg,
+        // errorMsg: action.payload.data,
       };
 
     case USER_LOADING_FAILURE:
