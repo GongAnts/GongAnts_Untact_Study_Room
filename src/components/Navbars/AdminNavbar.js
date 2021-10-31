@@ -16,8 +16,12 @@
 
 */
 import React, { Component } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
+
+import { Link } from 'react-router-dom';
+import { LOGOUT_REQUEST } from 'redux/types';
 
 import routes from 'routes.js';
 
@@ -43,6 +47,18 @@ function Header() {
     }
     return 'Brand';
   };
+
+  const dispatch = useDispatch();
+  const onLogout = (e) => {
+    e.preventDefault();
+    const result = confirm('로그아웃 하시겠습니까?');
+    if (result) {
+      dispatch({
+        type: LOGOUT_REQUEST,
+      });
+    }
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
@@ -177,11 +193,7 @@ function Header() {
               </Dropdown.Menu>
             </Dropdown>
             <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
+              <Nav.Link className="m-0" href="#pablo" onClick={onLogout}>
                 <span className="no-icon">Log out</span>
               </Nav.Link>
             </Nav.Item>

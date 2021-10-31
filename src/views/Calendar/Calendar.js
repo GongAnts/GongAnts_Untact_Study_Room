@@ -1,24 +1,41 @@
-import React, { useState, useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useLayoutEffect, createRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Day from './Day';
 import EditSchedule from './EditSchedule';
 
 // style
-import { CalendarWrap, Header, DateBody, Weekend, DOTW } from './styles';
+import {
+  CalendarWrap,
+  Header,
+  DateBody,
+  Weekend,
+  DOTW,
+  ButtonWrapper,
+} from './styles';
+import { MdCheck, MdDoneAll, MdEdit, MdDehaze } from 'react-icons/md';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { openEditPopup } from 'redux/reducers/modules/calendar';
+import {
+  readSchedule,
+  setIsFilter,
+  openEditPopup,
+} from 'redux/reducers/modules/calendar';
 
-// import 'react-calendar/dist/Calendar.css';
-// import Calendar from 'react-calendar';
 import moment from 'moment';
+import 'moment/locale/ko';
 
-function CalendarApp() {
+function CalendarApp({ history }) {
   const [current, setCurrent] = useState(moment());
-
   const { thisMonth, isOpenEditPopup, isFilter } = useSelector(
     (state) => state.schedule,
   );
+
+  const dispatch = useDispatch();
+  useLayoutEffect(() => {
+    const startDay = current.clone().startOf('month').format('YYYYMMDD');
+    const endDay = current.clone().endOf('month').format('YYYYMMDD');
+    // dispatch(readSchedule({ startDay, endDay }));
+  }, [current, dispatch, isOpenEditPopup, isFilter]);
 
   const PrevMonth = () => {
     setCurrent(current.clone().subtract(1, 'month'));
@@ -26,6 +43,10 @@ function CalendarApp() {
 
   const NextMonth = () => {
     setCurrent(current.clone().add(1, 'month'));
+  };
+
+  const goToAddSchedule = () => {
+    history.push('/addSchedule');
   };
 
   const daygenerate = () => {
@@ -81,6 +102,10 @@ function CalendarApp() {
     return calendar;
   };
 
+  const onFilter = (isFilter) => {
+    // dispatch(setIsFilter(isFilter));
+  };
+
   return (
     <div>
       <CalendarWrap>
@@ -117,6 +142,25 @@ function CalendarApp() {
           </Weekend>
         </DateBody>
       </CalendarWrap>
+      <ButtonWrapper
+        onClick={() => {
+          dispatch(openEditPopup(false));
+        }}
+      >
+        {isFilter ? (
+          <MdCheck
+            onClick={() => onFilter(false)}
+            className={'filterBtn subBtn'}
+          />
+        ) : (
+          <MdDoneAll
+            onClick={() => onFilter(true)}
+            className={'filterBtn subBtn'}
+          />
+        )}
+        <MdEdit onClick={goToAddSchedule} className={'writeBtn subBtn'} />
+        <MdDehaze className={'menuBtn'} />
+      </ButtonWrapper>
     </div>
   );
 }

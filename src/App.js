@@ -15,17 +15,20 @@ import 'antd/dist/antd.css';
 import AdminLayout from 'layouts/Admin.js';
 import SignIn from 'layouts/SignIn.js';
 import SignUp from 'layouts/SignUp.js';
+import AddSchedule from 'views/Calendar/AddSchedule';
 
 const App = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <Switch>
+      {console.log(isAuthenticated)}
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/signup" component={SignUp} />
       <Route exact path="/">
         {isAuthenticated ? <Redirect to="/admin/dashboard" /> : <SignIn />}
       </Route>
+      <Route path="/addschedule" component={AddSchedule} />
     </Switch>
   );
 };

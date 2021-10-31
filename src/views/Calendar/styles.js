@@ -45,6 +45,52 @@ export const DOTW = styled.div`
   text-align: center;
 `;
 
+export const ButtonWrapper = styled.div`
+  position: absolute;
+  left: 90%;
+  top: 70vh;
+  text-align: center;
+  padding-bottom: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  height: 150px;
+  &:hover .subBtn {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+  & > svg {
+    cursor: pointer;
+    border-radius: 50%;
+    color: white;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    &.filterBtn {
+      background-color: pink;
+      z-index: 1;
+      transition: all 0.4s ease;
+    }
+    &.writeBtn {
+      background-color: skyblue;
+      z-index: 2;
+      transition: all 0.5s ease;
+    }
+    &.menuBtn {
+      background-color: #ffdb0d;
+      z-index: 3;
+    }
+    &.subBtn {
+      opacity: 0;
+      visibility: hidden;
+      top: 60px;
+      position: relative;
+    }
+  }
+`;
+
 // Day js //
 
 export const DayItem = styled.div`
@@ -83,5 +129,61 @@ export const Plan = styled.span`
   cursor: pointer;
   &.completed {
     background-color: #bfbfbf;
+  }
+`;
+
+// AddCalendar js //
+export const Wrapper = styled.div`
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Head = styled.div`
+  background-color: white;
+  height: 7vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3px;
+  font-size: 1.5em;
+  & * {
+    color: #cccccc;
+    cursor: pointer;
+  }
+  /* Mobile Device */
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+  /* Tablet Device */
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    width: 100vw;
+  }
+  /* Desktop Device */
+  @media screen and (min-width: 992px) {
+    width: 30vw;
+  }
+`;
+
+export const Body = styled.div`
+  background-color: white;
+  padding-top: 6vh;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  /* Mobile Device */
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+  /* Tablet Device */
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    width: 100vw;
+  }
+  /* Desktop Device */
+  @media screen and (min-width: 992px) {
+    width: 30vw;
   }
 `;

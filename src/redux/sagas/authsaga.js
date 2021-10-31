@@ -24,7 +24,6 @@ const loginUserAPI = (loginData) => {
       'Content-Type': 'application/json',
     },
   };
-  console.log(loginData);
 
   return axios.post('/signin', loginData, config);
 };
@@ -83,16 +82,25 @@ function* watchregisterUser() {
 }
 
 // Logout
+const logoutAPI = () => {
+  return axios.get('/signout');
+};
+
 function* logout() {
   try {
+    const result = yield call(logoutAPI);
+    console.log(result);
     yield put({
       type: LOGOUT_SUCCESS,
+      payload: result.data,
     });
 
     yield put(push(`/`));
   } catch (e) {
+    console.log('에러');
     yield put({
       type: LOGOUT_FAILURE,
+      payload: e,
     });
   }
 }
@@ -102,7 +110,6 @@ function* watchlogout() {
 
 // User Loading
 const userLoadingAPI = (token) => {
-  console.log('결과0');
   const config = {
     withCredentials: true,
     headers: {
@@ -118,13 +125,11 @@ const userLoadingAPI = (token) => {
 function* userLoading(action) {
   try {
     const result = yield call(userLoadingAPI, action.payload);
-    console.log('결과1', result);
     yield put({
       type: USER_LOADING_SUCCESS,
       payload: result.data,
     });
   } catch (e) {
-    console.log('err 결과2');
     yield put({
       type: USER_LOADING_FAILURE,
       payload: e.response,
