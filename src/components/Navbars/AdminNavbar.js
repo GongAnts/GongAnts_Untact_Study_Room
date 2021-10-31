@@ -15,13 +15,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 import { LOGOUT_REQUEST } from 'redux/types';
+import { push } from 'react-router-redux';
 
 import axios from 'axios';
 import routes from 'routes.js';
@@ -50,16 +51,14 @@ function Header() {
   };
 
   const dispatch = useDispatch();
-  const onLogout = (e) => {
-    e.preventDefault();
-    const result = confirm('로그아웃 하시겠습니까?');
-    if (result) {
+  const onLogout = useCallback(() => {
+    alert('로그아웃 하시겠습니까?');
+    axios.get('http://localhost:4000/signout').then((req, res) => {
       dispatch({
         type: LOGOUT_REQUEST,
       });
-      window.location.pathname = '/';
-    }
-  };
+    });
+  }, [dispatch]);
 
   return (
     <Navbar bg="light" expand="lg">
