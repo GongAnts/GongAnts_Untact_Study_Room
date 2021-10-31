@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Row, Col, Button } from 'antd';
-import { MEMO_LIST_REQUEST } from 'redux/types';
+import { MEMO_LIST_REQUEST, MEMO_DELETE_REQUEST } from 'redux/types';
 
 function Memo() {
   const { memo } = useSelector((state) => state.memo);
@@ -23,6 +24,20 @@ function Memo() {
                 {item.memo_date.slice(8, 10)}
               </p>
               <p dangerouslySetInnerHTML={{ __html: item.memo_content }}></p>
+              <Link to={`/admin/memo/${item.memo_id}/edit`}>
+                <Button>수정하기</Button>
+              </Link>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch({
+                    type: MEMO_DELETE_REQUEST,
+                    payload: item.memo_id,
+                  });
+                }}
+              >
+                삭제하기
+              </Button>
             </Card>
           </Col>
         );
