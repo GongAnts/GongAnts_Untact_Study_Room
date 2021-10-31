@@ -45,16 +45,16 @@ function* watchmemowrite() {
 
 // memo load
 const memoloadAPI = (data) => {
-  return axios.post('/memo/load', data);
+  return axios.get('/memo/load', data);
 };
 
-function* memoLoad(action) {
+function* memoLoad() {
   try {
-    const result = yield call(memoloadAPI, action.payload);
-
+    const result = yield call(memoloadAPI);
+    console.log(result);
     yield put({
       type: MEMO_LIST_SUCCESS,
-      payload: result,
+      payload: result.data,
     });
   } catch (e) {
     yield put({
@@ -64,7 +64,7 @@ function* memoLoad(action) {
   }
 }
 
-function* watchmemoLoad(action) {
+function* watchmemoLoad() {
   yield takeEvery(MEMO_LIST_REQUEST, memoLoad);
 }
 

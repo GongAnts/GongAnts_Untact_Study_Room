@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Card, Row, Col, Button } from 'antd';
-import TextField from '@mui/material/TextField';
+import { MEMO_LIST_REQUEST } from 'redux/types';
 
 function Memo() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: MEMO_LIST_REQUEST,
+    });
+  }, []);
   return (
     <>
       <div>
