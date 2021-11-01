@@ -53,7 +53,8 @@ function Header() {
   const dispatch = useDispatch();
   const onLogout = useCallback(() => {
     alert('로그아웃 하시겠습니까?');
-    axios.get('http://localhost:4000/signout').then((req, res) => {
+    const config = { withCredentials: true };
+    axios.get('http://localhost:4000/signout', config).then((req, res) => {
       dispatch({
         type: LOGOUT_REQUEST,
       });
