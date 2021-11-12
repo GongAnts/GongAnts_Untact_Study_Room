@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'redux-saga';
+import { useDispatch } from 'react-redux';
 
 import { Card, Radio, Divider } from 'antd';
 import { SmallDashOutlined } from '@ant-design/icons';
