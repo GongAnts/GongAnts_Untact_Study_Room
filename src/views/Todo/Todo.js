@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'redux-saga';
 
 import { Card, Radio, Divider } from 'antd';
 import { SmallDashOutlined } from '@ant-design/icons';
 import { Content, ContentSecond, Title } from './styles';
 
+import { TODO_LOAD_REQUEST } from 'redux/types';
+
 function Todo() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: TODO_LOAD_REQUEST,
+    });
+  }, []);
+
   return (
     <div>
       <h3 style={{ marginLeft: '40px' }}>My TodoList</h3>

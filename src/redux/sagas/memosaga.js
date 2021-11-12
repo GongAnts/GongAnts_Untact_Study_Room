@@ -32,7 +32,6 @@ const memowriteAPI = (data) => {
 function* memoWrite(action) {
   try {
     const result = yield call(memowriteAPI, action.payload);
-    console.log(result);
 
     yield put({
       type: MEMO_WRITE_SUCCESS,
@@ -123,7 +122,7 @@ function* memoupdate(action) {
   } catch (e) {
     yield put({
       type: MEMO_UPDATE_FAILURE,
-      payload: ejs,
+      payload: e.response,
     });
   }
 }

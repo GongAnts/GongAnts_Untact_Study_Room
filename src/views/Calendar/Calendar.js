@@ -21,6 +21,13 @@ import {
   openEditPopup,
 } from 'redux/reducers/schedulereducer';
 
+import Calendar from '@toast-ui/react-calendar';
+import 'tui-calendar/dist/tui-calendar.css';
+
+// If you use the default popups, use this.
+import 'tui-date-picker/dist/tui-date-picker.css';
+import 'tui-time-picker/dist/tui-time-picker.css';
+
 import moment from 'moment';
 import 'moment/locale/ko';
 
@@ -32,8 +39,8 @@ function CalendarApp({ history }) {
 
   const dispatch = useDispatch();
   useLayoutEffect(() => {
-    const startDay = current.clone().startOf('month').format('YYYYMMDD');
-    const endDay = current.clone().endOf('month').format('YYYYMMDD');
+    const startDay = current.clone().startOf('month').format('YYYYMMDDHHMM');
+    const endDay = current.clone().endOf('month').format('YYYYMMDDHHMM');
     // dispatch(readSchedule({ startDay, endDay }));
   }, [current, dispatch, isOpenEditPopup, isFilter]);
 

@@ -127,7 +127,7 @@ function Header() {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown> */}
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link
                 className="m-0"
                 href="#pablo"
@@ -136,7 +136,7 @@ function Header() {
                 <i className="nc-icon nc-zoom-split"></i>
                 <span className="d-lg-block"> Search</span>
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
           </Nav>
           <Nav className="ml-auto" navbar>
             <Nav.Item>

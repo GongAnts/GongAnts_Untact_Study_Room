@@ -11,6 +11,9 @@ import {
   SCHEDULE_DELETE_REQUEST,
   SCHEDULE_DELETE_SUCCESS,
   SCHEDULE_DELETE_FAILURE,
+  SCHEDULE_UPDATE_REQUEST,
+  SCHEDULE_UPDATE_SUCCESS,
+  SCHEDULE_UPDATE_FAILURE,
 } from '../types';
 
 // schedule load
@@ -83,13 +86,13 @@ function* calendaredit(action) {
     const result = yield call(calendareditAPI, action.payload);
 
     yield put({
-      type: MEMO_UPDATE_SUCCESS,
+      type: SCHEDULE_UPDATE_SUCCESS,
       payload: result.data,
     });
     yield put(push('/admin/calendar'));
   } catch (e) {
     yield put({
-      type: MEMO_UPDATE_FAILURE,
+      type: SCHEDULE_UPDATE_FAILURE,
       payload: e,
     });
   }
