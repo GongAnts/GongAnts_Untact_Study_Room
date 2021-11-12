@@ -108,7 +108,7 @@ const memoupdateAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.post('/memo/modify', data, config);
+  return axios.post('http://localhost:4000/memo/modify', data, config);
 };
 
 function* memoupdate(action) {
@@ -139,7 +139,7 @@ const memodeleteAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.delete(`memo/delete?id=${data}`, config);
+  return axios.delete(`http://localhost:4000/memo/delete?id=${data}`, config);
 };
 
 function* memoDelete(action) {

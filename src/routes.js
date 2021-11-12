@@ -20,6 +20,7 @@ import UserProfile from 'views/UserProfile.js';
 import Room from 'views/Room/Room';
 import CalendarApp from 'views/Calendar/Calendar.js';
 import Memo from 'views/Memo/Memo';
+import Todo from 'views/Todo/Todo';
 
 const dashboardRoutes = [
   {
@@ -55,6 +56,13 @@ const dashboardRoutes = [
     name: 'Memo',
     icon: 'nc-icon nc-single-copy-04',
     component: Memo,
+    layout: '/admin',
+  },
+  {
+    path: '/todo',
+    name: 'Todo',
+    icon: 'nc-icon nc-single-copy-04',
+    component: Todo,
     layout: '/admin',
   },
 ];
