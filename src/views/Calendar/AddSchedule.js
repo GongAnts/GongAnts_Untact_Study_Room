@@ -8,6 +8,7 @@ const { TextArea } = Input;
 
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
+import { SCHEDULE_WRITE_REQUEST } from 'redux/types';
 
 const AddSchedule = ({ history }) => {
   const [date, setDate] = useState(
@@ -24,7 +25,10 @@ const AddSchedule = ({ history }) => {
       const time = date.split('T')[1].replaceAll(':', '');
       const data = { date: yyyymmdd, time, title, description };
 
-      //dispatch(createSchedule(data));
+      dispatch({
+        type: SCHEDULE_WRITE_REQUEST,
+        payload: data,
+      });
 
       history.push('/');
     }

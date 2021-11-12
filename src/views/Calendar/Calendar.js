@@ -16,10 +16,10 @@ import {
 import { MdCheck, MdDoneAll, MdEdit, MdDehaze } from 'react-icons/md';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import {
-  readSchedule,
+  // readSchedule,
   setIsFilter,
   openEditPopup,
-} from 'redux/reducers/modules/calendar';
+} from 'redux/reducers/schedulereducer';
 
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -103,7 +103,7 @@ function CalendarApp({ history }) {
   };
 
   const onFilter = (isFilter) => {
-    // dispatch(setIsFilter(isFilter));
+    dispatch(setIsFilter(isFilter));
   };
 
   return (

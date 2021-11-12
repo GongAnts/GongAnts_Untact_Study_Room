@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, Row, Col, Button } from 'antd';
 import { MEMO_LIST_REQUEST, MEMO_DELETE_REQUEST } from 'redux/types';
 
-function Memo() {
+function Memo({ history }) {
   const { memo } = useSelector((state) => state.memo);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -30,10 +30,13 @@ function Memo() {
               <Button
                 onClick={(e) => {
                   e.preventDefault();
-                  dispatch({
-                    type: MEMO_DELETE_REQUEST,
-                    payload: item.memo_id,
-                  });
+                  const result = window.confirm('삭제하시겠습니까?');
+                  if (result) {
+                    dispatch({
+                      type: MEMO_DELETE_REQUEST,
+                      payload: item.memo_id,
+                    });
+                  }
                 }}
               >
                 삭제하기

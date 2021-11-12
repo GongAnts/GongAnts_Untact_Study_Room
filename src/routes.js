@@ -20,7 +20,6 @@ import UserProfile from 'views/UserProfile.js';
 import Room from 'views/Room/Room';
 import CalendarApp from 'views/Calendar/Calendar.js';
 import Memo from 'views/Memo/Memo';
-import Notifications from 'views/Notifications.js';
 
 const dashboardRoutes = [
   {
@@ -56,13 +55,6 @@ const dashboardRoutes = [
     name: 'Memo',
     icon: 'nc-icon nc-single-copy-04',
     component: Memo,
-    layout: '/admin',
-  },
-  {
-    path: '/notifications',
-    name: 'Notifications',
-    icon: 'nc-icon nc-bell-55',
-    component: Notifications,
     layout: '/admin',
   },
 ];

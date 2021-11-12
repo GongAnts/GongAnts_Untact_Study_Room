@@ -8,3 +8,7 @@ export const TodoArea = styled.div`
     margin-left: 10px;
   }
 `;
+
+export const CardArea = styled.div`
+  position: relation;
+`;

@@ -32,6 +32,7 @@ const memoreducer = (state = initialState, action) => {
         ...state,
         isLoading: true,
       };
+    case MEMO_UPDATE_SUCCESS:
     case MEMO_WRITE_SUCCESS:
       return {
         ...state,
