@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 
 // react-bootstrap components
 import { Badge, Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
-import { Button } from 'antd';
+import { Button, Radio } from 'antd';
 import { TodoArea, CardArea } from './styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { FaUserCircle } from 'react-icons/fa';
 import { Checkbox, Card } from 'antd';
 
-import { TODO_WRITE_REQUEST, TODO_TODAY_REQUEST } from 'redux/types';
+import {
+  TODO_WRITE_REQUEST,
+  TODO_TODAY_REQUEST,
+  TODO_CHECK,
+} from 'redux/types';
 
-function Room() {
+function Room(req) {
   const [form, setform] = useState({
     todo_title: '',
   });
-
-  const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
-  };
+  const { todoToday } = useSelector((state) => state.todo);
 
   const onTextchange = (e) => {
     setform({
@@ -33,13 +34,43 @@ function Room() {
     await e.preventDefault();
     const { todo_title } = form;
     const body = { todo_title };
-    console.log(body);
 
     dispatch({
       type: TODO_WRITE_REQUEST,
       payload: body,
     });
   };
+
+  const onHandleCheck = (todo_id) => {
+    const body = { todo_id };
+
+    dispatch({
+      type: TODO_CHECK,
+      payload: body,
+    });
+    req.history.go(0);
+  };
+
+  const arrTodo = todoToday.map((todo, idx) => {
+    const status = todo.todo_check;
+    return (
+      <p key={idx}>
+        <Radio
+          onClick={() => onHandleCheck(todo.todo_id)}
+          style={{ marginTop: '18px' }}
+          checked={status === 1}
+        >
+          {todo.todo_title}
+        </Radio>
+      </p>
+    );
+  });
+
+  useLayoutEffect(() => {
+    dispatch({
+      type: TODO_TODAY_REQUEST,
+    });
+  }, [dispatch]);
 
   return (
     <>
@@ -49,12 +80,8 @@ function Room() {
             <FaUserCircle style={{ fontSize: '9em' }} />
           </Col>
           <Col md="4">
-            <Card title="To Do List" extra={<a href="#">More</a>}>
-              <div className="mt-5 ms-5">
-                <p>
-                  <Checkbox onChange={onChange}>할 일1</Checkbox>
-                </p>
-              </div>
+            <Card title="To Do List" extra={<a href="/admin/todo">More</a>}>
+              {arrTodo}
               <TodoArea>
                 <form>
                   <TextField
@@ -80,15 +107,6 @@ function Room() {
         </CardArea>
         <Col md="2">
           <FaUserCircle style={{ fontSize: '9em' }} />
-        </Col>
-        <Col md="4">
-          <Card title="To Do List" extra={<a href="#">More</a>}>
-            <div className="mt-5 ms-5">
-              <p>
-                <Checkbox onChange={onChange}>할 일1</Checkbox>
-              </p>
-            </div>
-          </Card>
         </Col>
       </Container>
     </>

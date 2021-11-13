@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Card, Radio, Divider } from 'antd';
-import { SmallDashOutlined } from '@ant-design/icons';
+import { Card, Radio, Divider, Menu, Dropdown } from 'antd';
+import { SmallDashOutlined, CloseOutlined } from '@ant-design/icons';
 import { Content, ContentSecond, Title } from './styles';
 
-import { TODO_LOAD_REQUEST, TODO_CHECK } from 'redux/types';
+import {
+  TODO_LOAD_REQUEST,
+  TODO_CHECK,
+  TODO_DELETE_REQUEST,
+} from 'redux/types';
 
 function Todo(req) {
   const dispatch = useDispatch();
@@ -13,9 +17,18 @@ function Todo(req) {
 
   const onHandleCheck = (todo_id) => {
     const body = { todo_id };
-
     dispatch({
       type: TODO_CHECK,
+      payload: body,
+    });
+    req.history.go(0);
+  };
+
+  const onDeleteClick = (todo_id) => {
+    const body = { todo_id };
+    console.log(body);
+    dispatch({
+      type: TODO_DELETE_REQUEST,
       payload: body,
     });
     req.history.go(0);
@@ -38,6 +51,10 @@ function Todo(req) {
         >
           {todo.todo_title}
         </Radio>
+        <CloseOutlined
+          style={{ float: 'right', margin: '10px 10px', color: '#b4b4b4' }}
+          onClick={() => onDeleteClick(todoID)}
+        />
       </Card>
     );
   });
@@ -72,7 +89,6 @@ function Todo(req) {
 
   return (
     <div>
-      {console.log(req.history)}
       <h3 style={{ marginLeft: '40px' }}>My TodoList</h3>
       <Divider />
 

@@ -49,6 +49,7 @@ const todotodayAPI = (data) => {
 function* todotoday() {
   try {
     const result = yield call(todotodayAPI);
+    console.log(result.data);
     yield put({
       type: TODO_TODAY_SUCCESS,
       payload: result.data,
@@ -131,7 +132,7 @@ const tododeleteAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.delete(`/todo/delete?id=${data}`, config);
+  return axios.delete(`/todo/delete?id=${data.todo_id}`, config);
 };
 
 function* tododelete(action) {

@@ -1,8 +1,6 @@
 import {
   TODO_LOAD_REQUEST,
   TODO_LOAD_SUCCESS,
-  TODO_LOAD_FAILURE,
-  TODO_TODAY_REQUEST,
   TODO_TODAY_SUCCESS,
   TODO_TODAY_FAILURE,
   TODO_WRITE_REQUEST,
@@ -38,6 +36,11 @@ const todoreducer = (state = initialState, action) => {
       return {
         ...state,
         fullTodo: [fullTodo, action.payload],
+      };
+    case TODO_TODAY_SUCCESS:
+      return {
+        ...state,
+        todoToday: action.payload.reverse(),
       };
     default:
       return {
