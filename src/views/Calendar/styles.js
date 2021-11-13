@@ -135,9 +135,15 @@ export const Plan = styled.span`
 // AddCalendar js //
 export const Wrapper = styled.div`
   padding: 0 10px;
+  height: 100vh;
+  line-height: 100vh;
+  vertical-align: middle;
+  padding-top: 17vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: flex;
+  background-color: white;
 `;
 
 export const Head = styled.div`
@@ -152,15 +158,6 @@ export const Head = styled.div`
     color: #cccccc;
     cursor: pointer;
   }
-  /* Mobile Device */
-  @media screen and (max-width: 767px) {
-    width: 100vw;
-  }
-  /* Tablet Device */
-  @media screen and (min-width: 768px) and (max-width: 991px) {
-    width: 100vw;
-  }
-  /* Desktop Device */
   @media screen and (min-width: 992px) {
     width: 30vw;
   }

@@ -20,18 +20,14 @@ const AddSchedule = ({ history }) => {
   const dispatch = useDispatch();
 
   const onAddSchedule = () => {
-    if (checkValid()) {
-      const yyyymmdd = date.split('T')[0].replaceAll('-', '');
-      const time = date.split('T')[1].replaceAll(':', '');
-      const data = { date: yyyymmdd, time, title, description };
-
-      dispatch({
-        type: SCHEDULE_WRITE_REQUEST,
-        payload: data,
-      });
-
-      history.push('/');
-    }
+    const yyyymmdd = date.split('T')[0].replaceAll('-', '');
+    const time = date.split('T')[1].replaceAll(':', '');
+    const data = { date: yyyymmdd, time, title, description };
+    console.log(data);
+    dispatch({
+      type: SCHEDULE_WRITE_REQUEST,
+      payload: data,
+    });
   };
 
   const checkValid = () => {

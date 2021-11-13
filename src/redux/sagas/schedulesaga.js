@@ -47,13 +47,14 @@ const scheduleAddAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
+  console.log(data);
   return axios.post('/calendar/write', data, config);
 };
 
-function* scheduleAdd() {
+function* scheduleAdd(action) {
   try {
     const result = yield call(scheduleAddAPI, action.payload);
-    console.log(result);
+    console.log(result.data);
 
     yield put({
       type: SCHEDULE_WRITE_SUCCESS,
