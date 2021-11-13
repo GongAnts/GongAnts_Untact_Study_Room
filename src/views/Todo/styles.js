@@ -10,7 +10,7 @@ export const Content = styled.div`
 export const ContentSecond = styled.div`
   width: 550px;
   display: inline-block;
-  position: fixed;
+  position: absolute;
   margin-top: 30px;
 `;
 

@@ -14,6 +14,7 @@ import {
   TODO_DELETE_REQUEST,
   TODO_DELETE_SUCCESS,
   TODO_DELETE_FAILURE,
+  TODO_CHECK,
 } from 'redux/types';
 
 // todo load //
@@ -62,6 +63,33 @@ function* todotoday() {
 
 function* watchtodotoday() {
   yield takeEvery(TODO_TODAY_REQUEST, todotoday);
+}
+
+// todo check //
+const todocheckAPI = (data) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  return axios.post('/todo/check', data, config);
+};
+
+function* todocheck(action) {
+  try {
+    const result = yield call(todocheckAPI, action.payload);
+    console.log(result.data);
+    yield put({
+      type: TODO_CHECK_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    alert(`${e.response.data.msg}`);
+  }
+}
+
+function* watchtoddocheck() {
+  yield takeEvery(TODO_CHECK, todocheck);
 }
 
 // todo write //
@@ -131,5 +159,6 @@ export default function* memosaga() {
     fork(watchtodotoday),
     fork(watchtodowrite),
     fork(watchmemodelete),
+    fork(watchtoddocheck),
   ]);
 }

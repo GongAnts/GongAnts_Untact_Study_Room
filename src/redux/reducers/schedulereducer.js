@@ -42,7 +42,7 @@ const schedulereducer = (state = initialState, action) => {
     case SCHEDULE_FILTERTHISMONTH:
       return {
         ...state,
-        thisMonth: state.fullSchedule.filter((sc, idx) => {
+        thisMonth: fullSchedule.filter((sc, idx) => {
           if (state.isFilter) {
             return (
               parseInt(sc.date) >= parseInt(payload.startDay) &&
