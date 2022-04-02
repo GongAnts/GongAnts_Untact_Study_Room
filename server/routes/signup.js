@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
   const body = req.body;
   const { user_name, user_email, user_password } = body;
   console.log(body);
-  if (!user_name || user_email || user_password) {
+  if (!user_name || !user_email || !user_password) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
   }
   const sql1 = `SELECT COUNT(*) AS result FROM user WHERE user_name = '${user_name}'`;
