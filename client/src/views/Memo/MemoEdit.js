@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WriteArea } from './styles';
 import { Button, Input } from 'antd';
 
-// Editor
-import '@toast-ui/editor/dist/toastui-editor.css';
+// // Editor
+// import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import { MEMO_EDIT_REQUEST, MEMO_UPDATE_REQUEST } from 'redux/types';
 
