@@ -1,8 +1,34 @@
 const express = require('express');
 const router = express();
 const db = require('../config/db');
+const bycrypt = require('bcrypt');
 
 router.use(express.json());
+
+
+// 비밀번호 암호화
+const saltRounds = 10;
+const beforePassword = '';
+const afterPassword = '';
+
+// 암호화
+bcrypt.hash(beforePassword, saltRounds, (err, hash) => {
+  if(err)
+    return err
+  afterPassword = hash;
+    return afterPassword;
+});
+
+// 복호화
+bcrypt.compare(beforePassword, afterPassword, (err, result) => {
+  if(err)
+    return err;
+  if(result)
+    return true;
+  else
+    return false;
+});
+
 
 // 연결 테스트용
 router.get('/', (req, res) => {
@@ -33,7 +59,7 @@ router.post('/', (req, res) => {
   const body = req.body;
   const { user_name, user_email, user_password } = body;
   console.log(body);
-  if (!user_name || user_email || user_password) {
+  if (!user_name || !user_email || !user_password) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
   }
   const sql1 = `SELECT COUNT(*) AS result FROM user WHERE user_name = '${user_name}'`;
@@ -53,6 +79,7 @@ router.post('/', (req, res) => {
               res.status(400).send({ msg2: 'Incorrect user_email.' });
             } else {
               // name, email 미존재 확인 -> DB 저장
+              
               const sql3 = `INSERT INTO user(user_name, user_email, user_password) VALUES('${user_name}', '${user_email}', '${user_password}')`;
               db.query(sql3, (err, data) => {
                 if (!err) {
