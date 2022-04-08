@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 4000;
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 
 // routing
 const signupRouter = require('./routes/signup');
@@ -75,32 +76,27 @@ passport.use(
     function (username, password, done) {
       console.log('LocalStrategy', username, password);
 
-      const sql1 = `SELECT COUNT(*) AS result FROM user WHERE user_name = '${username}'`;
+      const sql1 = `SELECT user_hash FROM user WHERE user_name = '${username}'`;
       db.query(sql1, (err, data) => {
         if (!err) {
           // 동일한 name 존재 X
-          if (data[0].result < 1) {
+          const returnPassword = data[0].user_hash; // 아이디 존재 여부 확인해서 가져온 hash
+          if (returnPassword === undefined) {
             console.log('계정이 존재하지 않습니다.');
             return done(null, false, { msg1: 'User_name not found.' });
           } else {
-            // name 존재, pw 확인
-            const sql2 = `SELECT * FROM user WHERE user_name = '${username}' AND user_password = '${password}'`;
-            db.query(sql2, (err, data) => {
-              if (!err) {
-                if (data.length === 0) {
-                  console.log('비밀번호가 일치하지 않습니다.');
-                  return done(null, false, { msg2: 'User data incorrect.' });
-                } else {
+            bcrypt.compare(password, returnPassword, (err, result) => {
+              console.log(returnPassword);
+              if (result){
                   var json = JSON.stringify(data[0]);
                   var userdata = JSON.parse(json);
                   userdata['user_google'] = false;
                   return done(null, userdata);
-                }
               } else {
-                console.log('에러 발생');
-                return done(err);
+                  console.log('비밀번호가 일치하지 않습니다.');
+                  return done(null, false, { msg2: 'User data incorrect.' });
               }
-            });
+            })
           }
         } else {
           return done(err);
@@ -130,9 +126,8 @@ passport.use(
       done(null, userdata);
     },
   ),
-);
-
-app.get(
+);  
+ app.get(
   '/auth/google',
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login', 'email'],
