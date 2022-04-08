@@ -1,33 +1,33 @@
 const express = require('express');
 const router = express();
 const db = require('../config/db');
-const bycrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 router.use(express.json());
 
 
 // 비밀번호 암호화
 const saltRounds = 10;
-const beforePassword = '';
+const originPassword = ''; // 사용자 입력 패스워드 (암호화 전)
 const afterPassword = '';
 
-// 암호화
-bcrypt.hash(beforePassword, saltRounds, (err, hash) => {
-  if(err)
-    return err
-  afterPassword = hash;
-    return afterPassword;
-});
+// // 암호화
+// bcrypt.hash(beforePassword, saltRounds, (err, hash) => {
+//   if(err)
+//     return err
+//   afterPassword = hash;
+//     return afterPassword;
+// });
 
-// 복호화
-bcrypt.compare(beforePassword, afterPassword, (err, result) => {
-  if(err)
-    return err;
-  if(result)
-    return true;
-  else
-    return false;
-});
+// // 복호화
+// bcrypt.compare(beforePassword, afterPassword, (err, result) => {
+//   if(err)
+//     return err;
+//   if(result)
+//     return true;
+//   else
+//     return false;
+// });
 
 
 // 연결 테스트용
@@ -79,17 +79,24 @@ router.post('/', (req, res) => {
               res.status(400).send({ msg2: 'Incorrect user_email.' });
             } else {
               // name, email 미존재 확인 -> DB 저장
+              bcrypt.hash(user_password, saltRounds, (err, hash) => {
+                if (!err){
+                const sql3 = `INSERT INTO user(user_name, user_email, user_password) VALUES('${user_name}', '${user_email}', '${hash}')`;
+                db.query(sql3, (err, data) => {
+                  if (!err) {
+                    console.log('DB 저장 성공');
+                    res.status(200).send(body);
+                  } else {
+                    console.log('DB 저장 실패');
+                    res.status(500).send(err);
+                  }
+                });
+              } else { // Hash Error
+                res.status(500).send(err);
+              }
+
+              })
               
-              const sql3 = `INSERT INTO user(user_name, user_email, user_password) VALUES('${user_name}', '${user_email}', '${user_password}')`;
-              db.query(sql3, (err, data) => {
-                if (!err) {
-                  console.log('DB 저장 성공');
-                  res.status(200).send(body);
-                } else {
-                  console.log('DB 저장 실패');
-                  res.status(500).send(err);
-                }
-              });
             }
           } else {
             res.status(500).send(err);
