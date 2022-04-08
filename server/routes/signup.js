@@ -5,30 +5,8 @@ const bcrypt = require('bcrypt');
 
 router.use(express.json());
 
-
-// 비밀번호 암호화
+// salt 횟수 지정
 const saltRounds = 10;
-const originPassword = ''; // 사용자 입력 패스워드 (암호화 전)
-const afterPassword = '';
-
-// // 암호화
-// bcrypt.hash(beforePassword, saltRounds, (err, hash) => {
-//   if(err)
-//     return err
-//   afterPassword = hash;
-//     return afterPassword;
-// });
-
-// // 복호화
-// bcrypt.compare(beforePassword, afterPassword, (err, result) => {
-//   if(err)
-//     return err;
-//   if(result)
-//     return true;
-//   else
-//     return false;
-// });
-
 
 // 연결 테스트용
 router.get('/', (req, res) => {
@@ -42,9 +20,9 @@ router.get('/', (req, res) => {
 /**
  * 1. sql1에서 user_name 존재 여부 판단
  * 1-1. 미존재시, msg1 전달
- * 2. user_name 존재 시, sql2에서 user_password와 일치 확인
+ * 2. user_name 존재 시, sql2에서 user_hash와 일치 확인
  * 2-1. 불일치시, msg2 전달
- * 3. user_name, user_password 모두 일치 시 세션 저장
+ * 3. user_name, user_hash 모두 일치 시 세션 저장
  */
 
 // 회원가입
@@ -79,9 +57,11 @@ router.post('/', (req, res) => {
               res.status(400).send({ msg2: 'Incorrect user_email.' });
             } else {
               // name, email 미존재 확인 -> DB 저장
+              // 해시, 솔트 값 자동 생성
+              ////////////////////////////////// password db에 저장하는 부분 배포 전에 제거하기!//////////////////////////////////
               bcrypt.hash(user_password, saltRounds, (err, hash) => {
                 if (!err){
-                const sql3 = `INSERT INTO user(user_name, user_email, user_password) VALUES('${user_name}', '${user_email}', '${hash}')`;
+                const sql3 = `INSERT INTO user(user_name, user_email, user_hash, user_password) VALUES('${user_name}', '${user_email}', '${hash}', '${user_password}')`;
                 db.query(sql3, (err, data) => {
                   if (!err) {
                     console.log('DB 저장 성공');
@@ -94,7 +74,6 @@ router.post('/', (req, res) => {
               } else { // Hash Error
                 res.status(500).send(err);
               }
-
               })
               
             }
