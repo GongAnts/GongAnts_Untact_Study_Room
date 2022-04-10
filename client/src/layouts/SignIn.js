@@ -12,8 +12,8 @@ import Checkbox from '@mui/material/Checkbox';
 import { Page } from './styles';
 
 // css, icon, image //
-import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
-import 'assets/css/style.css';
+// import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
+// import 'assets/css/style.css';
 import signinimg from 'assets/images/signin-image.jpg';
 
 function SignIn(req) {
