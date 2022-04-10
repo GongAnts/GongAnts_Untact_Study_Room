@@ -5,7 +5,7 @@ import { Button, Input } from 'antd';
 import { WriteArea } from './styles';
 
 // Editor
-import '@toast-ui/editor/dist/toastui-editor.css';
+// import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import { MEMO_WRITE_REQUEST } from 'redux/types';
 
