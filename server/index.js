@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 4000;
 const cors = require('cors');
 const bcrypt = require('bcrypt');
@@ -127,6 +128,23 @@ passport.use(
     },
   ),
 );  
+
+/**
+ * @api {get} /auth Request SignIn Information
+ *
+ * @apiVersion 1.0.0
+ * @apiName 로그인 정보
+ * @apiGroup Auth
+ * @apiDescription 로그인 여부를 확인합니다.
+ *
+ * @apiParam {Number} id Users unique ID.
+ *
+ * @apiSuccess {String} user_hash 사용자 비밀번호 해시값
+ * @apiSuccess {String} user_google 소셜 로그인 여부
+ * @apiSuccess {String} lastname  Lastname of the User.
+ */
+
+
  app.get(
   '/auth/google',
   passport.authenticate('google', {
@@ -138,40 +156,40 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google' }),
   function (req, res) {
-    res.redirect('http://localhost:3000/'); // 포트 번호 변경 필요
+    res.redirect(`http://${HOST}:${PORT}/auth`);
   },
 );
 
-app.get('/', (req, res) => {
+app.get('/auth', (req, res) => {
   if (req.isAuthenticated()) return res.status(200).send(req.user);
   res.status(401).send({ msg: 'logout' });
 });
 
-app.get('/signout', (req, res) => {
+app.get('/auth/signout', (req, res) => {
   console.log('현재 사용자를 로그아웃 합니다.');
   req.logout();
-  res.redirect('/');
+  res.redirect('/auth');
 });
 
 app.post(
-  '/signin',
+  '/auth/signin',
   passport.authenticate('local', {
-    failureRedirect: '/',
+    failureRedirect: '/auth',
   }),
   function (req, res) {
     req.session.user = req.user;
     req.session.save();
     console.log('session store..', req.user);
-    res.redirect('/');
+    res.redirect('/auth');
   },
 );
 
-app.use('/signup', signupRouter);
+app.use('/auth/signup', signupRouter);
 app.use('/calendar', calendarRouter);
 app.use('/memo', memoRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server On : http://localhost:${PORT}/`);
+  console.log(`Server On : http://${HOST}:${PORT}/`);
 });
