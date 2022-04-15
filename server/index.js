@@ -62,9 +62,9 @@ passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function (id, done) {
-  console.log('deserializeUser id : ', id);
-  done(null, id);
+passport.deserializeUser(function (user, done) {
+  console.log('deserializeUser', user);
+  done(null, user);
 });
 
 // Local Passport
@@ -77,17 +77,15 @@ passport.use(
     function (username, password, done) {
       console.log('LocalStrategy', username, password);
 
-      const sql1 = `SELECT user_hash FROM user WHERE user_name = '${username}'`;
+      const sql1 = `SELECT * FROM user WHERE user_name = '${username}'`;
       db.query(sql1, (err, data) => {
-        if (!err) {
-          // 동일한 name 존재 X
-          const returnPassword = data[0].user_hash; // 아이디 존재 여부 확인해서 가져온 hash
-          if (returnPassword === undefined) {
+        if (!err) { // user_name 미존재
+          if (data[0] === undefined) {
             console.log('계정이 존재하지 않습니다.');
-            return done(null, false, { msg1: 'User_name not found.' });
+            return done(null, false, { error : 'User name Not Found' });
           } else {
+            const returnPassword = data[0].user_hash; // 아이디 존재 여부 확인해서 가져온 hash
             bcrypt.compare(password, returnPassword, (err, result) => {
-              console.log(returnPassword);
               if (result){
                   var json = JSON.stringify(data[0]);
                   var userdata = JSON.parse(json);
@@ -95,7 +93,7 @@ passport.use(
                   return done(null, userdata);
               } else {
                   console.log('비밀번호가 일치하지 않습니다.');
-                  return done(null, false, { msg2: 'User data incorrect.' });
+                  return done(null, false, { error: 'User password Incorrect' });
               }
             })
           }
@@ -116,8 +114,6 @@ passport.use(
       callbackURL: googleCredentials.web.redirect_uris[0],
     },
     function (accessToken, refreshToken, profile, done) {
-      console.log('GoogleStrategy', accessToken, refreshToken, profile);
-      console.log('Email_info', profile.emails[0].value);
       var userdata = {
         user_id: profile.id,
         user_name: profile.displayName,
@@ -128,22 +124,6 @@ passport.use(
     },
   ),
 );  
-
-/**
- * @api {get} /auth Request SignIn Information
- *
- * @apiVersion 1.0.0
- * @apiName 로그인 정보
- * @apiGroup Auth
- * @apiDescription 로그인 여부를 확인합니다.
- *
- * @apiParam {Number} id Users unique ID.
- *
- * @apiSuccess {String} user_hash 사용자 비밀번호 해시값
- * @apiSuccess {String} user_google 소셜 로그인 여부
- * @apiSuccess {String} lastname  Lastname of the User.
- */
-
 
  app.get(
   '/auth/google',
@@ -160,10 +140,12 @@ app.get(
   },
 );
 
+
 app.get('/auth', (req, res) => {
   if (req.isAuthenticated()) return res.status(200).send(req.user);
   res.status(401).send({ msg: 'logout' });
 });
+
 
 app.get('/auth/signout', (req, res) => {
   console.log('현재 사용자를 로그아웃 합니다.');
@@ -171,10 +153,11 @@ app.get('/auth/signout', (req, res) => {
   res.redirect('/auth');
 });
 
+
 app.post(
-  '/auth/signin',
+  '/auth/signin', 
   passport.authenticate('local', {
-    failureRedirect: '/auth',
+    failureFlash : true
   }),
   function (req, res) {
     req.session.user = req.user;
