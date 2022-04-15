@@ -48,23 +48,23 @@ function SignIn(req) {
 
   return (
     <Page>
-      <section class="sign-in mt-4">
-        <div class="container">
-          <div class="signin-content">
-            <div class="signin-image">
+      <section className="sign-in mt-4">
+        <div className="container">
+          <div className="signin-content">
+            <div className="signin-image">
               <figure>
                 <img src={signinimg} alt="sign in image" />
               </figure>
-              <a href="/signup" class="signup-image-link">
+              <a href="/signup" className="signup-image-link">
                 Create an account
               </a>
             </div>
 
-            <div class="signin-form">
+            <div className="signin-form">
               <p>'공개미'에 온 것을 환영합니다.</p>
-              <h2 class="form-title">로그인</h2>
-              <form method="POST" class="register-form" id="login-form">
-                <div class="form-group">
+              <h2 className="m-5 bg-yellow-500 text-blue-500 font-bold">로그인</h2>
+              <form method="POST" className="register-form" id="login-form">
+                <div className="form-group">
                   <label for="user_name">
                     <AccountBoxIcon></AccountBoxIcon>
                   </label>
@@ -76,7 +76,7 @@ function SignIn(req) {
                     onChange={onChangeValue}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="user_password">
                     <LockIcon></LockIcon>
                   </label>
@@ -89,7 +89,7 @@ function SignIn(req) {
                   />
                 </div>
                 <FormGroup
-                  class="form-group"
+                  className="form-group"
                   style={{ width: '100%', height: '30px' }}
                 >
                   <FormControlLabel
@@ -97,24 +97,24 @@ function SignIn(req) {
                     label="Remember me"
                   />
                 </FormGroup>
-                <div class="form-group form-button">
+                <div className="form-group form-button">
                   <input
                     type="submit"
                     name="signin"
                     id="signin"
-                    class="form-submit"
+                    className="form-submit"
                     value="Log in"
                     onClick={onSubmit}
                   />
                 </div>
               </form>
-              <div class="social-login">
-                <span class="social-label">Or login with</span>
-                <ul class="socials">
+              <div className="social-login">
+                <span className="social-label">Or login with</span>
+                <ul className="socials">
                   <li>
                     <a href="http://localhost:4000/auth/google">
                       {/* 서버 URL 변경 시 수정 필요*/}
-                      <i class="display-flex-center zmdi zmdi-google"></i>
+                      <i className="display-flex-center zmdi zmdi-google"></i>
                     </a>
                   </li>
                 </ul>
