@@ -58,6 +58,7 @@
   "devDependencies": {
     "autoprefixer": "9.8.8",
     "craco": "0.0.3",
+    "daisyui": "1.9.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9",
     "postcss": "7.0.39",

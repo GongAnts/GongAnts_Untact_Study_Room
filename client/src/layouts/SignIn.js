@@ -44,7 +44,7 @@ function SignIn(req) {
   );
 
   return (
-    <div className='container '>
+    <div className='container'>
       <section className="bg-gray-200 h-screen w-screen flex justify-center items-center">
         <div className="shadow-lg w-96 rounded-lg h-3/6 bg-white">
           <div className="text-center">
