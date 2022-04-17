@@ -5,10 +5,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 // css //
 // import 'bootstrap/dist/css/bootstrap.min.css';
-// import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'tailwindcss/tailwind.css';
-import 'antd/dist/antd.css';
-import './styles/global.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+// import 'antd/dist/antd.css';
 
 /* Internal Libraries */
 import AdminLayout from 'layouts/Admin.js';

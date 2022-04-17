@@ -9,12 +9,9 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-import { Page } from './styles';
-
 // css, icon, image //
 // import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
 // import 'assets/css/style.css';
-import signinimg from 'assets/images/signin-image.jpg';
 
 function SignIn(req) {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -47,14 +44,11 @@ function SignIn(req) {
   );
 
   return (
-    <Page>
-      <section className="sign-in mt-4">
-        <div className="container">
-          <div className="signin-content">
+    <div className='container '>
+      <section className="bg-gray-200 h-screen w-screen flex justify-center items-center">
+        <div className="shadow-lg w-96 rounded-lg h-3/6 bg-white">
+          <div className="text-center">
             <div className="signin-image">
-              <figure>
-                <img src={signinimg} alt="sign in image" />
-              </figure>
               <a href="/signup" className="signup-image-link">
                 Create an account
               </a>
@@ -62,7 +56,7 @@ function SignIn(req) {
 
             <div className="signin-form">
               <p>'공개미'에 온 것을 환영합니다.</p>
-              <h2 className="m-5 bg-yellow-500 text-blue-500 font-bold">로그인</h2>
+              <h2 className="m-3">로그인</h2>
               <form method="POST" className="register-form" id="login-form">
                 <div className="form-group">
                   <label for="user_name">
@@ -93,6 +87,7 @@ function SignIn(req) {
                   style={{ width: '100%', height: '30px' }}
                 >
                   <FormControlLabel
+                    className='text-right'
                     control={<Checkbox size="small" />}
                     label="Remember me"
                   />
@@ -102,7 +97,7 @@ function SignIn(req) {
                     type="submit"
                     name="signin"
                     id="signin"
-                    className="form-submit"
+                    className="btn"
                     value="Log in"
                     onClick={onSubmit}
                   />
@@ -123,7 +118,7 @@ function SignIn(req) {
           </div>
         </div>
       </section>
-    </Page>
+    </div>
   );
 }
 

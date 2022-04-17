@@ -1,9 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { REGISTER_REQUEST } from 'redux/types.js';
-
-import { Page } from './styles';
-
 // css, icon, image //
 // import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
 // import 'assets/css/style.css';
@@ -46,7 +43,7 @@ function SignIn() {
   );
 
   return (
-    <Page>
+    <div>
       <section class="signup mt-4">
         <div class="container">
           <div class="signup-content">
@@ -141,7 +138,7 @@ function SignIn() {
           </div>
         </div>
       </section>
-    </Page>
+    </div>
   );
 }
 
