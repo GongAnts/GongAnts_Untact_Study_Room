@@ -1,16 +1,16 @@
+/* External Libraries */
 import React from 'react';
 import { useSelector } from 'react-redux';
-
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 // css //
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/css/animate.min.css';
-import './assets/css/demo.css';
+// import './assets/css/animate.min.css';
+// import './assets/css/demo.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
 import 'antd/dist/antd.css';
 
+/* Internal Libraries */
 import AdminLayout from 'layouts/Admin.js';
 import SignIn from 'layouts/SignIn.js';
 import SignUp from 'layouts/SignUp.js';
@@ -24,8 +24,12 @@ const App = () => {
       {console.log(isAuthenticated)}
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/signup" component={SignUp} />
-      <Route exact path="/">
+      {/* <Route exact path="/">
         {isAuthenticated ? <Redirect to="/admin/dashboard" /> : <SignIn />}
+      </Route> */}
+      <Route path="/signin" component={SignIn} />
+      <Route exact path="/">
+        <SignIn />
       </Route>
       <Route path="/addschedule" component={AddSchedule} />
     </Switch>

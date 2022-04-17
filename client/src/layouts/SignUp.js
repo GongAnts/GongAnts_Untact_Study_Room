@@ -5,8 +5,8 @@ import { REGISTER_REQUEST } from 'redux/types.js';
 import { Page } from './styles';
 
 // css, icon, image //
-import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
-import 'assets/css/style.css';
+// import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
+// import 'assets/css/style.css';
 import signupimg from 'assets/images/signup-image.jpg';
 
 function SignIn() {

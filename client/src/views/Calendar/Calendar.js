@@ -21,13 +21,6 @@ import {
   openEditPopup,
 } from 'redux/reducers/schedulereducer';
 
-import Calendar from '@toast-ui/react-calendar';
-import 'tui-calendar/dist/tui-calendar.css';
-
-// If you use the default popups, use this.
-import 'tui-date-picker/dist/tui-date-picker.css';
-import 'tui-time-picker/dist/tui-time-picker.css';
-
 import moment from 'moment';
 import 'moment/locale/ko';
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 4000;
 const cors = require('cors');
 const bcrypt = require('bcrypt');
@@ -61,9 +62,9 @@ passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function (id, done) {
-  console.log('deserializeUser id : ', id);
-  done(null, id);
+passport.deserializeUser(function (user, done) {
+  console.log('deserializeUser', user);
+  done(null, user);
 });
 
 // Local Passport
@@ -76,17 +77,15 @@ passport.use(
     function (username, password, done) {
       console.log('LocalStrategy', username, password);
 
-      const sql1 = `SELECT user_hash FROM user WHERE user_name = '${username}'`;
+      const sql1 = `SELECT * FROM user WHERE user_name = '${username}'`;
       db.query(sql1, (err, data) => {
-        if (!err) {
-          // 동일한 name 존재 X
-          const returnPassword = data[0].user_hash; // 아이디 존재 여부 확인해서 가져온 hash
-          if (returnPassword === undefined) {
+        if (!err) { // user_name 미존재
+          if (data[0] === undefined) {
             console.log('계정이 존재하지 않습니다.');
-            return done(null, false, { msg1: 'User_name not found.' });
+            return done(null, false, { error : 'User name Not Found' });
           } else {
+            const returnPassword = data[0].user_hash; // 아이디 존재 여부 확인해서 가져온 hash
             bcrypt.compare(password, returnPassword, (err, result) => {
-              console.log(returnPassword);
               if (result){
                   var json = JSON.stringify(data[0]);
                   var userdata = JSON.parse(json);
@@ -94,7 +93,7 @@ passport.use(
                   return done(null, userdata);
               } else {
                   console.log('비밀번호가 일치하지 않습니다.');
-                  return done(null, false, { msg2: 'User data incorrect.' });
+                  return done(null, false, { error: 'User password Incorrect' });
               }
             })
           }
@@ -115,8 +114,6 @@ passport.use(
       callbackURL: googleCredentials.web.redirect_uris[0],
     },
     function (accessToken, refreshToken, profile, done) {
-      console.log('GoogleStrategy', accessToken, refreshToken, profile);
-      console.log('Email_info', profile.emails[0].value);
       var userdata = {
         user_id: profile.id,
         user_name: profile.displayName,
@@ -127,6 +124,7 @@ passport.use(
     },
   ),
 );  
+
  app.get(
   '/auth/google',
   passport.authenticate('google', {
@@ -138,40 +136,43 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google' }),
   function (req, res) {
-    res.redirect('http://localhost:3000/'); // 포트 번호 변경 필요
+    res.redirect(`http://${HOST}:${PORT}/auth`);
   },
 );
 
-app.get('/', (req, res) => {
+
+app.get('/auth', (req, res) => {
   if (req.isAuthenticated()) return res.status(200).send(req.user);
   res.status(401).send({ msg: 'logout' });
 });
 
-app.get('/signout', (req, res) => {
+
+app.get('/auth/signout', (req, res) => {
   console.log('현재 사용자를 로그아웃 합니다.');
   req.logout();
-  res.redirect('/');
+  res.redirect('/auth');
 });
 
+
 app.post(
-  '/signin',
+  '/auth/signin', 
   passport.authenticate('local', {
-    failureRedirect: '/',
+    failureFlash : true
   }),
   function (req, res) {
     req.session.user = req.user;
     req.session.save();
     console.log('session store..', req.user);
-    res.redirect('/');
+    res.redirect('/auth');
   },
 );
 
-app.use('/signup', signupRouter);
+app.use('/auth/signup', signupRouter);
 app.use('/calendar', calendarRouter);
 app.use('/memo', memoRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server On : http://localhost:${PORT}/`);
+  console.log(`Server On : http://${HOST}:${PORT}/`);
 });
