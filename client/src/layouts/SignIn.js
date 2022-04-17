@@ -48,17 +48,11 @@ function SignIn(req) {
       <section className="bg-gray-200 h-screen w-screen flex justify-center items-center">
         <div className="shadow-lg w-96 rounded-lg h-3/6 bg-white">
           <div className="text-center">
-            <div className="signin-image">
-              <a href="/signup" className="signup-image-link">
-                Create an account
-              </a>
-            </div>
-
             <div className="signin-form">
-              <p>'공개미'에 온 것을 환영합니다.</p>
-              <h2 className="m-3">로그인</h2>
-              <form method="POST" className="register-form" id="login-form">
-                <div className="form-group">
+              <p className='mt-3 text-sm'>'공개미'에 온 것을 환영합니다.</p>
+              <h2 className="text-3xl m-3 font-medium">로그인</h2>
+              <form method="POST" id="login-form">
+                <div className="form-group mt-5">
                   <label for="user_name">
                     <AccountBoxIcon></AccountBoxIcon>
                   </label>
@@ -82,17 +76,12 @@ function SignIn(req) {
                     onChange={onChangeValue}
                   />
                 </div>
-                <FormGroup
-                  className="form-group"
-                  style={{ width: '100%', height: '30px' }}
-                >
-                  <FormControlLabel
-                    className='text-right'
-                    control={<Checkbox size="small" />}
-                    label="Remember me"
-                  />
-                </FormGroup>
-                <div className="form-group form-button">
+                <div className="signin-image mt-3">
+                  <a href="/signup" className="signup-image-link">
+                    Create an account
+                  </a>
+                </div>
+                <div className="form-group form-button mt-5">
                   <input
                     type="submit"
                     name="signin"
