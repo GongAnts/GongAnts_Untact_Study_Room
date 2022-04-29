@@ -35,7 +35,7 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   const body = req.body;
-  const { user_name, user_email, user_password } = body;
+  const { user_id, user_name, user_email, user_password } = body;
   console.log(body);
   if (!user_name || !user_email || !user_password) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
@@ -60,22 +60,22 @@ router.post('/', (req, res) => {
               // 해시, 솔트 값 자동 생성
               ////////////////////////////////// password db에 저장하는 부분 배포 전에 제거하기!//////////////////////////////////
               bcrypt.hash(user_password, saltRounds, (err, hash) => {
-                if (!err){
-                const sql3 = `INSERT INTO user(user_name, user_email, user_hash, user_password) VALUES('${user_name}', '${user_email}', '${hash}', '${user_password}')`;
-                db.query(sql3, (err, data) => {
-                  if (!err) {
-                    console.log('DB 저장 성공');
-                    res.status(200).send(body);
-                  } else {
-                    console.log('DB 저장 실패');
-                    res.status(500).send(err);
-                  }
-                });
-              } else { // Hash Error
-                res.status(500).send(err);
-              }
-              })
-              
+                if (!err) {
+                  const sql3 = `INSERT INTO user(user_id, user_type, user_name, user_email, user_hash, user_password) VALUES('u${user_id}', 'local', '${user_name}', '${user_email}', '${hash}', '${user_password}')`;
+                  db.query(sql3, (err, data) => {
+                    if (!err) {
+                      console.log('DB 저장 성공');
+                      res.status(200).send(body);
+                    } else {
+                      console.log('DB 저장 실패');
+                      res.status(500).send(err);
+                    }
+                  });
+                } else {
+                  // Hash Error
+                  res.status(500).send(err);
+                }
+              });
             }
           } else {
             res.status(500).send(err);
