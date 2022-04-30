@@ -5,13 +5,6 @@ import { LOGIN_REQUEST } from 'redux/types.js';
 // UI components //
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LockIcon from '@mui/icons-material/Lock';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-
-// css, icon, image //
-// import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
-// import 'assets/css/style.css';
 
 function SignIn(req) {
   const { isAuthenticated } = useSelector((state) => state.auth);

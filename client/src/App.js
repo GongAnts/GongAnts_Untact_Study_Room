@@ -10,8 +10,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 /* Internal Libraries */
 import AdminLayout from 'layouts/Admin.js';
-import SignIn from 'layouts/SignIn.js';
-import SignUp from 'layouts/SignUp.js';
+import SignIn from 'layouts/signin/SignIn.js';
+import SignUp from 'layouts/signup/SignUp.js';
 import AddSchedule from 'views/Calendar/AddSchedule';
 
 const App = () => {

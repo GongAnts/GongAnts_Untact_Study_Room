@@ -6,7 +6,7 @@ import { REGISTER_REQUEST } from 'redux/types.js';
 // import 'assets/css/style.css';
 import signupimg from 'assets/images/signup-image.jpg';
 
-function SignIn() {
+function SignUp() {
   const [form, setValue] = useState({
     user_name: '',
     user_email: '',
@@ -142,4 +142,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;
