@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 // routing
 const signupRouter = require('./routes/signup');
-const calendarRouter = require('./routes/calendar');
+const scheduleRouter = require('./routes/schedule');
 const memoRouter = require('./routes/memo');
 const studytimeRouter = require('./routes/studytime');
 const todoRouter = require('./routes/todo');
@@ -192,7 +192,7 @@ app.post(
 );
 
 app.use('/auth/signup', signupRouter);
-app.use('/calendar', calendarRouter);
+app.use('/schedule', scheduleRouter);
 app.use('/memo', memoRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);

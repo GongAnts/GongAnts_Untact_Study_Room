@@ -2,20 +2,11 @@ const express = require('express');
 const router = express();
 const db = require('../config/db');
 
-/*
-user_id 식별을 위해 구글 계정은 'g' + user_id,
-우리 서비스 계정은 'u' + user_id 로 관리합니다.
-*/
 router.use(express.json());
 
 router.get('/load', (req, res) => {
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   const sql = `SELECT * FROM memo WHERE user_id = '${user_id}'`;
   db.query(sql, (err, data) => {
     if (!err) {
@@ -29,15 +20,9 @@ router.get('/load', (req, res) => {
 });
 
 router.post('/write', (req, res) => {
-  
   const body = req.body;
   var { memo_title, memo_content } = body;
   var user_id = req.user.user_id;
-  if (req.user.user_google) {
-    user_id = 'g' + req.user.user_id;
-  } else {
-    user_id = 'u' + req.user.user_id;
-  }
   var memo_data = {
     user_id: `${user_id}`,
     memo_title: `${memo_title}`,

@@ -8,11 +8,6 @@ router.use(express.json());
 router.get('/load/total', (req, res) => {
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   const sql = `SELECT HOUR(SEC_TO_TIME(SUM(TIME_TO_SEC(studytime)))) AS hour,\
   MINUTE(SEC_TO_TIME(SUM(TIME_TO_SEC(studytime)))) AS minute,\
   SECOND(SEC_TO_TIME(SUM(TIME_TO_SEC(studytime)))) AS second\
@@ -56,11 +51,6 @@ router.get('/load/monthly/total', (req, res) => {
   var month = req.query.month;
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   if (!year || !month) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
   }
@@ -84,12 +74,6 @@ router.get('/load/monthly/list', (req, res) => {
   var year = req.query.year;
   var month = req.query.month;
   var user_id = req.user.user_id;
-
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
 
   if (!year || !month) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
@@ -117,11 +101,6 @@ router.get('/load/monthly/list', (req, res) => {
 router.get('/load/today', (req, res) => {
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   const sql = `SELECT HOUR(studytime) AS hour,\
   MINUTE(studytime) AS minute,\
   SECOND(studytime) AS second\
@@ -148,11 +127,7 @@ router.get('/load/today', (req, res) => {
 router.post('/save', (req, res) => {
   const studytime = `${req.body.hour}:${req.body.minute}:${req.body.second}`;
   var user_id = req.user.user_id;
-  if (req.user.user_google) {
-    user_id = 'g' + req.user.user_id;
-  } else {
-    user_id = 'u' + req.user.user_id;
-  }
+
   var studytime_data = {
     user_id: `${user_id}`,
     added_studytime: studytime,
