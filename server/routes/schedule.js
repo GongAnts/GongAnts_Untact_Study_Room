@@ -7,12 +7,7 @@ router.use(express.json());
 router.get('/load/all', (req, res) => {
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
-  const sql = `SELECT * FROM calendar WHERE user_id = '${user_id}'`;
+  const sql = `SELECT * FROM schedule WHERE user_id = '${user_id}'`;
   db.query(sql, (err, data) => {
     if (!err) {
       console.log('전체 일정 조회 성공', data);
@@ -27,12 +22,7 @@ router.get('/load/all', (req, res) => {
 router.get('/load/today', (req, res) => {
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
-  const sql = `SELECT * FROM calendar WHERE user_id = '${user_id}' \
+  const sql = `SELECT * FROM schedule WHERE user_id = '${user_id}' \
     AND DATE(schedule_date) = DATE(now())`;
   db.query(sql, (err, data) => {
     if (!err) {
@@ -50,16 +40,11 @@ router.get('/load/monthly', (req, res) => {
   var month = req.query.month;
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   if (!year || !month) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
   }
 
-  const sql = `SELECT * FROM calendar WHERE user_id = '${user_id}' \
+  const sql = `SELECT * FROM schedule WHERE user_id = '${user_id}' \
     AND DATE_FORMAT(schedule_date, '%Y-%c') BETWEEN '${year}-${month}' AND '${year}-${month}'`;
   db.query(sql, (err, data) => {
     if (!err) {
@@ -87,11 +72,6 @@ router.post('/write', (req, res) => {
   const schedule_description = body.description;
   var schedule_date = `${year}-${month}-${day} ${hour}:${minute}:00`;
 
-  if (req.user.user_google) {
-    user_id = 'g' + req.user.user_id;
-  } else {
-    user_id = 'u' + req.user.user_id;
-  }
   var schedule_data = {
     user_id: `${user_id}`,
     schedule_title: `${schedule_title}`,
@@ -99,7 +79,7 @@ router.post('/write', (req, res) => {
     schedule_date: `${schedule_date}`,
   };
   console.log(schedule_data);
-  const sql = `INSERT INTO calendar(user_id, schedule_title, schedule_date, schedule_description) VALUES('${user_id}', '${schedule_title}', '${schedule_date}', '${schedule_description}')`;
+  const sql = `INSERT INTO schedule(user_id, schedule_title, schedule_date, schedule_description) VALUES('${user_id}', '${schedule_title}', '${schedule_date}', '${schedule_description}')`;
   db.query(sql, (err, data) => {
     if (!err) {
       console.log('일정 저장 성공');
@@ -111,10 +91,10 @@ router.post('/write', (req, res) => {
   });
 });
 
-// request URL Example : http://localhost:4000/calendar/detail?id=1
+// request URL Example : http://localhost:4000/schedule/detail?id=1
 router.get('/detail', (req, res) => {
   const schedule_id = req.query.id;
-  const sql = `SELECT * FROM calendar WHERE schedule_id = '${schedule_id}'`;
+  const sql = `SELECT * FROM schedule WHERE schedule_id = '${schedule_id}'`;
   db.query(sql, (err, data) => {
     if (!err) {
       console.log('일정 로딩 성공');
@@ -135,7 +115,7 @@ router.delete('/delete', (req, res) => {
   if (!schedule_id) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
   }
-  const sql = `DELETE FROM calendar WHERE schedule_id = '${schedule_id}';`;
+  const sql = `DELETE FROM schedule WHERE schedule_id = '${schedule_id}';`;
   db.query(sql, (err, data) => {
     if (!err) {
       console.log('일정 삭제 성공');
@@ -168,7 +148,7 @@ router.post('/modify', (req, res) => {
     schedule_date: `${schedule_date}`,
   };
   console.log(schedule_data);
-  const sql = `UPDATE calendar SET schedule_title = '${schedule_title}', schedule_date = '${schedule_date}', \
+  const sql = `UPDATE schedule SET schedule_title = '${schedule_title}', schedule_date = '${schedule_date}', \
     schedule_description = '${schedule_description}' WHERE schedule_id = '${schedule_id}';`;
   db.query(sql, (err, data) => {
     if (!err) {

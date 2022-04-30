@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 // routing
 const signupRouter = require('./routes/signup');
-const calendarRouter = require('./routes/calendar');
+const scheduleRouter = require('./routes/schedule');
 const memoRouter = require('./routes/memo');
 const studytimeRouter = require('./routes/studytime');
 const todoRouter = require('./routes/todo');
@@ -79,23 +79,24 @@ passport.use(
 
       const sql1 = `SELECT * FROM user WHERE user_name = '${username}'`;
       db.query(sql1, (err, data) => {
-        if (!err) { // user_name 미존재
+        if (!err) {
+          // user_name 미존재
           if (data[0] === undefined) {
             console.log('계정이 존재하지 않습니다.');
-            return done(null, false, { error : 'User name Not Found' });
+            return done(null, false, { error: 'User name Not Found' });
           } else {
             const returnPassword = data[0].user_hash; // 아이디 존재 여부 확인해서 가져온 hash
             bcrypt.compare(password, returnPassword, (err, result) => {
-              if (result){
-                  var json = JSON.stringify(data[0]);
-                  var userdata = JSON.parse(json);
-                  userdata['user_google'] = false;
-                  return done(null, userdata);
+              if (result) {
+                var json = JSON.stringify(data[0]);
+                var userdata = JSON.parse(json);
+                userdata['user_google'] = false;
+                return done(null, userdata);
               } else {
-                  console.log('비밀번호가 일치하지 않습니다.');
-                  return done(null, false, { error: 'User password Incorrect' });
+                console.log('비밀번호가 일치하지 않습니다.');
+                return done(null, false, { error: 'User password Incorrect' });
               }
-            })
+            });
           }
         } else {
           return done(err);
@@ -113,19 +114,43 @@ passport.use(
       clientSecret: googleCredentials.web.client_secret,
       callbackURL: googleCredentials.web.redirect_uris[0],
     },
-    function (accessToken, refreshToken, profile, done) {
-      var userdata = {
-        user_id: profile.id,
+    function (accessToken, refreshToken, profile, cb) {
+      const userdata = {
+        user_id: 'g' + profile.id,
         user_name: profile.displayName,
         user_email: profile.emails[0].value,
         user_google: true,
       };
-      done(null, userdata);
+      try {
+        const sql1 = `SELECT COUNT(*) AS result FROM user WHERE user_email = '${profile.emails[0].value}'`;
+        db.query(sql1, (err, data) => {
+          if (!err) {
+            // 동일 user_email 존재
+            if (data[0].result > 0) {
+              console.log('이미 존재하는 user_email 입니다.');
+              return cb(null, userdata);
+            } else {
+              const sql2 = `INSERT INTO user(user_id, user_type, user_name, user_email) VALUES('g${profile.id}', 'google', '${profile.displayName}', '${profile.emails[0].value}')`;
+              db.query(sql2, (err, data) => {
+                if (!err) {
+                  console.log('DB 저장 성공');
+                  return cb(null, userdata);
+                } else {
+                  console.log('DB 저장 실패');
+                  return cb(err);
+                }
+              });
+            }
+          }
+        });
+      } catch (error) {
+        return cb(error);
+      }
     },
   ),
-);  
+);
 
- app.get(
+app.get(
   '/auth/google',
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login', 'email'],
@@ -134,18 +159,18 @@ passport.use(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/auth/google' }),
+  (profile = passport.authenticate('google', {
+    failureRedirect: '/auth/google',
+  })),
   function (req, res) {
     res.redirect(`http://${HOST}:${PORT}/auth`);
   },
 );
 
-
 app.get('/auth', (req, res) => {
   if (req.isAuthenticated()) return res.status(200).send(req.user);
   res.status(401).send({ msg: 'logout' });
 });
-
 
 app.get('/auth/signout', (req, res) => {
   console.log('현재 사용자를 로그아웃 합니다.');
@@ -153,11 +178,10 @@ app.get('/auth/signout', (req, res) => {
   res.redirect('/auth');
 });
 
-
 app.post(
-  '/auth/signin', 
+  '/auth/signin',
   passport.authenticate('local', {
-    failureFlash : true
+    failureFlash: true,
   }),
   function (req, res) {
     req.session.user = req.user;
@@ -168,7 +192,7 @@ app.post(
 );
 
 app.use('/auth/signup', signupRouter);
-app.use('/calendar', calendarRouter);
+app.use('/schedule', scheduleRouter);
 app.use('/memo', memoRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
