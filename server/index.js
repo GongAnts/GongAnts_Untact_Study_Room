@@ -71,13 +71,13 @@ passport.deserializeUser(function (user, done) {
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'user_name',
+      usernameField: 'user_id',
       passwordField: 'user_password',
     },
-    function (username, password, done) {
-      console.log('LocalStrategy', username, password);
+    function (userid, password, done) {
+      console.log('LocalStrategy', userid, password);
 
-      const sql1 = `SELECT * FROM user WHERE user_name = '${username}'`;
+      const sql1 = `SELECT * FROM user WHERE user_id = 'u${userid}'`;
       db.query(sql1, (err, data) => {
         if (!err) {
           // user_name 미존재
