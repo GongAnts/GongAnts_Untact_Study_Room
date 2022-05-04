@@ -8,11 +8,6 @@ router.use(express.json());
 router.get('/load/all', (req, res) => {
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   const sql = `SELECT * FROM todo WHERE user_id = '${user_id}'`;
   db.query(sql, (err, data) => {
     if (!err) {
@@ -31,11 +26,6 @@ router.get('/load/monthly', (req, res) => {
   var month = req.query.month;
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   if (!year || !month) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
   }
@@ -56,11 +46,6 @@ router.get('/load/monthly', (req, res) => {
 router.get('/load/today', (req, res) => {
   var user_id = req.user.user_id;
 
-  if (req.user.user_google) {
-    user_id = 'g' + user_id;
-  } else {
-    user_id = 'u' + user_id;
-  }
   const sql = `SELECT * FROM todo WHERE user_id = '${user_id}'\
     AND DATE(create_date) = DATE(now())`;
   db.query(sql, (err, data) => {
@@ -84,11 +69,7 @@ router.get('/load/today', (req, res) => {
 router.post('/write', (req, res) => {
   var user_id = req.user.user_id;
   const todo_title = req.body.todo_title;
-  if (req.user.user_google) {
-    user_id = 'g' + req.user.user_id;
-  } else {
-    user_id = 'u' + req.user.user_id;
-  }
+
   var todo_data = {
     user_id: `${user_id}`,
     todo_title: `${todo_title}`,
