@@ -22,12 +22,9 @@ const App = () => {
       {console.log(isAuthenticated)}
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/signup" component={SignUp} />
-      {/* <Route exact path="/">
-        {isAuthenticated ? <Redirect to="/admin/dashboard" /> : <SignIn />}
-      </Route> */}
       <Route path="/signin" component={SignIn} />
       <Route exact path="/">
-        <SignIn />
+        {isAuthenticated ? <Redirect to="/admin/dashboard" /> : <SignIn />}
       </Route>
       <Route path="/addschedule" component={AddSchedule} />
     </Switch>
