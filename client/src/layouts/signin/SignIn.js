@@ -5,16 +5,7 @@ import { LOGIN_REQUEST } from 'redux/types.js';
 // UI components //
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LockIcon from '@mui/icons-material/Lock';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-
-import { Page } from './styles';
-
-// css, icon, image //
-// import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
-// import 'assets/css/style.css';
-import signinimg from 'assets/images/signin-image.jpg';
+import GoogleIcon from '@mui/icons-material/Google';
 
 function SignIn(req) {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -24,7 +15,6 @@ function SignIn(req) {
     user_password: '',
   });
 
-  // const {  } = useSelector((state) => state.auth);
   const onChangeValue = (e) => {
     setValue({
       ...form,
@@ -47,24 +37,15 @@ function SignIn(req) {
   );
 
   return (
-    <Page>
-      <section class="sign-in mt-4">
-        <div class="container">
-          <div class="signin-content">
-            <div class="signin-image">
-              <figure>
-                <img src={signinimg} alt="sign in image" />
-              </figure>
-              <a href="/signup" class="signup-image-link">
-                Create an account
-              </a>
-            </div>
-
-            <div class="signin-form">
-              <p>'공개미'에 온 것을 환영합니다.</p>
-              <h2 class="form-title">로그인</h2>
-              <form method="POST" class="register-form" id="login-form">
-                <div class="form-group">
+    <div className="container">
+      <section className="bg-gray-200 h-screen w-screen flex justify-center items-center">
+        <div className="shadow-lg w-96 rounded-lg h-3/6 bg-white">
+          <div className="text-center">
+            <div className="signin-form">
+              <p className="mt-3 text-sm">'공개미'에 온 것을 환영합니다.</p>
+              <h2 className="text-3xl m-3 font-medium">로그인</h2>
+              <form method="POST" id="login-form">
+                <div className="form-group mt-5">
                   <label for="user_name">
                     <AccountBoxIcon></AccountBoxIcon>
                   </label>
@@ -76,7 +57,7 @@ function SignIn(req) {
                     onChange={onChangeValue}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="user_password">
                     <LockIcon></LockIcon>
                   </label>
@@ -88,33 +69,28 @@ function SignIn(req) {
                     onChange={onChangeValue}
                   />
                 </div>
-                <FormGroup
-                  class="form-group"
-                  style={{ width: '100%', height: '30px' }}
-                >
-                  <FormControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Remember me"
-                  />
-                </FormGroup>
-                <div class="form-group form-button">
+                <div className="signin-image mt-3">
+                  <a href="/signup" className="signup-image-link">
+                    Create an account
+                  </a>
+                </div>
+                <div className="form-group form-button mt-5">
                   <input
                     type="submit"
                     name="signin"
                     id="signin"
-                    class="form-submit"
+                    className="btn"
                     value="Log in"
                     onClick={onSubmit}
                   />
                 </div>
               </form>
-              <div class="social-login">
-                <span class="social-label">Or login with</span>
-                <ul class="socials">
+              <div className="social-login">
+                <span className="social-label">Or login with</span>
+                <ul className="socials">
                   <li>
                     <a href="http://localhost:4000/auth/google">
-                      {/* 서버 URL 변경 시 수정 필요*/}
-                      <i class="display-flex-center zmdi zmdi-google"></i>
+                      <GoogleIcon style={{ color: '#4284F3' }}></GoogleIcon>
                     </a>
                   </li>
                 </ul>
@@ -123,7 +99,7 @@ function SignIn(req) {
           </div>
         </div>
       </section>
-    </Page>
+    </div>
   );
 }
 

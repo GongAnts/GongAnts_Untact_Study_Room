@@ -110,9 +110,6 @@ const userLoadingAPI = (token) => {
       'Content-Type': 'application/json',
     },
   };
-  axios.get('http://localhost:4000/').then((res) => {
-    console.log(res.data);
-  });
   return axios.get('http://localhost:4000/', config);
 };
 
@@ -120,13 +117,6 @@ function* userLoading(action) {
   try {
     const result = yield call(userLoadingAPI, action.payload);
     console.log(result.data);
-    if (result.data.msg !== undefined) {
-      console.log('유저로딩 실패');
-      yield put({
-        type: USER_LOADING_FAILURE,
-        payload: e.response,
-      });
-    }
     yield put({
       type: USER_LOADING_SUCCESS,
       payload: result.data,
