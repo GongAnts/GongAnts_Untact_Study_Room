@@ -2,14 +2,11 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { REGISTER_REQUEST } from 'redux/types.js';
 
-import { Page } from './styles';
+// UI components //
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LockIcon from '@mui/icons-material/Lock';
 
-// css, icon, image //
-// import 'assets/fonts/material-icon/css/material-design-iconic-font.min.css';
-// import 'assets/css/style.css';
-import signupimg from 'assets/images/signup-image.jpg';
-
-function SignIn() {
+function SignUp() {
   const [form, setValue] = useState({
     user_name: '',
     user_email: '',
@@ -46,16 +43,16 @@ function SignIn() {
   );
 
   return (
-    <Page>
-      <section class="signup mt-4">
-        <div class="container">
-          <div class="signup-content">
-            <div class="signup-form">
-              <h2 class="form-title">회원가입</h2>
-              <form method="POST" class="register-form" id="register-form">
-                <div class="form-group">
+    <div className='container'>
+      <section className="bg-gray-200 h-screen w-screen flex justify-center items-center">
+        <div className="shadow-lg w-96 rounded-lg h-3/6 bg-white">
+          <div className="text-center">
+            <div className="signup-form">
+              <h2 className="text-3xl m-3 font-medium">회원가입</h2>
+              <form method="POST" id="login-form">
+                <div className="form-group mt-5">
                   <label for="user_name">
-                    <i class="zmdi zmdi-account material-icons-user_name"></i>
+                    <AccountBoxIcon></AccountBoxIcon>
                   </label>
                   <input
                     type="text"
@@ -65,21 +62,21 @@ function SignIn() {
                     onChange={onChangeValue}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="user_email">
-                    <i class="zmdi zmdi-email"></i>
+                    <LockIcon></LockIcon>
                   </label>
                   <input
                     type="email"
                     name="user_email"
                     id="user_email"
-                    placeholder="Your Email"
+                    placeholder="email"
                     onChange={onChangeValue}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="user_password">
-                    <i class="zmdi zmdi-lock"></i>
+                    <LockIcon></LockIcon>
                   </label>
                   <input
                     type="password"
@@ -89,60 +86,36 @@ function SignIn() {
                     onChange={onChangeValue}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="passwordCheck">
-                    <i class="zmdi zmdi-lock-outline"></i>
+                    <LockIcon></LockIcon>
                   </label>
                   <input
                     type="password"
                     name="passwordCheck"
                     id="passwordCheck"
-                    placeholder="Repeat your password"
+                    placeholder="Password 확인"
                     onChange={onChangeValue}
                   />
                 </div>
-                <div class="form-group">
-                  <input
-                    type="checkbox"
-                    name="agree-term"
-                    id="agree-term"
-                    class="agree-term"
-                  />
-                  <label for="agree-term" class="label-agree-term">
-                    <span>
-                      <span></span>
-                    </span>
-                    I agree all statements in{' '}
-                    <a href="#" class="term-service">
-                      Terms of service
-                    </a>
-                  </label>
-                </div>
-                <div class="form-group form-button">
+                <div className="form-group form-button mt-5">
                   <input
                     type="submit"
                     name="signup"
                     id="signup"
-                    class="form-submit"
-                    value="Register"
+                    className="btn"
+                    value="Sign Up"
                     onClick={onSubmit}
                   />
                 </div>
               </form>
-            </div>
-            <div class="signup-image">
-              <figure>
-                <img src={signupimg} alt="sing up image" />
-              </figure>
-              <a href="/signin" class="signup-image-link">
-                I am already member
-              </a>
+
             </div>
           </div>
         </div>
       </section>
-    </Page>
+    </div>
   );
 }
 
-export default SignIn;
+export default SignUp;

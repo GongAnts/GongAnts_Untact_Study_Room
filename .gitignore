@@ -26,4 +26,3 @@ server/config/db.js
 server/config/google.json
 server/config/session_db.json
 server/sessions/
-server/.env
