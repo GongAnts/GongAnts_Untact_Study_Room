@@ -11,7 +11,7 @@ function SignIn(req) {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [form, setValue] = useState({
-    user_name: '',
+    user_id: '',
     user_password: '',
   });
 
@@ -26,11 +26,11 @@ function SignIn(req) {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      const { user_name, user_password } = form;
+      const { user_id, user_password } = form;
 
       dispatch({
         type: LOGIN_REQUEST,
-        payload: { user_name, user_password },
+        payload: { user_id, user_password },
       });
     },
     [form, dispatch],
@@ -46,13 +46,13 @@ function SignIn(req) {
               <h2 className="text-3xl m-3 font-medium">로그인</h2>
               <form method="POST" id="login-form">
                 <div className="form-group mt-5">
-                  <label for="user_name">
+                  <label for="user_id">
                     <AccountBoxIcon></AccountBoxIcon>
                   </label>
                   <input
                     type="text"
-                    name="user_name"
-                    id="user_name"
+                    name="user_id"
+                    id="user_id"
                     placeholder="Your Name"
                     onChange={onChangeValue}
                   />

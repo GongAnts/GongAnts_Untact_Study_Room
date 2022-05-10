@@ -8,6 +8,7 @@ import LockIcon from '@mui/icons-material/Lock';
 
 function SignUp() {
   const [form, setValue] = useState({
+    user_id: '',
     user_name: '',
     user_email: '',
     user_password: '',
@@ -25,13 +26,14 @@ function SignUp() {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      const { user_name, user_email, user_password, passwordCheck } = form;
+      const { user_id, user_name, user_email, user_password, passwordCheck } =
+        form;
       console.log(user_name, user_email, user_password);
 
       if (user_password !== passwordCheck) {
         alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
       } else {
-        const user = { user_name, user_email, user_password };
+        const user = { user_id, user_name, user_email, user_password };
 
         dispatch({
           type: REGISTER_REQUEST,
@@ -43,7 +45,7 @@ function SignUp() {
   );
 
   return (
-    <div className='container'>
+    <div className="container">
       <section className="bg-gray-200 h-screen w-screen flex justify-center items-center">
         <div className="shadow-lg w-96 rounded-lg h-3/6 bg-white">
           <div className="text-center">
@@ -51,6 +53,18 @@ function SignUp() {
               <h2 className="text-3xl m-3 font-medium">회원가입</h2>
               <form method="POST" id="login-form">
                 <div className="form-group mt-5">
+                  <label for="user_name">
+                    <AccountBoxIcon></AccountBoxIcon>
+                  </label>
+                  <input
+                    type="text"
+                    name="user_id"
+                    id="user_id"
+                    placeholder="Your ID"
+                    onChange={onChangeValue}
+                  />
+                </div>
+                <div className="form-group">
                   <label for="user_name">
                     <AccountBoxIcon></AccountBoxIcon>
                   </label>
@@ -109,7 +123,6 @@ function SignUp() {
                   />
                 </div>
               </form>
-
             </div>
           </div>
         </div>
