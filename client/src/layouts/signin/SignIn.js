@@ -53,7 +53,7 @@ function SignIn(req) {
                     type="text"
                     name="user_id"
                     id="user_id"
-                    placeholder="Your Name"
+                    placeholder="ID"
                     onChange={onChangeValue}
                   />
                 </div>

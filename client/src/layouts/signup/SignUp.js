@@ -28,7 +28,7 @@ function SignUp() {
       e.preventDefault();
       const { user_id, user_name, user_email, user_password, passwordCheck } =
         form;
-      console.log(user_name, user_email, user_password);
+      console.log(user_id, user_email, user_password);
 
       if (user_password !== passwordCheck) {
         alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
@@ -53,6 +53,18 @@ function SignUp() {
               <h2 className="text-3xl m-3 font-medium">회원가입</h2>
               <form method="POST" id="login-form">
                 <div className="form-group mt-5">
+                  <label for="user_id">
+                    <AccountBoxIcon></AccountBoxIcon>
+                  </label>
+                  <input
+                    type="text"
+                    name="user_id"
+                    id="user_id"
+                    placeholder="ID"
+                    onChange={onChangeValue}
+                  />
+                </div>
+                <div className="form-group">
                   <label for="user_name">
                     <AccountBoxIcon></AccountBoxIcon>
                   </label>
@@ -72,7 +84,7 @@ function SignUp() {
                     type="text"
                     name="user_name"
                     id="user_name"
-                    placeholder="Your Name"
+                    placeholder="User Name"
                     onChange={onChangeValue}
                   />
                 </div>
