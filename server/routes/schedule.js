@@ -4,38 +4,34 @@ const db = require('../config/db');
 
 router.use(express.json());
 
-router.get('/load/all', (req, res) => {
+router.get('/all', (req, res) => {
   var user_id = req.user.user_id;
 
   const sql = `SELECT * FROM schedule WHERE user_id = '${user_id}'`;
   db.query(sql, (err, data) => {
     if (!err) {
-      console.log('전체 일정 조회 성공', data);
       res.status(200).send(data);
     } else {
-      console.log('전체 일정 조회 실패');
       res.status(500).send(err);
     }
   });
 });
 
-router.get('/load/today', (req, res) => {
+router.get('/today', (req, res) => {
   var user_id = req.user.user_id;
 
   const sql = `SELECT * FROM schedule WHERE user_id = '${user_id}' \
     AND DATE(schedule_date) = DATE(now())`;
   db.query(sql, (err, data) => {
     if (!err) {
-      console.log('오늘 일정 조회 성공', data);
       res.status(200).send(data);
     } else {
-      console.log('오늘 일정 조회 실패');
       res.status(500).send(err);
     }
   });
 });
 
-router.get('/load/monthly', (req, res) => {
+router.get('/monthly', (req, res) => {
   var year = req.query.year;
   var month = req.query.month;
   var user_id = req.user.user_id;
@@ -48,16 +44,14 @@ router.get('/load/monthly', (req, res) => {
     AND DATE_FORMAT(schedule_date, '%Y-%c') BETWEEN '${year}-${month}' AND '${year}-${month}'`;
   db.query(sql, (err, data) => {
     if (!err) {
-      console.log('월별 일정 조회 성공', data);
       res.status(200).send(data);
     } else {
-      console.log('월별 일정 조회 실패');
       res.status(500).send(err);
     }
   });
 });
 
-router.post('/write', (req, res) => {
+router.post('/', (req, res) => {
   var user_id = req.user.user_id;
   if (!req.body.date) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
@@ -78,36 +72,32 @@ router.post('/write', (req, res) => {
     schedule_description: `${schedule_description}`,
     schedule_date: `${schedule_date}`,
   };
-  console.log(schedule_data);
   const sql = `INSERT INTO schedule(user_id, schedule_title, schedule_date, schedule_description) VALUES('${user_id}', '${schedule_title}', '${schedule_date}', '${schedule_description}')`;
   db.query(sql, (err, data) => {
     if (!err) {
-      console.log('일정 저장 성공');
       res.status(200).send(schedule_data);
     } else {
-      console.log('일정 저장 실패');
       res.status(500).send(err);
     }
   });
 });
 
 // request URL Example : http://localhost:4000/schedule/detail?id=1
-router.get('/detail', (req, res) => {
+router.get('/', (req, res) => {
   const schedule_id = req.query.id;
   const sql = `SELECT * FROM schedule WHERE schedule_id = '${schedule_id}'`;
   db.query(sql, (err, data) => {
     if (!err) {
-      console.log('일정 로딩 성공');
       res.status(200).send(data);
     } else {
-      console.log('일정 로딩 실패');
       res.status(500).send(err);
     }
   });
 });
 
-router.delete('/delete', (req, res) => {
-  const schedule_id = req.body.schedule_id;
+// schedule delete
+router.delete('/', (req, res) => {
+  const schedule_id = req.body.id;
   var schedule_data = {
     schedule_id: `${schedule_id}`,
   };
@@ -118,16 +108,15 @@ router.delete('/delete', (req, res) => {
   const sql = `DELETE FROM schedule WHERE schedule_id = '${schedule_id}';`;
   db.query(sql, (err, data) => {
     if (!err) {
-      console.log('일정 삭제 성공');
       res.status(200).send(schedule_data);
     } else {
-      console.log('일정 삭제 실패');
       res.status(500).send(err);
     }
   });
 });
 
-router.post('/modify', (req, res) => {
+// schedule edit
+router.put('/', (req, res) => {
   if (!req.body.date) {
     return res.status(400).send({ statusMsg: 'Bad Request' });
   }
@@ -152,10 +141,8 @@ router.post('/modify', (req, res) => {
     schedule_description = '${schedule_description}' WHERE schedule_id = '${schedule_id}';`;
   db.query(sql, (err, data) => {
     if (!err) {
-      console.log('일정 수정 성공');
       res.status(200).send(schedule_data);
     } else {
-      console.log('일정 수정 실패');
       res.status(500).send(err);
     }
   });
