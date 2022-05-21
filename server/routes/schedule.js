@@ -95,26 +95,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// schedule delete
-router.delete('/', (req, res) => {
-  const schedule_id = req.body.id;
-  var schedule_data = {
-    schedule_id: `${schedule_id}`,
-  };
-  console.log(schedule_data);
-  if (!schedule_id) {
-    return res.status(400).send({ statusMsg: 'Bad Request' });
-  }
-  const sql = `DELETE FROM schedule WHERE schedule_id = '${schedule_id}';`;
-  db.query(sql, (err, data) => {
-    if (!err) {
-      res.status(200).send(schedule_data);
-    } else {
-      res.status(500).send(err);
-    }
-  });
-});
-
 // schedule edit
 router.put('/', (req, res) => {
   if (!req.body.date) {
@@ -139,6 +119,25 @@ router.put('/', (req, res) => {
   console.log(schedule_data);
   const sql = `UPDATE schedule SET schedule_title = '${schedule_title}', schedule_date = '${schedule_date}', \
     schedule_description = '${schedule_description}' WHERE schedule_id = '${schedule_id}';`;
+  db.query(sql, (err, data) => {
+    if (!err) {
+      res.status(200).send(schedule_data);
+    } else {
+      res.status(500).send(err);
+    }
+  });
+});
+
+// schedule delete
+router.delete('/', (req, res) => {
+  const schedule_id = req.query.id;
+  var schedule_data = {
+    schedule_id: `${schedule_id}`,
+  };
+  if (!schedule_id) {
+    return res.status(400).send({ statusMsg: 'Bad Request' });
+  }
+  const sql = `DELETE FROM schedule WHERE schedule_id = '${schedule_id}';`;
   db.query(sql, (err, data) => {
     if (!err) {
       res.status(200).send(schedule_data);

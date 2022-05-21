@@ -145,7 +145,7 @@
  * @apiName 일정 삭제
  * @apiGroup Schedule
  * @apiDescription 기존 일정을 삭제합니다. (로그인 상태에서만 가능합니다.)
- * @apiBody {String} id 일정 아이디
+ * @apiParam {String} id 일정 아이디
  * @apiSuccess {String} schedule_id 일정 아이디
  *
  * @apiSuccessExample Success-Response:
