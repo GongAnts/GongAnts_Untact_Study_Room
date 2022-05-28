@@ -65,14 +65,17 @@ router.put('/', (req, res) => {
 });
 
 router.delete('/', (req, res) => {
-  const memo_id = req.query.memo_id;
+  const memo_id = req.query.id;
+  var memo_data = {
+    memo_id: `${memo_id}`,
+  };
   if (!memo_id) {
     return res.status(400).send({ msg: 'Bad Request' });
   }
   const sql = `DELETE FROM memo WHERE memo_id = '${memo_id}';`;
   db.query(sql, (err, data) => {
     if (!err) {
-      res.status(204).send();
+      res.status(200).send(memo_data);
     } else {
       res.status(500).send(err);
     }

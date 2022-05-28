@@ -92,13 +92,6 @@
  *       "memo_title": "메모 수정 테스트",
  *       "memo_content": "메모 수정 테스트"
  *     }
- *
- * @apiError {String} msg 메모 아이디가 없을 경우
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 400 Bad Request
- *     {
- *       "msg": "Bad Request"
- *     }
  */
 
 /**
@@ -108,14 +101,10 @@
  * @apiName 메모 삭제
  * @apiGroup Memo
  * @apiDescription 메모를 삭제합니다.
- * @apiParam {Int} memo_id 메모 아이디
+ * @apiParam {Int} id 메모 아이디
  * @apiSuccessExample Success-Response:
- *     HTTP/1.1 204 OK
- *
- * @apiError {String} msg 메모 아이디가 없을 경우
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 400 Bad Request
+ *     HTTP/1.1 200 OK
  *     {
- *       "msg": "Bad Request"
+ *          "memo_id": "1"
  *     }
  */
