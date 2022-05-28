@@ -17,6 +17,7 @@ const initialState = {
   isAuthenticated: false,
   isLoading: false,
   userEmail: '',
+  user_id: '',
   userName: '',
   errorMsg: '',
   successMsg: '',
@@ -41,6 +42,7 @@ const authreducer = (state = initialState, action) => {
         ...action.payload,
         isAuthenticated: true,
         isLoading: false,
+        user_id: action.payload.user_id,
         userName: action.payload.user_name,
       };
     case REGISTER_SUCCESS:

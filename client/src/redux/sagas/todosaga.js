@@ -100,7 +100,7 @@ const todowriteAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.post('/todo/write', data, config);
+  return axios.post('/todo', data, config);
 };
 
 function* todowrite(action) {
