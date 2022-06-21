@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // UI components //
 import AddIcon from '@mui/icons-material/Add';
@@ -10,7 +10,6 @@ import { TODO_WRITE_REQUEST } from 'redux/types';
 function AddTodo() {
   const [isClick, setIsClick] = useState(false);
   const [todo, setTodo] = useState();
-  const { user_id } = useSelector((state) => state.auth);
 
   const onClickChange = () => {
     setIsClick(true);
@@ -24,9 +23,9 @@ function AddTodo() {
   const onSubmit = async (e) => {
     await e.preventDefault();
     const body = {
-      user_id: user_id,
       todo_title: todo,
     };
+    console.log(body);
 
     dispatch({
       type: TODO_WRITE_REQUEST,
@@ -45,11 +44,12 @@ function AddTodo() {
         <div className="flex mt-3">
           <input
             type="text"
+            name="todo"
             placeholder="입력"
             class="input input-bordered w-5/6 max-w-xs"
             onChange={onTodoChange}
           />
-          <button type="submit" class="btn btn-ghost" onSubmit={onSubmit}>
+          <button class="btn btn-ghost" onClick={onSubmit}>
             <CheckIcon></CheckIcon>
           </button>
         </div>
