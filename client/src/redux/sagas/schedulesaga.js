@@ -18,7 +18,7 @@ import {
 
 // schedule load
 const scheduleloadAPI = (data) => {
-  return axios.get('/calendar/load/all', data);
+  return axios.get('http://localhost:4000/schedule/monthly', data);
 };
 
 function* scheduleload() {
@@ -47,8 +47,7 @@ const scheduleAddAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  console.log(data);
-  return axios.post('/calendar/write', data, config);
+  return axios.post('/schedule', data, config);
 };
 
 function* scheduleAdd(action) {
@@ -79,7 +78,7 @@ const calendareditAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.post('/calendar/modify', data, config);
+  return axios.post('/schedule/modify', data, config);
 };
 
 function* calendaredit(action) {
@@ -110,7 +109,7 @@ const calendardeleteAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.delete(`/calendar/delete?id=${data}`, config);
+  return axios.delete(`/schedule/delete?id=${data}`, config);
 };
 
 function* calendarDelete(action) {

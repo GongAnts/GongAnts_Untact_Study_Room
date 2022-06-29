@@ -5,21 +5,12 @@ import Day from './Day';
 import EditSchedule from './EditSchedule';
 
 // style
-import {
-  CalendarWrap,
-  Header,
-  DateBody,
-  Weekend,
-  DOTW,
-  ButtonWrapper,
-} from './styles';
+import { ButtonWrapper } from './styles';
 import { MdCheck, MdDoneAll, MdEdit, MdDehaze } from 'react-icons/md';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import {
-  // readSchedule,
-  setIsFilter,
-  openEditPopup,
-} from 'redux/reducers/schedulereducer';
+// reducer
+import { SCHEDULE_LOADING_REQUEST } from 'redux/types';
+import { setIsFilter, openEditPopup } from 'redux/reducers/schedulereducer';
 
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -32,9 +23,13 @@ function CalendarApp({ history }) {
 
   const dispatch = useDispatch();
   useLayoutEffect(() => {
-    const startDay = current.clone().startOf('month').format('YYYYMMDDHHMM');
-    const endDay = current.clone().endOf('month').format('YYYYMMDDHHMM');
-    // dispatch(readSchedule({ startDay, endDay }));
+    var nowDate = String(current.clone().startOf('month').format('YYYYMM'));
+    const year = nowDate.slice(0, 4);
+    const month = nowDate.slice(6);
+    dispatch({
+      type: SCHEDULE_LOADING_REQUEST,
+      payload: { year, month },
+    });
   }, [current, dispatch, isOpenEditPopup, isFilter]);
 
   const PrevMonth = () => {
