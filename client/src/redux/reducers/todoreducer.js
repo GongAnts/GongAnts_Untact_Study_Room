@@ -1,6 +1,7 @@
 import {
   TODO_LOAD_REQUEST,
   TODO_LOAD_SUCCESS,
+  TODO_TODAY_REQUEST,
   TODO_TODAY_SUCCESS,
   TODO_TODAY_FAILURE,
   TODO_WRITE_REQUEST,
@@ -24,6 +25,7 @@ const initialState = {
 const todoreducer = (state = initialState, action) => {
   switch (action.type) {
     case TODO_LOAD_REQUEST:
+    case TODO_TODAY_REQUEST:
       return {
         ...state,
       };

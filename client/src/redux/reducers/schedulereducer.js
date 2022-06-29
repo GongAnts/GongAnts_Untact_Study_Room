@@ -58,6 +58,7 @@ const schedulereducer = (state = initialState, action) => {
         }),
       };
     case SCHEDULE_WRITE_SUCCESS:
+    case SCHEDULE_LOADING_SUCCESS:
       return {
         ...state,
         fullSchedule: action.payload,

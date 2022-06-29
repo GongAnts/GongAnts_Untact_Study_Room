@@ -2,8 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { openEditPopup } from 'redux/reducers/modules/calendar';
 
-import { Plan, DayItem } from './styles';
-
 const Day = ({ dateInfo, className }) => {
   const dispatch = useDispatch();
   const schedule = dateInfo.currentSch;
@@ -15,7 +13,8 @@ const Day = ({ dateInfo, className }) => {
 
   const PlanList = schedule.map((s, idx) => {
     return (
-      <Plan
+      <span
+        className="text-center"
         key={idx}
         data={s}
         onClick={() => {
@@ -23,14 +22,15 @@ const Day = ({ dateInfo, className }) => {
         }}
       >
         {s.title}
-      </Plan>
+      </span>
     );
   });
+
   return (
-    <DayItem>
+    <div className="flex justify-center h-24 w-1/4 p-2">
       <span className="day_title">{dateInfo.day}</span>
       {PlanList}
-    </DayItem>
+    </div>
   );
 };
 

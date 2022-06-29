@@ -5,21 +5,12 @@ import Day from './Day';
 import EditSchedule from './EditSchedule';
 
 // style
-import {
-  CalendarWrap,
-  Header,
-  DateBody,
-  Weekend,
-  DOTW,
-  ButtonWrapper,
-} from './styles';
+import { ButtonWrapper } from './styles';
 import { MdCheck, MdDoneAll, MdEdit, MdDehaze } from 'react-icons/md';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import {
-  // readSchedule,
-  setIsFilter,
-  openEditPopup,
-} from 'redux/reducers/schedulereducer';
+// reducer
+import { SCHEDULE_LOADING_REQUEST } from 'redux/types';
+import { setIsFilter, openEditPopup } from 'redux/reducers/schedulereducer';
 
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -32,9 +23,13 @@ function CalendarApp({ history }) {
 
   const dispatch = useDispatch();
   useLayoutEffect(() => {
-    const startDay = current.clone().startOf('month').format('YYYYMMDDHHMM');
-    const endDay = current.clone().endOf('month').format('YYYYMMDDHHMM');
-    // dispatch(readSchedule({ startDay, endDay }));
+    var nowDate = String(current.clone().startOf('month').format('YYYYMM'));
+    const year = nowDate.slice(0, 4);
+    const month = nowDate.slice(6);
+    dispatch({
+      type: SCHEDULE_LOADING_REQUEST,
+      payload: { year, month },
+    });
   }, [current, dispatch, isOpenEditPopup, isFilter]);
 
   const PrevMonth = () => {
@@ -61,7 +56,7 @@ function CalendarApp({ history }) {
 
     for (let wk = startWeek; wk <= endWeek; wk++) {
       calendar.push(
-        <Weekend key={wk}>
+        <div className="flex w-full" key={wk}>
           {Array(7)
             .fill(0)
             .map((n, idx) => {
@@ -96,7 +91,7 @@ function CalendarApp({ history }) {
                 />
               );
             })}
-        </Weekend>,
+        </div>,
       );
     }
     return calendar;
@@ -108,43 +103,49 @@ function CalendarApp({ history }) {
 
   return (
     <div>
-      <CalendarWrap>
+      <div className="relative">
         {isOpenEditPopup && <EditSchedule />}
-        <Header>
-          <LeftOutlined className="arrow" onClick={PrevMonth} />
-          <span className="month">{current.format('MM')}</span>
-          <RightOutlined className="arrow" onClick={NextMonth} />
-        </Header>
-        <DateBody>
-          <Weekend className="row">
-            <DOTW style={{ color: '#ff4b4b' }}>
+        <div className="flex justify-center text-5xl items-center mt-1">
+          <LeftOutlined className="arrow text-2xl" onClick={PrevMonth} />
+          <span className="mx-36">{current.format('MM')}</span>
+          <RightOutlined className="arrow text-2xl" onClick={NextMonth} />
+        </div>
+        <div className="flex flex-col mt-5">
+          <div className="flex flex-row w-full">
+            <div
+              className="h-10 border-b-4 w-1/5 text-center"
+              style={{ color: '#ff4b4b' }}
+            >
               <span>S</span>
-            </DOTW>
-            <DOTW>
+            </div>
+            <div className="h-10 border-b-4 w-1/5 text-center">
               <span>M</span>
-            </DOTW>
-            <DOTW>
+            </div>
+            <div className="h-10 border-b-4 w-1/5 text-center">
               <span>T</span>
-            </DOTW>
-            <DOTW>
+            </div>
+            <div className="h-10 border-b-4 w-1/5 text-center">
               <span>W</span>
-            </DOTW>
-            <DOTW>
+            </div>
+            <div className="h-10 border-b-4 w-1/5 text-center">
               <span>T</span>
-            </DOTW>
-            <DOTW>
+            </div>
+            <div className="h-10 border-b-4 w-1/5 text-center">
               <span>F</span>
-            </DOTW>
-            <DOTW style={{ color: '#4b87ff' }}>
+            </div>
+            <div
+              className="h-10 border-b-4 w-1/5 text-center"
+              style={{ color: '#4b87ff' }}
+            >
               <span>S</span>
-            </DOTW>
-            {daygenerate()}
-          </Weekend>
-        </DateBody>
-      </CalendarWrap>
+            </div>
+          </div>
+          {daygenerate()}
+        </div>
+      </div>
       <ButtonWrapper
         onClick={() => {
-          dispatch(openEditPopup(false));
+          dispatch(openEditPopup(true));
         }}
       >
         {isFilter ? (
