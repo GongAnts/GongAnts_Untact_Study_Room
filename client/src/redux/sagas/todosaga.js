@@ -42,8 +42,8 @@ function* watchtodoLoad() {
 }
 
 // todo today //
-const todotodayAPI = (data) => {
-  return axios.get('todo/load/today', data);
+const todotodayAPI = () => {
+  return axios.get('/todo/today');
 };
 
 function* todotoday() {
@@ -100,17 +100,17 @@ const todowriteAPI = (data) => {
       'Content-Type': 'application/json',
     },
   };
-  return axios.post('/todo/write', data, config);
+  return axios.post('/todo', data, config);
 };
 
 function* todowrite(action) {
   try {
     const result = yield call(todowriteAPI, action.payload);
-    console.log(result.data);
     yield put({
       type: TODO_WRITE_SUCCESS,
       payload: result.data,
     });
+    window.location.reload(true);
   } catch (e) {
     alert(`${e.response.data.msg}`);
 

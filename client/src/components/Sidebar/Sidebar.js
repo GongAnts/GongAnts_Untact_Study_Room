@@ -9,7 +9,7 @@ function Sidebar({ color, image, routes }) {
     return location.pathname.indexOf(routeName) > -1 ? 'active' : '';
   };
   return (
-    <div className="static w-10 h-full drawer-side">
+    <div>
       <label for="my-drawer-2" class="drawer-overlay"></label>
       <ul class="menu p-4 w-80 bg-base-100" style={{ height: '50vh' }}>
         {routes.map((prop, key) => {

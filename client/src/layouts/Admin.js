@@ -6,6 +6,7 @@ import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
 import MemoWrite from 'views/Memo/MemoWrite';
 import MemoEdit from 'views/Memo/MemoEdit';
+import RoomEnter from 'views/Room/RoomEnter';
 
 import routes from 'routes.js';
 
@@ -52,17 +53,20 @@ function Admin() {
         <div class="drawer">
           <AdminNavbar />
         </div>
-        <div className="static" ref={mainPanel}>
-          <Sidebar
-            color={color}
-            image={hasImage ? image : ''}
-            routes={routes}
-          />
-          <div className="float-left">
+        <div className="flex h-max" ref={mainPanel}>
+          <div className="flex-initial">
+            <Sidebar
+              color={color}
+              image={hasImage ? image : ''}
+              routes={routes}
+            />
+          </div>
+          <div className="flex-initial w-4/5">
             <Switch>
               {getRoutes(routes)}
               <Route path={`/admin/memo/write`} exact component={MemoWrite} />
               <Route path={`/admin/memo/:id/edit`} exact component={MemoEdit} />
+              <Route path={`/admin/room/:id`} exact component={RoomEnter} />
             </Switch>
           </div>
         </div>
