@@ -1,9 +1,24 @@
 const express = require('express');
 const app = express();
+const socketio = require('socket.io');
+const httpServer = require('http').createServer(app);
+const socketadmin = require('@socket.io/admin-ui');
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 4000;
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+
+// admin-socket.io
+const wsServer = new socketio.Server(httpServer, {
+  cors: {
+    origin: ['https://admin.socket.io'],
+    credentials: true,
+  },
+});
+
+socketadmin.instrument(wsServer, {
+  auth: false, // pw
+});
 
 // routing
 const signupRouter = require('./routes/signup');
@@ -37,6 +52,49 @@ var options = {
   password: session_db.db.password,
   database: session_db.db.database,
 };
+
+function publicRooms() {
+  // const sids = wsServer.sockets.adapter.sids;
+  // const rooms = wsServer.sockets.adapter.rooms;
+
+  console.log(wsServer.sockets.adapter.rooms);
+  const {
+    sockets: {
+      adapter: { sids, rooms },
+    },
+  } = wsServer;
+
+  const publicRooms = [];
+  rooms.forEach((_, key) => {
+    // key 가 있으면 public room
+    if (sids.get(key) === undefined) {
+      publicRooms.push(key);
+    }
+  });
+  return publicRooms;
+}
+
+function countRoom(roomName) {
+  return wsServer.sockets.adapter.rooms.get(roomName)?.size;
+}
+wsServer.on('connection', (socket) => {
+  console.log(wsServer.sockets.adapter);
+  socket.on('join_room', async (roomName, done) => {
+    socket.join(roomName);
+    socket.to(roomName).emit('welcome');
+  });
+
+  socket.on('offer', (offer, roomName) => {
+    socket.to(roomName).emit('offer', offer);
+  });
+
+  socket.on('answer', (answer, roomName) => {
+    socket.to(roomName).emit('answer', answer);
+  });
+  socket.on('ice', (ice, roomName) => {
+    socket.to(roomName).emit('ice', ice);
+  });
+});
 
 app.use(
   session({
@@ -197,6 +255,10 @@ app.use('/memo', memoRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server On : http://${HOST}:${PORT}/`);
 });
+
+// httpServer.listen(PORT, () => {
+//   console.log(`Server On : http://${HOST}:${PORT}/`);
+// });

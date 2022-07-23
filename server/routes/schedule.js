@@ -41,7 +41,7 @@ router.get('/monthly', (req, res) => {
   }
 
   const sql = `SELECT * FROM schedule WHERE user_id = '${user_id}' \
-    AND DATE_FORMAT(schedule_date, '%Y-%c') BETWEEN '${year}-${month}' AND '${year}-${month}'`;
+    AND DATE_FORMAT(schedule_date, '%Y-%m') BETWEEN '${year}-${month}' AND '${year}-${month}'`;
   db.query(sql, (err, data) => {
     if (!err) {
       res.status(200).send(data);

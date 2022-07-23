@@ -8,13 +8,17 @@ import { TodoArea, CardArea } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FaUserCircle } from 'react-icons/fa';
-import { Checkbox, Card } from 'antd';
+import { Checkbox, Card, Input, Form } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import io from 'socket.io-client';
 
 import {
   TODO_WRITE_REQUEST,
   TODO_TODAY_REQUEST,
   TODO_CHECK,
 } from 'redux/types';
+
+let roomName;
 
 function Room(req) {
   const [form, setform] = useState({
@@ -66,6 +70,11 @@ function Room(req) {
     );
   });
 
+  async function onEnterRoom(values) {
+    roomName = values['room-name'];
+    window.location.replace(`room/${roomName}`);
+  }
+
   useLayoutEffect(() => {
     dispatch({
       type: TODO_TODAY_REQUEST,
@@ -108,6 +117,46 @@ function Room(req) {
         <Col md="2">
           <FaUserCircle style={{ fontSize: '9em' }} />
         </Col>
+      </Container>
+      <Container>
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onEnterRoom}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="방 이름"
+            name="room-name"
+            rules={[
+              {
+                required: true,
+                message: '방 이름을 입력해주세요!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
       </Container>
     </>
   );
