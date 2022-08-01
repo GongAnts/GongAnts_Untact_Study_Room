@@ -12,7 +12,7 @@ spinner.ontransitionend = () => {
 function onResultsHands(results) {
   document.body.classList.add('loaded');
   fpsControl.tick();
-
+  
   canvasCtx3.save();
   canvasCtx3.clearRect(0, 0, out3.width, out3.height);
   canvasCtx3.drawImage(
@@ -22,6 +22,8 @@ function onResultsHands(results) {
       const classification = results.multiHandedness[index];
       const isRightHand = classification.label === 'Right';
       const landmarks = results.multiHandLandmarks[index];
+      // 손 인지되면
+      console.log("인지됨");
       drawConnectors(
           canvasCtx3, landmarks, HAND_CONNECTIONS,
           {color: isRightHand ? '#00FF00' : '#FF0000'}),
@@ -29,11 +31,17 @@ function onResultsHands(results) {
         color: isRightHand ? '#00FF00' : '#FF0000',
         fillColor: isRightHand ? '#FF0000' : '#00FF00',
         radius: (x) => {
+          
           return lerp(x.from.z, -0.15, .1, 10, 1);
         }
       });
     }
   }
+  else {
+    // 손 인지 안되면
+    console.log("인지 안됨");
+  }
+
   canvasCtx3.restore();
 }
 
@@ -42,9 +50,12 @@ const hands = new Hands({locateFile: (file) => {
 }});
 hands.onResults(onResultsHands);
 
+
+
 const camera = new Camera(video3, {
   onFrame: async () => {
     await hands.send({image: video3});
+    //console.log("read");
   },
   width: 480,
   height: 480

@@ -52,6 +52,8 @@ function onResultsHolistic(results) {
       results.image, 0, 0, out4.width, out4.height);
   canvasCtx4.lineWidth = 5;
   if (results.poseLandmarks) {
+    // 인지되면
+    console.log("인지됨");
     if (results.rightHandLandmarks) {
       canvasCtx4.strokeStyle = '#00FF00';
       connect(canvasCtx4, [[
@@ -66,6 +68,9 @@ function onResultsHolistic(results) {
                   results.leftHandLandmarks[0]
                 ]]);
     }
+  }
+  else {
+    console.log("인지안됨");
   }
   drawConnectors(
       canvasCtx4, results.poseLandmarks, POSE_CONNECTIONS,

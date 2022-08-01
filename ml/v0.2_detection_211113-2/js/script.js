@@ -26,8 +26,8 @@ function clock() {
   // `${hhours < 10 ? `0${hhours}` : hhours}:${mminutes < 10 ? `0${mminutes}` : mminutes}:${sseconds < 10 ? `0${sseconds}` : sseconds}`;
       
 }
-clock();
-setInterval(clock, 1000); // 1초마다 실행
+// clock();
+// setInterval(clock, 1000); // 1초마다 실행
 
 
 
