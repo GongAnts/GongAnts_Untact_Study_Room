@@ -1,5 +1,4 @@
 import Dashboard from 'views/Dashboard.js';
-import UserProfile from 'views/UserProfile.js';
 import Room from 'views/Room/Room';
 import CalendarApp from 'views/Calendar/Calendar.js';
 import Memo from 'views/Memo/Memo';

@@ -1,16 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container } from 'react-bootstrap';
-import { Button, Select } from 'antd';
 import { useParams } from 'react-router';
 import io from 'socket.io-client';
+
+// UI component //
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMicrophone,
+  faMicrophoneSlash, 
+  faVideo,
+  faVideoSlash
+} from '@fortawesome/free-solid-svg-icons';
+import { Container } from 'react-bootstrap';
+import { Button, Select } from 'antd';
 
 const socket = io('http://localhost:4000'); // 서버 주소
 
 function RoomEnter(req) {
   const myFaceSrc = useRef(null);
   const peerFaceSrc = useRef(null);
-  const [muted, setmuted] = useState(false);
-  const [muteBtn, setmuteBtn] = useState('Mute');
+  const [muted, setmuted] = useState(true);
+  const [muteBtn, setmuteBtn] = useState('UnMute');
   const [cameraOff, setcameraOff] = useState(true);
   const [cameraBtn, setcameraBtn] = useState('Turn Camera Off');
   let options = [];
@@ -150,15 +159,6 @@ function RoomEnter(req) {
   });
 
   // RTC Code
-  function makeConnection() {
-    myPeerConnection = new RTCPeerConnection();
-
-    myPeerConnection.addEventListener('icecandidate', handleIce);
-    myPeerConnection.addEventListener('addstream', handleAddStream);
-    myStream
-      .getTracks()
-      .forEach((track) => myPeerConnection.addTrack(track, myStream));
-  }
 
   function handleIce(data) {
     socket.emit('ice', data.candidate, roomName);
@@ -174,39 +174,66 @@ function RoomEnter(req) {
   return (
     <>
       <Container fluid>
-        <div>
-          RoomEnter 테스트
-          <video
-            ref={myFaceSrc}
-            autoPlay={cameraOff}
-            playsInline
-            muted={muted}
-            width="400"
-            height="400"
-          />
-          <Button type="primary" onClick={handleMuteClick}>
-            {muteBtn}
-          </Button>
-          <Button type="primary" onClick={handleCameraClick}>
-            {cameraBtn}
-          </Button>
-          <Select
-            style={{ width: 300 }}
-            defaultValue={selected}
-            onChange={handleCameraChange}
+        <div
+          className='w-full'
           >
-            {options}
-            {console.log('what', { options })}
-          </Select>
-          <video
-            ref={peerFaceSrc}
-            autoPlay
-            playsInline
-            muted
-            width="400"
-            height="400"
-          />
+          <div
+            className="flex justify-between float-left w-6/12 p-7 h-80"
+            >
+            <div
+              className='flex-initial w-full min-w-min'
+              style={{ flexBasis: '330px', flexGrow: 0, flexShrink: 0}}>
+              <video
+                ref={myFaceSrc}
+                autoPlay={cameraOff}
+                playsInline
+                muted={muted}
+                width="330"
+                height="330"
+              />
+            </div>
+            <div
+              className='flex-initial'
+              style={{ flexShrink: 1}}>
+              {muteBtn === 'Mute' ?
+                <Button onClick={handleMuteClick}>
+                  <FontAwesomeIcon className='text-3xl' icon={faMicrophone} />
+                </Button>:
+                <Button onClick={handleMuteClick}>
+                  <FontAwesomeIcon className='text-3xl' icon={faMicrophoneSlash} />
+                </Button>
+              }
+              {cameraBtn === 'Turn Camera Off' ?
+                <Button type="primary" onClick={handleCameraClick}>
+                  <FontAwesomeIcon className='text-3xl' icon={faVideo}/>
+                </Button> :
+                <Button type="primary" onClick={handleCameraClick}>
+                  <FontAwesomeIcon className='text-3xl' icon={faVideoSlash} />
+                </Button>
+              }
+              <Select
+                style={{ width: 300 }}
+                defaultValue={selected}
+                onChange={handleCameraChange}
+              >
+                {options}
+                {console.log('what', { options })}
+              </Select>
+            </div>
+          </div>
+          <div
+            className='float-left w-6/12'>
+            <video
+              ref={peerFaceSrc}
+              autoPlay
+              playsInline
+              muted
+              width="400"
+              height="400"
+            />
+          </div>
         </div>
+        <div class="divider w-full h-px"></div> 
       </Container>
     </>
   );

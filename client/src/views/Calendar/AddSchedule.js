@@ -16,23 +16,28 @@ const AddSchedule = ({ history }) => {
   const [titleError, setTitleError] = useState(false);
   const dispatch = useDispatch();
 
+  const checkValid = () => {
+    if (title.length === 0 || title.trim().length === 0) {
+      setTitleError(true);
+      return true;
+    }
+    return false;
+  };
+
+  // 스케줄 추가하기
   const onAddSchedule = () => {
     const yyyymmdd = date.split('T')[0].replaceAll('-', '');
     const time = date.split('T')[1].replaceAll(':', '');
     const data = { date: yyyymmdd, time, title, description };
-    console.log(data);
-    dispatch({
-      type: SCHEDULE_WRITE_REQUEST,
-      payload: data,
-    });
-  };
-
-  const checkValid = () => {
-    if (title.length === 0 || title.trim().length === 0) {
-      setTitleError(true);
-      return false;
+    if (checkValid() == false) {
+      console.log(data);
+      dispatch({
+        type: SCHEDULE_WRITE_REQUEST,
+        payload: data,
+      });
+    } else {
+      console.log(titleError);
     }
-    return true;
   };
 
   return (
@@ -49,14 +54,17 @@ const AddSchedule = ({ history }) => {
       <div className="flex flex-col pt-8 items-center justify-space w-2/5">
         <Datepicker setDate={setDate} date={date} />
         <textarea
-          className="textarea mt-4"
+          className={`textarea ${titleError && "textarea-error"}`}
           placeholder="어떤 일정이 있나요?"
-          error={titleError ? titleError : false}
           cols={30}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
         ></textarea>
+        {titleError ? 
+          <p className='font-light text-xs'>일정 제목을 입력해주세요</p>
+          : <></>
+        }
         <textarea
           className="textarea mt-4"
           placeholder="상세 메모"

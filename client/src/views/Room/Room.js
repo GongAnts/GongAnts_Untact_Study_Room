@@ -3,12 +3,10 @@ import React, { useState, useLayoutEffect } from 'react';
 // react-bootstrap components
 import { Badge, Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
-import { Button, Radio } from 'antd';
-import { TodoArea, CardArea } from './styles';
+import { Radio } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FaUserCircle } from 'react-icons/fa';
-import { Checkbox, Card, Input, Form } from 'antd';
+import { Input, Form } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import io from 'socket.io-client';
 
@@ -33,17 +31,17 @@ function Room(req) {
     });
   };
 
-  const dispatch = useDispatch();
-  const onSubmit = async (e) => {
-    await e.preventDefault();
-    const { todo_title } = form;
-    const body = { todo_title };
+  // const dispatch = useDispatch();
+  // const onSubmit = async (e) => {
+  //   await e.preventDefault();
+  //   const { todo_title } = form;
+  //   const body = { todo_title };
 
-    dispatch({
-      type: TODO_WRITE_REQUEST,
-      payload: body,
-    });
-  };
+  //   dispatch({
+  //     type: TODO_WRITE_REQUEST,
+  //     payload: body,
+  //   });
+  // };
 
   const onHandleCheck = (todo_id) => {
     const body = { todo_id };
@@ -75,51 +73,17 @@ function Room(req) {
     window.location.replace(`room/${roomName}`);
   }
 
-  useLayoutEffect(() => {
-    dispatch({
-      type: TODO_TODAY_REQUEST,
-    });
-  }, [dispatch]);
+  // useLayoutEffect(() => {
+  //   dispatch({
+  //     type: TODO_TODAY_REQUEST,
+  //   });
+  // }, [dispatch]);
 
   return (
     <>
-      <Container fluid>
-        <CardArea>
-          <Col md="2">
-            <FaUserCircle style={{ fontSize: '9em' }} />
-          </Col>
-          <Col md="4">
-            <Card title="To Do List" extra={<a href="/admin/todo">More</a>}>
-              {arrTodo}
-              <TodoArea>
-                <form>
-                  <TextField
-                    id="standard-basic"
-                    label="To do"
-                    variant="standard"
-                    placeholder="Wrtie To do"
-                    sx={{ width: '27ch' }}
-                    onChange={onTextchange}
-                  />
-
-                  <Button
-                    type="primary"
-                    className="save mt-3"
-                    onClick={onSubmit}
-                  >
-                    저장
-                  </Button>
-                </form>
-              </TodoArea>
-            </Card>
-          </Col>
-        </CardArea>
-        <Col md="2">
-          <FaUserCircle style={{ fontSize: '9em' }} />
-        </Col>
-      </Container>
       <Container>
         <Form
+          className='grid text-center place-content-center h-max m-40'
           name="basic"
           labelCol={{
             span: 8,
@@ -134,27 +98,35 @@ function Room(req) {
           autoComplete="off"
         >
           <Form.Item
-            label="방 이름"
+            className='text-center w-50'
+            label="방 아이디를 입력하세요."
             name="room-name"
             rules={[
               {
                 required: true,
-                message: '방 이름을 입력해주세요!',
+                message: '방 아이디를 입력해주세요!',
               },
             ]}
           >
-            <Input />
+            <input
+              type="text"
+              class="input input-bordered w-64 max-w-xs mt-4"
+            />
           </Form.Item>
 
           <Form.Item
+            className='mt-3'
             wrapperCol={{
               offset: 8,
               span: 16,
             }}
           >
-            <Button type="primary" htmlType="submit">
+            <button
+              class="btn btn-outline btn-primary w-64"
+              htmlType="submit"
+            >
               Submit
-            </Button>
+            </button>
           </Form.Item>
         </Form>
       </Container>

@@ -6,6 +6,7 @@ const Day = ({ dateInfo, className }) => {
   const dispatch = useDispatch();
   const schedule = dateInfo.currentSch;
 
+  // 팝업을 연다.
   const openPopup = (schedule) => {
     dispatch(openEditPopup({ isOpen: true, schedule }));
   };
