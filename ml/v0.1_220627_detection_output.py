@@ -11,7 +11,7 @@ import sys
 cascade_file = "haarcascade_frontalface_default.xml"
 cascade =  cv2.CascadeClassifier(cv2.data.haarcascades + cascade_file)
  
-image_file = "gani.jpg"  # ./data/face2.jpg
+image_file = "20220805_133250.jpg"  # ./data/face2.jpg
 image = cv2.imread(image_file)
 image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
  
