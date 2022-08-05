@@ -34,7 +34,7 @@ function CalendarApp({ history }) {
       type: SCHEDULE_LOADING_REQUEST,
       payload: body,
     });
-  }, [current, dispatch, isOpenEditPopup, isFilter]);
+  }, []);
 
   const PrevMonth = () => {
     setCurrent(current.clone().subtract(1, 'month'));
@@ -57,7 +57,6 @@ function CalendarApp({ history }) {
 
     // 날짜
     let calendar = [];
-    console.log(fullSchedule);
 
     for (let wk = startWeek; wk <= endWeek; wk++) {
       calendar.push(
@@ -83,11 +82,13 @@ function CalendarApp({ history }) {
                   ? ''
                   : 'grayed';
 
-              const currentSch = thisMonth.filter((s) => {
-                return s.date === fullDate;
+              // 날짜 스케줄 불러오기
+              const daySch = fullSchedule.filter((s) => {
+                return s?.schedule_date.slice(5, 7) === fullDate.slice(4, 6) &&
+                  s?.schedule_date.slice(8, 10) === fullDate.slice(6, 8)
               });
 
-              const dateInfo = { day, fullDate, dow: idx, currentSch };
+              const dateInfo = { day, fullDate, dow: idx, daySch };
               return (
                 <Day
                   key={n + idx}
