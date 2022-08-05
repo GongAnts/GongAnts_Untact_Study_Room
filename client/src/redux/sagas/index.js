@@ -1,15 +1,15 @@
 import { all, fork } from 'redux-saga/effects';
 import axios from 'axios';
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import authsaga from './authsaga';
 import memosaga from './memosaga';
 import schedulesaga from './schedulesaga';
 import todosaga from './todosaga';
 
-dotenv.config();
+console.log(process.env);
 
-axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL;
+// axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL;
 
 export default function* rootSaga() {
   yield all([

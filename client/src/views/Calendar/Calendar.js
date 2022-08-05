@@ -17,7 +17,7 @@ import 'moment/locale/ko';
 
 function CalendarApp({ history }) {
   const [current, setCurrent] = useState(moment());
-  const { thisMonth, isOpenEditPopup, isFilter } = useSelector(
+  const { thisMonth, isOpenEditPopup, isFilter, fullSchedule } = useSelector(
     (state) => state.schedule,
   );
 
@@ -25,10 +25,14 @@ function CalendarApp({ history }) {
   useLayoutEffect(() => {
     var nowDate = String(current.clone().startOf('month').format('YYYYMM'));
     const year = nowDate.slice(0, 4);
-    const month = nowDate.slice(6);
+    const month = nowDate.slice(4, 6);
+    const body = {
+      year: year,
+      month: month,
+    };
     dispatch({
       type: SCHEDULE_LOADING_REQUEST,
-      payload: { year, month },
+      payload: body,
     });
   }, [current, dispatch, isOpenEditPopup, isFilter]);
 
@@ -53,6 +57,7 @@ function CalendarApp({ history }) {
 
     // 날짜
     let calendar = [];
+    console.log(fullSchedule);
 
     for (let wk = startWeek; wk <= endWeek; wk++) {
       calendar.push(
