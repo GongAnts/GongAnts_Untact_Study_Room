@@ -74,7 +74,7 @@ export const D = styled.div`
   }
 `;
 
-export const Plan = styled.span`
+export const Plan = styled.label`
   text-align: center;
   background-color: ${(props) => props.color};
   font-size: 0.8em;

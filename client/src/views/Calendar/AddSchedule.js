@@ -54,17 +54,18 @@ const AddSchedule = ({ history }) => {
       <div className="flex flex-col pt-8 items-center justify-space w-2/5">
         <Datepicker setDate={setDate} date={date} />
         <textarea
-          className={`textarea ${titleError && "textarea-error"}`}
+          className={`textarea ${titleError && 'textarea-error'}`}
           placeholder="어떤 일정이 있나요?"
           cols={30}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
         ></textarea>
-        {titleError ? 
-          <p className='font-light text-xs'>일정 제목을 입력해주세요</p>
-          : <></>
-        }
+        {titleError ? (
+          <p className="font-light text-xs">일정 제목을 입력해주세요</p>
+        ) : (
+          <></>
+        )}
         <textarea
           className="textarea mt-4"
           placeholder="상세 메모"
