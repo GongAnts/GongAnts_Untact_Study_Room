@@ -4,35 +4,39 @@ import { openEditPopup } from 'redux/reducers/modules/calendar';
 import CalendarEditModal from 'components/Calendar/CalendarEditModal';
 
 import { baseColor, pointColor } from '../../styles/color';
-import { D, Plan } from './styles';
+import { D, Plan, PlanArea } from './styles';
 
 const Day = ({ dateInfo, className }) => {
   const [openModal, setOpenModal] = useState(false);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const schedule = dateInfo.daySch;
 
   schedule.sort((a, b) => a.time - b.time);
 
   const PlanList = schedule.map((s, idx) => {
     return (
-      <p key={idx}>
+      <PlanArea key={idx} color={pointColor}>
         <Plan
           for={`modal${idx}`}
-          className="text-center"
+          className="text-center w-full"
           data={s}
-          color={pointColor}
           onClick={() => {
             setOpenModal(true);
           }}
         >
           {s.schedule_title}
         </Plan>
-        {console.log(openModal)}
         {openModal && (
-          <CalendarEditModal idx={idx} setOpenModal={setOpenModal} />
+          <CalendarEditModal
+            idx={idx}
+            setOpenModal={setOpenModal}
+            schedule_title={s.schedule_title}
+            schedule_date={s.schedule_date}
+            schedule_description={s.schedule_description}
+          />
         )}
-      </p>
+      </PlanArea>
     );
   });
 

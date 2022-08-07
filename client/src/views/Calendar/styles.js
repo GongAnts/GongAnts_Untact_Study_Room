@@ -74,20 +74,23 @@ export const D = styled.div`
   }
 `;
 
-export const Plan = styled.label`
+export const PlanArea = styled.div`
   text-align: center;
   background-color: ${(props) => props.color};
-  font-size: 0.8em;
+  font-size: 0.9em;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   margin: 1px 0;
   height: 20px;
   width: 100%;
   border-radius: 7px;
-  color: white;
-  cursor: pointer;
   &.completed {
     background-color: #bfbfbf;
   }
+`;
+
+export const Plan = styled.label`
+  color: white;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
