@@ -17,7 +17,7 @@ import 'moment/locale/ko';
 
 function CalendarApp({ history }) {
   const [current, setCurrent] = useState(moment());
-  const { thisMonth, isOpenEditPopup, isFilter } = useSelector(
+  const { thisMonth, isOpenEditPopup, isFilter, fullSchedule } = useSelector(
     (state) => state.schedule,
   );
 
@@ -25,12 +25,16 @@ function CalendarApp({ history }) {
   useLayoutEffect(() => {
     var nowDate = String(current.clone().startOf('month').format('YYYYMM'));
     const year = nowDate.slice(0, 4);
-    const month = nowDate.slice(6);
+    const month = nowDate.slice(4, 6);
+    const body = {
+      year: year,
+      month: month,
+    };
     dispatch({
       type: SCHEDULE_LOADING_REQUEST,
-      payload: { year, month },
+      payload: body,
     });
-  }, [current, dispatch, isOpenEditPopup, isFilter]);
+  }, []);
 
   const PrevMonth = () => {
     setCurrent(current.clone().subtract(1, 'month'));
@@ -78,11 +82,13 @@ function CalendarApp({ history }) {
                   ? ''
                   : 'grayed';
 
-              const currentSch = thisMonth.filter((s) => {
-                return s.date === fullDate;
+              // 날짜 스케줄 불러오기
+              const daySch = fullSchedule.filter((s) => {
+                return s?.schedule_date.slice(5, 7) === fullDate.slice(4, 6) &&
+                  s?.schedule_date.slice(8, 10) === fullDate.slice(6, 8)
               });
 
-              const dateInfo = { day, fullDate, dow: idx, currentSch };
+              const dateInfo = { day, fullDate, dow: idx, daySch };
               return (
                 <Day
                   key={n + idx}

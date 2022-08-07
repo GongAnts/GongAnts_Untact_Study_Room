@@ -18,12 +18,17 @@ import {
 
 // schedule load
 const scheduleloadAPI = (data) => {
-  return axios.get('http://localhost:4000/schedule/monthly', data);
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  return axios.get(`/schedule/monthly?year=${data.year}&month=${data.month}`, config);
 };
 
-function* scheduleload() {
+function* scheduleload(action) {
   try {
-    const result = yield call(scheduleloadAPI);
+    const result = yield call(scheduleloadAPI, action.payload);
     yield put({
       type: SCHEDULE_LOADING_SUCCESS,
       payload: result.data,

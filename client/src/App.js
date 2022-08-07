@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 // css //
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 // import 'antd/dist/antd.css';
 
@@ -19,7 +18,6 @@ const App = () => {
 
   return (
     <Switch>
-      {console.log(isAuthenticated)}
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/signup" component={SignUp} />
       <Route path="/signin" component={SignIn} />
