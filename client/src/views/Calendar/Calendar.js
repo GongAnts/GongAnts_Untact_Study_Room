@@ -84,8 +84,10 @@ function CalendarApp({ history }) {
 
               // 날짜 스케줄 불러오기
               const daySch = fullSchedule.filter((s) => {
-                return s?.schedule_date.slice(5, 7) === fullDate.slice(4, 6) &&
+                return (
+                  s?.schedule_date.slice(5, 7) === fullDate.slice(4, 6) &&
                   s?.schedule_date.slice(8, 10) === fullDate.slice(6, 8)
+                );
               });
 
               const dateInfo = { day, fullDate, dow: idx, daySch };

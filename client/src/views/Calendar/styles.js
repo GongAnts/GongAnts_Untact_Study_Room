@@ -46,3 +46,51 @@ export const ButtonWrapper = styled.div`
     }
   }
 `;
+
+// Day js //
+export const D = styled.div`
+  padding-top: 4px;
+  height: 12vh;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  &.grayed {
+    color: gray;
+  }
+  &.today > .title {
+    color: white;
+    background-color: skyblue;
+  }
+  & > .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+export const PlanArea = styled.div`
+  text-align: center;
+  background-color: ${(props) => props.color};
+  font-size: 0.9em;
+  overflow: hidden;
+  margin: 1px 0;
+  height: 20px;
+  width: 100%;
+  border-radius: 7px;
+  &.completed {
+    background-color: #bfbfbf;
+  }
+`;
+
+export const Plan = styled.label`
+  color: white;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
