@@ -16,21 +16,21 @@ const Day = ({ dateInfo, className }) => {
 
   const PlanList = schedule.map((s, idx) => {
     return (
-      <PlanArea key={idx} color={pointColor}>
-        <Plan
-          for={`modal${idx}`}
-          className="text-center w-full"
-          data={s}
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        >
+      <PlanArea
+        key={idx}
+        color={pointColor}
+        onClick={() => {
+          setOpenModal(true);
+        }}
+      >
+        <Plan for={`modal${idx}`} className="text-center w-full" data={s}>
           {s.schedule_title}
         </Plan>
         {openModal && (
           <CalendarEditModal
             idx={idx}
             setOpenModal={setOpenModal}
+            openModal={openModal}
             schedule_title={s.schedule_title}
             schedule_date={s.schedule_date}
             schedule_description={s.schedule_description}

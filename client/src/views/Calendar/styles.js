@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mainColor, baseColor, pointColor, serveColor } from 'styles/color';
 
 // Calendar js //
 export const ButtonWrapper = styled.div`
@@ -25,17 +26,17 @@ export const ButtonWrapper = styled.div`
     height: 50px;
     padding: 10px;
     &.filterBtn {
-      background-color: pink;
+      background-color: ${pointColor};
       z-index: 1;
       transition: all 0.4s ease;
     }
     &.writeBtn {
-      background-color: skyblue;
+      background-color: ${serveColor};
       z-index: 2;
       transition: all 0.5s ease;
     }
     &.menuBtn {
-      background-color: #ffdb0d;
+      background-color: ${baseColor};
       z-index: 3;
     }
     &.subBtn {
@@ -83,6 +84,7 @@ export const PlanArea = styled.div`
   height: 20px;
   width: 100%;
   border-radius: 7px;
+  cursor: pointer;
   &.completed {
     background-color: #bfbfbf;
   }

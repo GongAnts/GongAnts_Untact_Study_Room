@@ -28,12 +28,12 @@ const initialState = {
 
 const schedulereducer = (state = initialState, action) => {
   switch (action.type) {
-    case SCHEDULE_EDIT_POPUP:
-      return {
-        ...state,
-        isOpenEditPopup: action.payload.isOpen,
-        currentSchedule: action.payload.schedule,
-      };
+    // case SCHEDULE_EDIT_POPUP:
+    //   return {
+    //     ...state,
+    //     isOpenEditPopup: action.payload.isOpen,
+    //     currentSchedule: action.payload.schedule,
+    //   };
     case SCHEDULE_ISFILTER:
       return {
         ...state,
@@ -57,6 +57,7 @@ const schedulereducer = (state = initialState, action) => {
           }
         }),
       };
+    case SCHEDULE_UPDATE_SUCCESS:
     case SCHEDULE_WRITE_SUCCESS:
     case SCHEDULE_LOADING_SUCCESS:
       return {
