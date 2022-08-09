@@ -28,9 +28,10 @@ const AddSchedule = ({ history }) => {
   const onAddSchedule = () => {
     const yyyymmdd = date.split('T')[0].replaceAll('-', '');
     const time = date.split('T')[1].replaceAll(':', '');
+    // console.log(date);
     const data = { date: yyyymmdd, time, title, description };
     if (checkValid() == false) {
-      console.log(data);
+      // console.log(data);
       dispatch({
         type: SCHEDULE_WRITE_REQUEST,
         payload: data,

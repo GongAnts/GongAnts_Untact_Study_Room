@@ -15,10 +15,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component, useCallback } from 'react';
+import React, { Component, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 import { LOGOUT_REQUEST } from 'redux/types';
@@ -27,39 +26,48 @@ import { push } from 'react-router-redux';
 import axios from 'axios';
 import routes from 'routes.js';
 
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { pointColor } from 'styles/color';
+
 function Header() {
   const location = useLocation();
-  const mobileSidebarToggle = (e) => {
-    e.preventDefault();
-    document.documentElement.classList.toggle('nav-open');
-    var node = document.createElement('div');
-    node.id = 'bodyClick';
-    node.onclick = function () {
-      this.parentElement.removeChild(this);
-      document.documentElement.classList.toggle('nav-open');
-    };
-    document.body.appendChild(node);
-  };
-
-  const getBrandText = () => {
-    for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
-        return routes[i].name;
-      }
-    }
-    return 'Brand';
-  };
+  // const mobileSidebarToggle = (e) => {
+  //   e.preventDefault();
+  //   document.documentElement.classList.toggle('nav-open');
+  //   var node = document.createElement('div');
+  //   node.id = 'bodyClick';
+  //   node.onclick = function () {
+  //     this.parentElement.removeChild(this);
+  //     document.documentElement.classList.toggle('nav-open');
+  //   };
+  //   document.body.appendChild(node);
+  // };
 
   const dispatch = useDispatch();
   const onLogout = useCallback(() => {
     alert('로그아웃 하시겠습니까?');
     const config = { withCredentials: true };
-    axios.get('http://localhost:4000/signout', config).then((req, res) => {
-      dispatch({
-        type: LOGOUT_REQUEST,
+    axios
+      .get(`${process.env.REACT_APP_BASIC_SERVER_URL}/auth/signout`, config)
+      .then((req, res) => {
+        dispatch({
+          type: LOGOUT_REQUEST,
+        });
       });
-    });
+    window.location = '/';
   }, [dispatch]);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div class="drawer-content flex flex-col">
@@ -85,11 +93,29 @@ function Header() {
           <a href="/">GongAnts</a>
         </div>
         <div class="flex-none hidden lg:block">
-          <ul class="menu menu-horizontal">
-            <li>
-              <a>Navbar Item 1</a>
-            </li>
-          </ul>
+          <Button
+            className="text-2xl"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+          >
+            <AccountCircleIcon
+              style={{ fontSize: '2.4em', color: pointColor }}
+            />
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={onLogout}>Logout</MenuItem>
+          </Menu>
         </div>
       </div>
     </div>
