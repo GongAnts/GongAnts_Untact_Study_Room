@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const socketio = require('socket.io');
@@ -27,10 +28,16 @@ const memoRouter = require('./routes/memo');
 const studytimeRouter = require('./routes/studytime');
 const todoRouter = require('./routes/todo');
 
-// session setting
-const db = require('./config/db');
-const session_db = require('./config/session_db.json');
-const googleCredentials = require('./config/google.json');
+// db setting
+const main_db = require('./config/db');
+const session_db = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_SESSION_DATABASE,
+};
+
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 app.use(express.static('public'));
@@ -44,14 +51,6 @@ app.use(
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-var options = {
-  host: session_db.db.host,
-  port: session_db.db.port,
-  user: session_db.db.user,
-  password: session_db.db.password,
-  database: session_db.db.database,
-};
 
 function publicRooms() {
   // const sids = wsServer.sockets.adapter.sids;
@@ -100,7 +99,7 @@ app.use(
   session({
     key: 'session_cookie_name',
     secret: 'session_cookie_secret',
-    store: new MySQLStore(options),
+    store: new MySQLStore(session_db),
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -168,9 +167,9 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      clientID: googleCredentials.web.client_id,
-      clientSecret: googleCredentials.web.client_secret,
-      callbackURL: googleCredentials.web.redirect_uris[0],
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_REDIRECT_URIS,
     },
     function (accessToken, refreshToken, profile, cb) {
       const userdata = {
@@ -181,7 +180,7 @@ passport.use(
       };
       try {
         const sql1 = `SELECT COUNT(*) AS result FROM user WHERE user_email = '${profile.emails[0].value}'`;
-        db.query(sql1, (err, data) => {
+        main_db.query(sql1, (err, data) => {
           if (!err) {
             // 동일 user_email 존재
             if (data[0].result > 0) {
@@ -189,7 +188,7 @@ passport.use(
               return cb(null, userdata);
             } else {
               const sql2 = `INSERT INTO user(user_id, user_type, user_name, user_email) VALUES('g${profile.id}', 'google', '${profile.displayName}', '${profile.emails[0].value}')`;
-              db.query(sql2, (err, data) => {
+              main_db.query(sql2, (err, data) => {
                 if (!err) {
                   console.log('DB 저장 성공');
                   return cb(null, userdata);
