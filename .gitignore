@@ -22,8 +22,6 @@ client/.env
 
 ### server ###
 server/node_modules/
-server/config/db.js
-server/config/google.json
-server/config/session_db.json
-server/sessions/
-server/public/assets/main.bundle.js
+server/.env
+server/*.bak
+server/public
