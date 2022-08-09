@@ -135,7 +135,7 @@ passport.use(
       console.log('LocalStrategy', userid, password);
 
       const sql1 = `SELECT * FROM user WHERE user_id = 'u${userid}'`;
-      db.query(sql1, (err, data) => {
+      main_db.query(sql1, (err, data) => {
         if (!err) {
           // user_name 미존재
           if (data[0] === undefined) {
