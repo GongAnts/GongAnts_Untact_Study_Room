@@ -4,9 +4,11 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon index.js",
-    "build": "rm -rf node_modules/ package-lock.json && npm i --force && apidoc -i . -o public &&npm run start",
-    "frontend": "cd ../client && npm run start",
-    "dev": "concurrently \"npm run start\" \"npm run frontend\""
+    "frontend": "cd ../client && npm ci --force && npm run start",
+    "dev": "concurrently \"npm run start\" \"npm run frontend\"",
+    "install:clean": "rm -rf node_modules/ package-lock.json",
+    "deploy:install": "npm ci --force && apidoc -i . -o public",
+    "deploy:production": "pm2 start index.js"
   },
   "license": "ISC",
   "dependencies": {
