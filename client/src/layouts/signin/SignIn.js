@@ -103,7 +103,7 @@ function SignIn(req) {
               <div className="mt-3">
                 <ul className="socials">
                   <li>
-                    <GoogleLogin
+                    {/* <GoogleLogin
                       clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                       buttonText="구글로 계속하기"
                       onSuccess={responseGoogle}
@@ -121,7 +121,10 @@ function SignIn(req) {
                           구글로 로그인하기
                         </Button>
                       )}
-                    />
+                    /> */}
+                    <a href="http://localhost:4000/auth/google">
+                      <GoogleIcon style={{ color: '#4284F3' }}></GoogleIcon>
+                    </a>
                   </li>
                   <li className="signin-image mt-3">
                     <Button

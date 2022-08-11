@@ -14,9 +14,11 @@ import {
 import { Container } from 'react-bootstrap';
 import { Button, Select } from 'antd';
 
-const SERVERHOST = process.env.SERVERHOST || 'localhost';
-const SERVERPORT = process.env.SERVERPORT || 4000;
-const socket = io(`http://${SERVERHOST}:${SERVERPORT}`); // 서버 주소
+const SERVER_HOST = process.env.SERVER_HOST || 'localhost';
+const SERVER_PORT = process.env.SERVER_PORT || 4000;
+const socket = io(`http://${SERVER_HOST}:${SERVER_PORT}`, {
+  transports: ['websocket', 'polling', 'flashsocket'],
+});
 
 function RoomEnter(req) {
   const myFaceSrc = useRef(null);

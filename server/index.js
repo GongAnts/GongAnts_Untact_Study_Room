@@ -4,8 +4,10 @@ const app = express();
 const socketio = require('socket.io');
 const httpServer = require('http').createServer(app);
 const socketadmin = require('@socket.io/admin-ui');
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 4000;
+const CLIENT_HOST = process.env.CLIENT_HOST || 'localhost';
+const CLIENT_PORT = process.env.CLIENT_PORT || 3000;
+const SERVER_HOST = process.env.SERVER_HOST || 'localhost';
+const SERVER_PORT = process.env.SERVER_PORT || 4000;
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 
@@ -220,7 +222,7 @@ app.get(
     failureRedirect: '/auth/google',
   })),
   function (req, res) {
-    res.redirect(`http://${HOST}:${PORT}/auth`);
+    res.redirect(`http://${CLIENT_HOST}:${CLIENT_PORT}`);
   },
 );
 
@@ -254,8 +256,8 @@ app.use('/memo', memoRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
 
-httpServer.listen(PORT, () => {
-  console.log(`Server On : http://${HOST}:${PORT}/`);
+httpServer.listen(SERVER_PORT, () => {
+  console.log(`Server On : http://${SERVER_HOST}:${SERVER_PORT}/`);
 });
 
 // httpServer.listen(PORT, () => {
