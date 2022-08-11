@@ -1,19 +1,24 @@
+require('dotenv').config();
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import io from 'socket.io-client';
 
 // UI component //
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMicrophone,
-  faMicrophoneSlash, 
+  faMicrophoneSlash,
   faVideo,
-  faVideoSlash
+  faVideoSlash,
 } from '@fortawesome/free-solid-svg-icons';
 import { Container } from 'react-bootstrap';
 import { Button, Select } from 'antd';
 
-const socket = io('http://localhost:4000'); // 서버 주소
+const SERVER_HOST = process.env.SERVER_HOST || 'localhost';
+const SERVER_PORT = process.env.SERVER_PORT || 4000;
+const socket = io(`http://${SERVER_HOST}:${SERVER_PORT}`, {
+  transports: ['websocket', 'polling', 'flashsocket'],
+});
 
 function RoomEnter(req) {
   const myFaceSrc = useRef(null);
@@ -174,15 +179,12 @@ function RoomEnter(req) {
   return (
     <>
       <Container fluid>
-        <div
-          className='w-full'
-          >
-          <div
-            className="flex justify-between float-left w-6/12 p-7 h-80"
-            >
+        <div className="w-full">
+          <div className="flex justify-between float-left w-6/12 p-7 h-80">
             <div
-              className='flex-initial w-full min-w-min'
-              style={{ flexBasis: '330px', flexGrow: 0, flexShrink: 0}}>
+              className="flex-initial w-full min-w-min"
+              style={{ flexBasis: '330px', flexGrow: 0, flexShrink: 0 }}
+            >
               <video
                 ref={myFaceSrc}
                 autoPlay={cameraOff}
@@ -192,25 +194,28 @@ function RoomEnter(req) {
                 height="330"
               />
             </div>
-            <div
-              className='flex-initial'
-              style={{ flexShrink: 1}}>
-              {muteBtn === 'Mute' ?
+            <div className="flex-initial" style={{ flexShrink: 1 }}>
+              {muteBtn === 'Mute' ? (
                 <Button onClick={handleMuteClick}>
-                  <FontAwesomeIcon className='text-3xl' icon={faMicrophone} />
-                </Button>:
+                  <FontAwesomeIcon className="text-3xl" icon={faMicrophone} />
+                </Button>
+              ) : (
                 <Button onClick={handleMuteClick}>
-                  <FontAwesomeIcon className='text-3xl' icon={faMicrophoneSlash} />
+                  <FontAwesomeIcon
+                    className="text-3xl"
+                    icon={faMicrophoneSlash}
+                  />
                 </Button>
-              }
-              {cameraBtn === 'Turn Camera Off' ?
+              )}
+              {cameraBtn === 'Turn Camera Off' ? (
                 <Button type="primary" onClick={handleCameraClick}>
-                  <FontAwesomeIcon className='text-3xl' icon={faVideo}/>
-                </Button> :
-                <Button type="primary" onClick={handleCameraClick}>
-                  <FontAwesomeIcon className='text-3xl' icon={faVideoSlash} />
+                  <FontAwesomeIcon className="text-3xl" icon={faVideo} />
                 </Button>
-              }
+              ) : (
+                <Button type="primary" onClick={handleCameraClick}>
+                  <FontAwesomeIcon className="text-3xl" icon={faVideoSlash} />
+                </Button>
+              )}
               <Select
                 style={{ width: 300 }}
                 defaultValue={selected}
@@ -221,8 +226,7 @@ function RoomEnter(req) {
               </Select>
             </div>
           </div>
-          <div
-            className='float-left w-6/12'>
+          <div className="float-left w-6/12">
             <video
               ref={peerFaceSrc}
               autoPlay
@@ -233,7 +237,7 @@ function RoomEnter(req) {
             />
           </div>
         </div>
-        <div class="divider w-full h-px"></div> 
+        <div class="divider w-full h-px"></div>
       </Container>
     </>
   );
