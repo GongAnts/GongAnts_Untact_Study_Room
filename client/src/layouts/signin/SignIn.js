@@ -127,6 +127,7 @@ function SignIn(req) {
                             variant="outlined"
                             color="point"
                             startIcon={<GoogleIcon />}
+                            onClick={renderProps.onClick}
                           >
                             구글로 로그인하기
                           </Button>
