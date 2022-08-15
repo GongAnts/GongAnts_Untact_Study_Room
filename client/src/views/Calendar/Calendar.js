@@ -83,7 +83,7 @@ function CalendarApp({ history }) {
                   : 'grayed';
 
               // 날짜 스케줄 불러오기
-              const daySch = fullSchedule.filter((s) => {
+              const daySch = fullSchedule?.filter((s) => {
                 return (
                   s?.schedule_date.slice(0, 4) === fullDate.slice(0, 4) &&
                   s?.schedule_date.slice(5, 7) === fullDate.slice(4, 6) &&
@@ -110,6 +110,7 @@ function CalendarApp({ history }) {
     dispatch(setIsFilter(isFilter));
   };
 
+  if (!fullSchedule) return 'loading...';
   return (
     <div>
       <div className="relative">

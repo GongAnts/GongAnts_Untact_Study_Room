@@ -1,15 +1,20 @@
 import React, { useRef, useState } from 'react';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import { useDispatch } from 'react-redux';
 
 import { LeftOutlined } from '@ant-design/icons';
 
 // Date //
 import Datepicker from 'views/Calendar/Datepicker';
 
+// API //
+import { SCHEDULE_UPDATE_REQUEST } from 'redux/types';
+
 function CalendarEditModal({
   idx,
   setOpenModal,
   openModal,
+  schedule_id,
   schedule_title,
   schedule_description,
   schedule_date,
@@ -19,15 +24,34 @@ function CalendarEditModal({
   const [date, setDate] = useState(schedule_date.slice(0, 16));
   const [titleError, setTitleError] = useState(false);
 
+  // 모달창 바깥 클릭 시 모달 닫히게
   const outSection = useRef();
   useOnClickOutside(outSection, () => {
     setOpenModal(false);
   });
 
+  // 제목이 존재하는지 검사
+  const checkValid = () => {
+    if (title.length === 0 || title.trim().length === 0) {
+      setTitleError(true);
+      return true;
+    }
+    return false;
+  };
+
+  // 스케줄 수정
+  const dispatch = useDispatch();
   const onUpdate = () => {
     const yyyymmdd = date.split('T')[0].replaceAll('-', '');
     const time = date.split('T')[1].replaceAll(':', '');
-    const data = { date: yyyymmdd, time, title, description };
+    const data = { id: schedule_id, date: yyyymmdd, time, title, description };
+    console.log(data);
+    if (checkValid() === false) {
+      dispatch({
+        type: SCHEDULE_UPDATE_REQUEST,
+        payload: data,
+      });
+    }
   };
 
   return (

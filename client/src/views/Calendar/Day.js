@@ -31,6 +31,7 @@ const Day = ({ dateInfo, className }) => {
             idx={idx}
             setOpenModal={setOpenModal}
             openModal={openModal}
+            schedule_id={s.schedule_id}
             schedule_title={s.schedule_title}
             schedule_date={s.schedule_date}
             schedule_description={s.schedule_description}
