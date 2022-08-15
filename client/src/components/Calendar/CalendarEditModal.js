@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { LeftOutlined } from '@ant-design/icons';
 
@@ -24,6 +25,9 @@ function CalendarEditModal({
   const [date, setDate] = useState(schedule_date.slice(0, 16));
   const [titleError, setTitleError] = useState(false);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   // 모달창 바깥 클릭 시 모달 닫히게
   const outSection = useRef();
   useOnClickOutside(outSection, () => {
@@ -40,18 +44,17 @@ function CalendarEditModal({
   };
 
   // 스케줄 수정
-  const dispatch = useDispatch();
   const onUpdate = () => {
     const yyyymmdd = date.split('T')[0].replaceAll('-', '');
     const time = date.split('T')[1].replaceAll(':', '');
     const data = { id: schedule_id, date: yyyymmdd, time, title, description };
-    console.log(data);
     if (checkValid() === false) {
       dispatch({
         type: SCHEDULE_UPDATE_REQUEST,
         payload: data,
       });
     }
+    history.go(0);
   };
 
   return (

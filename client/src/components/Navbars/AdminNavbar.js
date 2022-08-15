@@ -17,7 +17,7 @@
 */
 import React, { Component, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import { LOGOUT_REQUEST } from 'redux/types';
@@ -34,6 +34,7 @@ import { pointColor } from 'styles/color';
 
 function Header() {
   const location = useLocation();
+  const history = useHistory();
   // const mobileSidebarToggle = (e) => {
   //   e.preventDefault();
   //   document.documentElement.classList.toggle('nav-open');
@@ -57,7 +58,7 @@ function Header() {
           type: LOGOUT_REQUEST,
         });
       });
-    window.location = '/';
+    history.push('/');
   }, [dispatch]);
 
   const [anchorEl, setAnchorEl] = useState(null);
