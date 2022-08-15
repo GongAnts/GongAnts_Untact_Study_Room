@@ -111,12 +111,7 @@ function* watchcalendarEdit() {
 
 // schedule delete
 const calendardeleteAPI = (data) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  return axios.delete(`/schedule/delete?id=${data}`, config);
+  return axios.delete(`/schedule?id=${data}`);
 };
 
 function* calendarDelete(action) {

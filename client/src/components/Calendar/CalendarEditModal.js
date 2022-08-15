@@ -9,7 +9,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import Datepicker from 'views/Calendar/Datepicker';
 
 // API //
-import { SCHEDULE_UPDATE_REQUEST } from 'redux/types';
+import { SCHEDULE_UPDATE_REQUEST, SCHEDULE_DELETE_REQUEST } from 'redux/types';
 
 function CalendarEditModal({
   idx,
@@ -54,6 +54,15 @@ function CalendarEditModal({
         payload: data,
       });
     }
+    history.go(0);
+  };
+
+  // 스케줄 삭제
+  const onDelete = () => {
+    dispatch({
+      type: SCHEDULE_DELETE_REQUEST,
+      payload: schedule_id,
+    });
     history.go(0);
   };
 
@@ -115,7 +124,7 @@ function CalendarEditModal({
                 </button>
                 <button
                   class="btn btn-outline btn-warning w-20 mx-1"
-                  // onClick={onUpdate}
+                  onClick={onDelete}
                 >
                   삭제
                 </button>
