@@ -234,7 +234,7 @@ app.get('/auth', (req, res) => {
 app.get('/auth/signout', (req, res) => {
   console.log('현재 사용자를 로그아웃 합니다.');
   req.logout();
-  res.redirect('/auth');
+  // res.redirect('/auth');
 });
 
 app.post(
@@ -246,7 +246,7 @@ app.post(
     req.session.user = req.user;
     req.session.save();
     console.log('session store..', req.user);
-    res.redirect('/auth');
+    // res.redirect('/auth');
   },
 );
 

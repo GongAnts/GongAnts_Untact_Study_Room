@@ -59,6 +59,7 @@ function Header() {
         });
       });
     history.push('/');
+    history.go(0);
   }, [dispatch]);
 
   const [anchorEl, setAnchorEl] = useState(null);

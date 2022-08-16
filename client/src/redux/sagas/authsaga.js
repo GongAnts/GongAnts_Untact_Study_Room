@@ -86,7 +86,7 @@ function* logout() {
       type: LOGOUT_SUCCESS,
     });
 
-    yield put(push(`/`));
+    // yield put(push(`/`));
   } catch (e) {
     console.log('실패');
     console.log(e);
