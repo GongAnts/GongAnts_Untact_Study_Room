@@ -246,7 +246,7 @@ app.post(
     req.session.user = req.user;
     req.session.save();
     console.log('session store..', req.user);
-    res.redirect('/auth');
+    // res.redirect('/auth');
   },
 );
 

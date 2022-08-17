@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST } from 'redux/types.js';
+import { useHistory } from 'react-router-dom';
 
 // UI components //
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -30,6 +31,7 @@ function SignIn(req) {
   };
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -39,6 +41,9 @@ function SignIn(req) {
         type: LOGIN_REQUEST,
         payload: { user_id, user_password },
       });
+
+      history.push('/');
+      history.go(0);
     },
     [form, dispatch],
   );
