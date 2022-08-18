@@ -2,7 +2,6 @@ import React, { useState, useLayoutEffect, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Day from './Day';
-import EditSchedule from './EditSchedule';
 
 // style
 import { ButtonWrapper } from './styles';
@@ -83,7 +82,7 @@ function CalendarApp({ history }) {
                   : 'grayed';
 
               // 날짜 스케줄 불러오기
-              const daySch = fullSchedule.filter((s) => {
+              const daySch = fullSchedule?.filter((s) => {
                 return (
                   s?.schedule_date.slice(0, 4) === fullDate.slice(0, 4) &&
                   s?.schedule_date.slice(5, 7) === fullDate.slice(4, 6) &&
@@ -110,10 +109,10 @@ function CalendarApp({ history }) {
     dispatch(setIsFilter(isFilter));
   };
 
+  if (!fullSchedule) return 'loading...';
   return (
     <div>
       <div className="relative">
-        {isOpenEditPopup && <EditSchedule />}
         <div className="flex justify-center text-5xl items-center mt-1">
           <LeftOutlined className="arrow text-2xl" onClick={PrevMonth} />
           <span className="mx-36">{current.format('MM')}</span>

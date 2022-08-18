@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST } from 'redux/types.js';
+import { useHistory } from 'react-router-dom';
 
 // UI components //
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -30,6 +31,7 @@ function SignIn(req) {
   };
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -39,6 +41,9 @@ function SignIn(req) {
         type: LOGIN_REQUEST,
         payload: { user_id, user_password },
       });
+
+      history.push('/');
+      history.go(0);
     },
     [form, dispatch],
   );
@@ -103,28 +108,16 @@ function SignIn(req) {
               <div className="mt-3">
                 <ul className="socials">
                   <li>
-                    {/* <GoogleLogin
-                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                      buttonText="구글로 계속하기"
-                      onSuccess={responseGoogle}
-                      onFailure={responseGoogle}
-                      isSignedIn={true}
-                      render={(renderProps) => (
-                        <Button
-                          type="submit"
-                          className="w-3/5"
-                          variant="outlined"
-                          color="point"
-                          startIcon={<GoogleIcon />}
-                          onClick={renderProps.onClick}
-                        >
-                          구글로 로그인하기
-                        </Button>
-                      )}
-                    /> */}
-                    <a href="http://localhost:4000/auth/google">
-                      <GoogleIcon style={{ color: '#4284F3' }}></GoogleIcon>
-                    </a>
+                    <Button
+                      type="submit"
+                      className="w-3/5"
+                      variant="outlined"
+                      color="point"
+                      startIcon={<GoogleIcon />}
+                      href="http://localhost:4000/auth/google"
+                    >
+                      구글로 로그인하기
+                    </Button>
                   </li>
                   <li className="signin-image mt-3">
                     <Button

@@ -1,7 +1,6 @@
 import Dashboard from 'views/Dashboard.js';
 import Room from 'views/Room/Room';
 import CalendarApp from 'views/Calendar/Calendar.js';
-import Memo from 'views/Memo/Memo';
 
 const dashboardRoutes = [
   {
@@ -30,13 +29,6 @@ const dashboardRoutes = [
     name: 'Calendar',
     icon: 'nc-icon nc-time-alarm',
     component: CalendarApp,
-    layout: '/admin',
-  },
-  {
-    path: '/memo',
-    name: 'Memo',
-    icon: 'nc-icon nc-single-copy-04',
-    component: Memo,
     layout: '/admin',
   },
 ];

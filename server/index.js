@@ -26,7 +26,6 @@ socketadmin.instrument(wsServer, {
 // routing
 const signupRouter = require('./routes/signup');
 const scheduleRouter = require('./routes/schedule');
-const memoRouter = require('./routes/memo');
 const studytimeRouter = require('./routes/studytime');
 const todoRouter = require('./routes/todo');
 
@@ -246,20 +245,15 @@ app.post(
     req.session.user = req.user;
     req.session.save();
     console.log('session store..', req.user);
-    res.redirect('/auth');
+    // res.redirect('/auth');
   },
 );
 
 app.use('/auth/signup', signupRouter);
 app.use('/schedule', scheduleRouter);
-app.use('/memo', memoRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
 
 httpServer.listen(SERVER_PORT, () => {
   console.log(`Server On : http://${SERVER_HOST}:${SERVER_PORT}/`);
 });
-
-// httpServer.listen(PORT, () => {
-//   console.log(`Server On : http://${HOST}:${PORT}/`);
-// });
