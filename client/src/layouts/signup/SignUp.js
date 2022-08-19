@@ -31,7 +31,7 @@ function SignUp() {
       e.preventDefault();
       const { user_id, user_name, user_email, user_password, passwordCheck } =
         form;
-      console.log(user_id, user_email, user_password);
+      // console.log(user_id, user_email, user_password);
 
       if (user_password !== passwordCheck) {
         alert('비밀번호와 비밀번호 확인은 같아야 합니다.');

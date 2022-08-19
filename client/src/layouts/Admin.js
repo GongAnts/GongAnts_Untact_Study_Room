@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import { useLocation, Route, Switch } from 'react-router-dom';
 
 import AdminNavbar from 'components/Navbars/AdminNavbar';
 import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
-import MemoWrite from 'views/Memo/MemoWrite';
-import MemoEdit from 'views/Memo/MemoEdit';
 import RoomEnter from 'views/Room/RoomEnter';
 
 import routes from 'routes.js';
@@ -13,11 +11,11 @@ import routes from 'routes.js';
 import sidebarImage from 'assets/img/sidebar-3.jpg';
 
 function Admin() {
-  const [image, setImage] = React.useState(sidebarImage);
-  const [color, setColor] = React.useState('black');
-  const [hasImage, setHasImage] = React.useState(false);
+  const [image, setImage] = useState(sidebarImage);
+  const [color, setColor] = useState('black');
+  const [hasImage, setHasImage] = useState(false);
   const location = useLocation();
-  const mainPanel = React.useRef(null);
+  const mainPanel = useRef(null);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === '/admin') {
@@ -34,7 +32,7 @@ function Admin() {
       }
     });
   };
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -64,8 +62,6 @@ function Admin() {
           <div className="flex-initial w-4/5">
             <Switch>
               {getRoutes(routes)}
-              <Route path={`/admin/memo/write`} exact component={MemoWrite} />
-              <Route path={`/admin/memo/:id/edit`} exact component={MemoEdit} />
               <Route path={`/admin/room/:id`} exact component={RoomEnter} />
             </Switch>
           </div>
