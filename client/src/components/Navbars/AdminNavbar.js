@@ -26,10 +26,12 @@ import { push } from 'react-router-redux';
 import axios from 'axios';
 import routes from 'routes.js';
 
+// UI Components //
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SearchIcon from '@mui/icons-material/Search';
 import { pointColor } from 'styles/color';
 
 function Header() {
@@ -95,6 +97,7 @@ function Header() {
           <a href="/">GongAnts</a>
         </div>
         <div class="flex-none hidden lg:block">
+          <SearchIcon style={{ fontSize: '1.7em', color: pointColor }} />
           <Button
             className="text-2xl"
             aria-controls={open ? 'basic-menu' : undefined}

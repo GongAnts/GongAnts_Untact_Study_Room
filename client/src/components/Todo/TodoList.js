@@ -7,7 +7,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function TodoList() {
   return (
-    <div className="ml-3">
+    <div className="w-full">
       <h3 className="text-3xl">오늘의 TodoList</h3>
       <div className="flex mt-3">
         <div className="flex-1">
