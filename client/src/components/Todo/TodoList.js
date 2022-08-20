@@ -1,6 +1,6 @@
 import React from 'react';
 import AddTodo from 'components/Todo/AddTodo';
-import InCompleteTodo from 'components/Todo/InCompleteTodo';
+import CompleteTodo from 'components/Todo/CompleteTodo';
 
 // UI components //
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -16,12 +16,17 @@ function TodoList() {
             <AddTodo />
           </div>
           <div>
-            <InCompleteTodo />
+            <CompleteTodo complete={0} />
           </div>
         </div>
         <div className="w-2/5">
-          <span>🌕 완료</span>
-          <MoreHorizIcon className="text-2xl ml-4 mb-1"></MoreHorizIcon>
+          <div>
+            <span>🌕 완료</span>
+            <MoreHorizIcon className="text-2xl ml-4 mb-1"></MoreHorizIcon>
+          </div>
+          <div>
+            <CompleteTodo complete={1} />
+          </div>
         </div>
       </div>
     </div>
