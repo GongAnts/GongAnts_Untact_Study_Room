@@ -3,7 +3,7 @@ import { baseColor, serveColor, whiteColor } from 'styles/color';
 
 function RoomTable({ userName }) {
   return (
-    <div className="overflow-x-auto pr-3 w-full float-left flex justify-center">
+    <div className="overflow-x-auto pr-3 w-full float-left flex justify-center mb-10 mt-3 pb-3">
       <div className="w-2/5 float-left">
         <p
           className="text-sm pl-3 h-9 leading-8"

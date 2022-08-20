@@ -34,6 +34,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import { pointColor } from 'styles/color';
 
+// Icon //
+import GongImg from 'assets/img/ms-icon-70x70.png';
+
 function Header() {
   const location = useLocation();
   const history = useHistory();
@@ -76,7 +79,7 @@ function Header() {
   return (
     <div class="drawer-content flex flex-col">
       <div class="w-full navbar bg-base-200 drop-shadow-lg">
-        <div class="flex-none lg:hidden">
+        {/* <div class="flex-none lg:hidden">
           <label for="my-drawer-3" class="btn btn-square btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,9 +95,12 @@ function Header() {
               ></path>
             </svg>
           </label>
-        </div>
+        </div> */}
         <div class="flex-1 px-2 mx-2">
-          <a href="/">GongAnts</a>
+          <a href="/">
+            <img src={GongImg} style={{ width: '30px', float: 'left' }} />
+            GongAnts
+          </a>
         </div>
         <div class="flex-none hidden lg:block">
           <SearchIcon style={{ fontSize: '1.7em', color: pointColor }} />
