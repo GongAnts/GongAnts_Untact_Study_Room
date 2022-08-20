@@ -14,9 +14,6 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-### GitLab ###
-.github/workflows/sync-gitlab.yml
-
 ### client ###
 client/node_modules/
 client/.eslintcache
