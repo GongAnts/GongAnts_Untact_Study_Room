@@ -11,7 +11,7 @@ import {
   TODO_DELETE_SUCCESS,
   TODO_DELETE_FAILURE,
   TODO_UPDATE,
-  TODO_CHECK,
+  TODO_CHECK_REQUEST,
   TODO_CHECK_SUCCESS,
 } from 'redux/types';
 
@@ -37,7 +37,6 @@ const todoreducer = (state = initialState, action) => {
     case TODO_CHECK_SUCCESS:
       return {
         ...state,
-        fullTodo: [fullTodo, action.payload],
       };
     case TODO_TODAY_SUCCESS:
       return {
