@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GOGN ANT STUDY</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.css" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="demo.css" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.2/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/hands.js" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+
+  <!-- BULMA NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+ 
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+  
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <!-- <a class="navbar-item" href="face.html">
+            Face
+          </a>
+    
+          <a class="navbar-item" href="faceMesh.html">
+            Face Mesh
+          </a>
+  
+          <a class="navbar-item" href="hands.html">
+            Hands
+          </a>
+          
+          <a class="navbar-item" href="pose.html">
+            Pose
+          </a> -->
+  
+          <a class="navbar-item" href="holistic.html">
+            Face & hands Detection
+          </a>
+  
+          <a class="navbar-item" href="hands.html">
+            Hands Detection
+          </a>
+  
+          </div>
+        </div>
+    
+      </div>
+    </nav>
+
+  <!-- CONTENTS -->
+  <div class="container" style="margin-top: 20px;">
+
+    <div class="columns">
+      
+      <!-- WEBCAM INPUT -->
+      <!-- <div class="column">
+        <article class="panel is-info">
+          <p class="panel-heading">
+            Webcam Input
+          </p>
+          <div class="panel-block">
+            <video class="input_video4" style="visibility: hidden"></video>
+          </div>
+        </article>
+      </div> -->
+
+      <!-- WEBCAM INPUT -->
+      <div class="column">
+
+        <video class="input_video3" style="visibility: hidden"></video>
+
+  </div>
+
+      <!-- MEDIAPIPE OUTPUT -->
+      <div class="column">
+        <article class="panel is-info">
+          <p class="panel-heading">
+            Hands Detection
+          </p>
+          <div class="panel-block">
+            <canvas class="output3" width="480px" height="480px"></canvas>
+          </div>
+        </article>
+      </div>
+    </div>
+  
+    <!-- 스톱워치 -->
+    <!-- ### 1번 -->
+    <h2>스톱워치</h2>
+    <h1>
+      <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="tenMillis">00</span>
+    </h1>
+    <button id="bt__start">START</button>
+    <button id="bt__stop">STOP</button>
+    <button id="bt__reset">RESET</button>
+  </div>
+
+
+
+    <!-- ### 2번
+    <div class = "controls">
+      <button onclick = "start()">Start</button>
+      <button onclick = "pause()">Pause</button>
+      <button onclick = "stop()">END</button>
+      <button onclick = "restart()">Restart</button>
+      <button onclick = "lap()">Lap</button>
+      <button onclick = "resetLaps()">Reset Laps</button>
+    </div>
+    <div class = "stopwatch">00:00:00</div>
+    <ul class = "laps"></ul>   -->
+
+
+
+    <div class="loading">
+      <div class="spinner"></div>
+    </div>
+  <div style="visibility: hidden;" class="control3">
+  </div>
+
+  <script type="text/javascript" src="./js/hands.js"></script>
+  <script src="./js/script.js"></script>
+
+</body>
+</html>
