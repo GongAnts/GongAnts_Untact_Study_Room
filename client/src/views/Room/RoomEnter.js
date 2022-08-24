@@ -1,6 +1,7 @@
 require('dotenv').config();
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 
 // UI component //
@@ -28,7 +29,8 @@ function RoomEnter(req) {
   const [cameraOff, setcameraOff] = useState(true);
   const [cameraBtn, setcameraBtn] = useState('Turn Camera Off');
   let options = [];
-  let roomName = useParams()['id'];
+  const location = useLocation();
+  const roomName = location.state.roomName;
 
   useEffect(() => {
     console.log('useEffect', options);
