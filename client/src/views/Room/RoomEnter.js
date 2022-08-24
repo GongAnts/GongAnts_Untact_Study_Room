@@ -167,6 +167,16 @@ function RoomEnter(req) {
 
   // RTC Code
 
+  function makeConnection() {
+    // peerConnection을 각 브라우저에 만들어준다.
+    myPeerConnection = new RTCPeerConnection({});
+    myPeerConnection.addEventListener('icecandidate', handleIce);
+    myPeerConnection.addEventListener('addstream', handleAddStream);
+    myStream // 양쪽 브라우저의 카메라, 마이크 데이터 stream 을 받아와서 그걸 연결 안에 집어넣어줌
+      .getTracks()
+      .forEach((track) => myPeerConnection.addTrack(track, myStream));
+  }
+
   function handleIce(data) {
     socket.emit('ice', data.candidate, roomName);
     console.log('sent candidate');
