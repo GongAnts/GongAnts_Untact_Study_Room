@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Datepicker from './Datepicker';
 
 import { LeftOutlined } from '@ant-design/icons';
+import TextField from '@mui/material/TextField';
 
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
@@ -53,20 +54,22 @@ const AddSchedule = ({ history }) => {
         <div className="flex-2 text-2xl px-14">일정 추가</div>
       </div>
       <div className="flex flex-col pt-8 items-center justify-space w-2/5">
-        <Datepicker setDate={setDate} date={date} />
-        <textarea
-          className={`textarea ${titleError && 'textarea-error'}`}
-          placeholder="어떤 일정이 있나요?"
-          cols={30}
+        <TextField
+          className="w-64"
+          id={`standard-basic ${titleError && 'standard-error'}`}
+          label="일정 제목"
+          variant="standard"
           onChange={(e) => {
             setTitle(e.target.value);
           }}
-        ></textarea>
+        />
         {titleError ? (
           <p className="font-light text-xs">일정 제목을 입력해주세요</p>
         ) : (
           <></>
         )}
+        <br />
+        <Datepicker setDate={setDate} date={date} />
         <textarea
           className="textarea mt-4"
           placeholder="상세 메모"

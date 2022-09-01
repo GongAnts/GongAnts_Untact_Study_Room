@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
 
 import { LeftOutlined } from '@ant-design/icons';
 
@@ -72,33 +73,25 @@ function CalendarEditModal({
       <label for={`modal${idx}`} className="modal">
         <label className="modal-box relative" for="">
           <div className="flex align-middle flex-col h-100 items-center">
-            <div className="flex mt-2 items-center w-56">
-              <div
-                className="flex-0 cursor-pointer"
-                onClick={() => {
-                  setOpenModal(false);
-                }}
-              >
-                <LeftOutlined />
-              </div>
-              <div className="flex-2 text-xl px-14">일정 보기</div>
-            </div>
-            <div className="flex flex-col pt-3 items-center justify-space w-2/5">
-              <Datepicker setDate={setDate} date={date} />
-              <textarea
-                className={`textarea ${titleError && 'textarea-error'}`}
-                cols={30}
+            <div className="flex mt-2 items-center w-64">
+              <TextField
+                className="w-full"
+                id={`standard-basic ${titleError && 'standard-error'}`}
+                label="일정 제목"
+                variant="standard"
                 value={title}
-                placeholder="어떤 일정이 있나요?"
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
-              ></textarea>
+              />
               {titleError ? (
                 <p className="font-light text-xs">일정 제목을 입력해주세요</p>
               ) : (
                 <></>
               )}
+            </div>
+            <div className="flex flex-col pt-3 items-center justify-space w-2/5">
+              <Datepicker setDate={setDate} date={date} />
               <textarea
                 className="textarea mt-4"
                 placeholder="상세 메모"
