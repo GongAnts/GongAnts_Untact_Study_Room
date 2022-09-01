@@ -37,6 +37,7 @@ const AddSchedule = ({ history }) => {
         type: SCHEDULE_WRITE_REQUEST,
         payload: data,
       });
+      window.location.href = '/admin/calendar';
     } else {
       console.log(titleError);
     }

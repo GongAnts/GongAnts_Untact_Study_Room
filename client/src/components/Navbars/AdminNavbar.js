@@ -106,7 +106,10 @@ function Header() {
         <div class="flex-none hidden lg:block">
           <span>
             <label for="search-modal" class="modal-button">
-              <SearchIcon style={{ fontSize: '1.7em', color: pointColor }} />
+              <SearchIcon
+                className="cursor-pointer"
+                style={{ fontSize: '1.7em', color: pointColor }}
+              />
             </label>
             <SearchModal />
           </span>
