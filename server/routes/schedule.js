@@ -64,6 +64,7 @@ router.post('/', (req, res) => {
   const minute = body.time.substring(2, 4);
   const schedule_title = body.title;
   const schedule_description = body.description;
+  const schedule_priority = body.priority;
   var schedule_date = `${year}-${month}-${day} ${hour}:${minute}:00`;
 
   var schedule_data = {
@@ -71,8 +72,10 @@ router.post('/', (req, res) => {
     schedule_title: `${schedule_title}`,
     schedule_description: `${schedule_description}`,
     schedule_date: `${schedule_date}`,
+    schedule_check: 0,
+    schedule_priority: `${schedule_priority}`,
   };
-  const sql = `INSERT INTO schedule(user_id, schedule_title, schedule_date, schedule_description) VALUES('${user_id}', '${schedule_title}', '${schedule_date}', '${schedule_description}')`;
+  const sql = `INSERT INTO schedule(user_id, schedule_title, schedule_date, schedule_priority, schedule_description ) VALUES('${user_id}', '${schedule_title}', '${schedule_date}', '${schedule_priority}', '${schedule_description}')`;
   db.query(sql, (err, data) => {
     if (!err) {
       res.status(200).send(schedule_data);
@@ -109,15 +112,20 @@ router.put('/', (req, res) => {
   const minute = body.time.substring(2, 4);
   const schedule_title = body.title;
   const schedule_description = body.description;
+  const schedule_check = body.check;
+  const schedule_priority = body.priority;
   var schedule_date = `${year}-${month}-${day} ${hour}:${minute}:00`;
 
   var schedule_data = {
     schedule_title: `${schedule_title}`,
     schedule_description: `${schedule_description}`,
     schedule_date: `${schedule_date}`,
+    schedule_check: `${schedule_check}`,
+    schedule_priority: `${schedule_priority}`,
   };
   console.log(schedule_data);
   const sql = `UPDATE schedule SET schedule_title = '${schedule_title}', schedule_date = '${schedule_date}', \
+    schedule_check = '${schedule_check}', schedule_priority = '${schedule_priority}',\
     schedule_description = '${schedule_description}' WHERE schedule_id = '${schedule_id}';`;
   db.query(sql, (err, data) => {
     if (!err) {
