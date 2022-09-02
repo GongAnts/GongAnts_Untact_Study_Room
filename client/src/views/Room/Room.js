@@ -1,4 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // react-bootstrap components
 import { Badge, Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
@@ -15,6 +16,7 @@ import { TODO_WRITE_REQUEST, TODO_TODAY_REQUEST } from 'redux/types';
 let roomName;
 
 function Room(req) {
+  const history = useHistory();
   const [form, setform] = useState({
     todo_title: '',
   });
@@ -51,7 +53,11 @@ function Room(req) {
 
   async function onEnterRoom(values) {
     roomName = values['room-name'];
-    window.location.replace(`room/${roomName}`);
+    history.push({
+      pathname: `/admin/room/${roomName}`,
+      state: { roomName: roomName },
+    });
+    // window.location.replace(`room/${roomName}`);
   }
 
   // useLayoutEffect(() => {
