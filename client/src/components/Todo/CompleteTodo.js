@@ -6,6 +6,7 @@ import { TODO_TODAY_REQUEST, TODO_CHECK_REQUEST } from 'redux/types';
 
 // UI Components //
 import Checkbox from '@mui/material/Checkbox';
+import { serveColor } from 'styles/color';
 
 function CompleteTodo({ complete }) {
   const dispatch = useDispatch();
@@ -62,7 +63,12 @@ function CompleteTodo({ complete }) {
                     defaultChecked
                     onChange={() => onSubmit(todo.todo_id)}
                   />
-                  <div className="p-2">{todo.todo_title}</div>
+                  <div
+                    className="p-2 line-through"
+                    style={{ color: serveColor }}
+                  >
+                    {todo.todo_title}
+                  </div>
                 </div>
               </div>
             );

@@ -33,6 +33,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import { pointColor } from 'styles/color';
+import SearchModal from 'components/Search/SearchModal';
 
 // Icon //
 import GongImg from 'assets/img/ms-icon-70x70.png';
@@ -103,7 +104,15 @@ function Header() {
           </a>
         </div>
         <div class="flex-none hidden lg:block">
-          <SearchIcon style={{ fontSize: '1.7em', color: pointColor }} />
+          <span>
+            <label for="search-modal" class="modal-button">
+              <SearchIcon
+                className="cursor-pointer"
+                style={{ fontSize: '1.7em', color: pointColor }}
+              />
+            </label>
+            <SearchModal />
+          </span>
           <Button
             className="text-2xl"
             aria-controls={open ? 'basic-menu' : undefined}
