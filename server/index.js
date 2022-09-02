@@ -78,8 +78,8 @@ function countRoom(roomName) {
   return wsServer.sockets.adapter.rooms.get(roomName)?.size;
 }
 wsServer.on('connection', (socket) => {
-  console.log(wsServer.sockets.adapter);
-  socket.on('join_room', async (roomName, done) => {
+  // console.log(wsServer.sockets.adapter);
+  socket.on('join_room', (roomName, done) => {
     socket.join(roomName);
     socket.to(roomName).emit('welcome');
   });
