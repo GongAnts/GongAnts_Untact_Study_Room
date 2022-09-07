@@ -19,10 +19,12 @@ function CalendarEditModal({
   schedule_id,
   schedule_title,
   schedule_description,
+  schedule_priority,
   schedule_date,
 }) {
   const [title, setTitle] = useState(`${schedule_title}`);
   const [description, setDescription] = useState(`${schedule_description}`);
+  const [priority, setPriority] = useState(`${schedule_priority}`);
   const [date, setDate] = useState(schedule_date.slice(0, 16));
   const [titleError, setTitleError] = useState(false);
 
@@ -48,7 +50,14 @@ function CalendarEditModal({
   const onUpdate = () => {
     const yyyymmdd = date.split('T')[0].replaceAll('-', '');
     const time = date.split('T')[1].replaceAll(':', '');
-    const data = { id: schedule_id, date: yyyymmdd, time, title, description };
+    const data = {
+      id: schedule_id,
+      date: yyyymmdd,
+      time,
+      title,
+      description,
+      priority,
+    };
     if (checkValid() === false) {
       dispatch({
         type: SCHEDULE_UPDATE_REQUEST,
@@ -92,6 +101,20 @@ function CalendarEditModal({
             </div>
             <div className="flex flex-col pt-3 items-center justify-space w-2/5">
               <Datepicker setDate={setDate} date={date} />
+              <select
+                className="select w-64 mt-4"
+                value={priority}
+                onChange={(e) => {
+                  setPriority(e.target.value);
+                }}
+              >
+                <option disabled selected>
+                  중요도를 선택하세요
+                </option>
+                <option value="상">상</option>
+                <option value="중">중</option>
+                <option value="하">하</option>
+              </select>
               <textarea
                 className="textarea mt-4"
                 placeholder="상세 메모"
