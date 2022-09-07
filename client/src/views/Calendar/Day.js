@@ -34,6 +34,7 @@ const Day = ({ dateInfo, className }) => {
             schedule_id={s.schedule_id}
             schedule_title={s.schedule_title}
             schedule_date={s.schedule_date}
+            schedule_priority={s.schedule_priority}
             schedule_description={s.schedule_description}
           />
         )}
