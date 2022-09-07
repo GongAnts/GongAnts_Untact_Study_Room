@@ -24,13 +24,13 @@ socketadmin.instrument(wsServer, {
 });
 
 // routing
-const signupRouter = require('./routes/signup');
-const scheduleRouter = require('./routes/schedule');
-const studytimeRouter = require('./routes/studytime');
-const todoRouter = require('./routes/todo');
+const signupRouter = require('./src/api/signup');
+const scheduleRouter = require('./src/route/schedule');
+const studytimeRouter = require('./src/route/studytime');
+const todoRouter = require('./src/api/todo');
 
 // db setting
-const main_db = require('./config/db');
+const main_db = require('./src/config/db');
 const session_db = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
