@@ -24,13 +24,14 @@ socketadmin.instrument(wsServer, {
 });
 
 // routing
-const signupRouter = require('./routes/signup');
-const scheduleRouter = require('./routes/schedule');
-const studytimeRouter = require('./routes/studytime');
-const todoRouter = require('./routes/todo');
+const signupRouter = require('./src/route/auth');
+const scheduleRouter = require('./src/route/schedule');
+const studytimeRouter = require('./src/route/studytime');
+const todoRouter = require('./src/route/todo');
+const friendRouter = require('./src/route/friend');
 
 // db setting
-const main_db = require('./config/db');
+const main_db = require('./src/config/db');
 const session_db = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -249,10 +250,11 @@ app.post(
   },
 );
 
-app.use('/auth/signup', signupRouter);
+app.use('/auth', signupRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
+app.use('/friend', friendRouter);
 
 httpServer.listen(SERVER_PORT, () => {
   console.log(`Server On : http://${SERVER_HOST}:${SERVER_PORT}/`);
