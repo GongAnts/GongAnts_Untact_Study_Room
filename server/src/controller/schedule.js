@@ -75,30 +75,28 @@ const getDetailScheduleController = (req, res) => {
 const postScheduleController = (req, res) => {
   const dto = {
     userId: req.user.user_id,
-    year: Number(req.body.date.substring(0, 4)),
-    month: Number(req.body.date.substring(4, 6)),
-    day: Number(req.body.date.substring(6, 8)),
-    hour: Number(req.body.time.substring(0, 2)),
-    minute: Number(req.body.time.substring(2, 4)),
+    date:
+      req.body.date.substring(0, 4) +
+      '-' +
+      req.body.date.substring(5, 7) +
+      '-' +
+      req.body.date.substring(8, 10) +
+      ' ' +
+      req.body.time.substring(0, 2) +
+      ':' +
+      req.body.time.substring(3, 5) +
+      ':00',
     title: req.body.title,
     description: req.body.description,
     priority: req.body.priority,
   };
+
   if (!dto.userId)
     return res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
-  if (
-    !dto.year ||
-    !dto.month ||
-    !dto.day ||
-    !dto.hour ||
-    !dto.minute ||
-    !dto.title ||
-    !dto.description ||
-    !dto.priority
-  )
+  if (!dto.date || !dto.title || !dto.description || !dto.priority)
     return res.status(statusCode.BAD_REQUEST).send('Bad Request');
 
-  service.postSchduleService(dto, (err, data) => {
+  service.postScheduleService(dto, (err, data) => {
     if (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     } else {
@@ -111,11 +109,17 @@ const postScheduleController = (req, res) => {
 const putScheduleController = (req, res) => {
   const dto = {
     id: req.body.id,
-    year: Number(req.body.date.substring(0, 4)),
-    month: Number(req.body.date.substring(4, 6)),
-    day: Number(req.body.date.substring(6, 8)),
-    hour: Number(req.body.time.substring(0, 2)),
-    minute: Number(req.body.time.substring(2, 4)),
+    date:
+      req.body.date.substring(0, 4) +
+      '-' +
+      req.body.date.substring(5, 7) +
+      '-' +
+      req.body.date.substring(8, 10) +
+      ' ' +
+      req.body.time.substring(0, 2) +
+      ':' +
+      req.body.time.substring(3, 5) +
+      ':00',
     title: req.body.title,
     description: req.body.description,
     check: req.body.check,
@@ -123,7 +127,7 @@ const putScheduleController = (req, res) => {
   };
   if (!dto.id) return res.status(statusCode.BAD_REQUEST).send('Bad Request');
 
-  service.postSchduleService(dto, (err, data) => {
+  service.putScheduleService(dto, (err, data) => {
     if (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     } else {
@@ -139,7 +143,7 @@ const deleteScheduleController = (req, res) => {
   };
   if (!dto.id) return res.status(statusCode.BAD_REQUEST).send('Bad Request');
 
-  service.postSchduleService(dto, (err, data) => {
+  service.deleteScheduleService(dto, (err, data) => {
     if (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     } else {
