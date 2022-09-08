@@ -24,10 +24,10 @@ socketadmin.instrument(wsServer, {
 });
 
 // routing
-const signupRouter = require('./src/api/signup');
+const signupRouter = require('./src/route/auth');
 const scheduleRouter = require('./src/route/schedule');
 const studytimeRouter = require('./src/route/studytime');
-const todoRouter = require('./src/api/todo');
+const todoRouter = require('./src/route/todo');
 
 // db setting
 const main_db = require('./src/config/db');
@@ -249,7 +249,7 @@ app.post(
   },
 );
 
-app.use('/auth/signup', signupRouter);
+app.use('/auth', signupRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
