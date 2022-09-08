@@ -28,6 +28,7 @@ const signupRouter = require('./src/route/auth');
 const scheduleRouter = require('./src/route/schedule');
 const studytimeRouter = require('./src/route/studytime');
 const todoRouter = require('./src/route/todo');
+const friendRouter = require('./src/route/friend');
 
 // db setting
 const main_db = require('./src/config/db');
@@ -253,6 +254,7 @@ app.use('/auth', signupRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
+app.use('/friend', friendRouter);
 
 httpServer.listen(SERVER_PORT, () => {
   console.log(`Server On : http://${SERVER_HOST}:${SERVER_PORT}/`);
