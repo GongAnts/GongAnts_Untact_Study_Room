@@ -23,7 +23,6 @@ const getMonthlyScheduleDao = (dto, callback) => {
     `
     SELECT * FROM schedule WHERE user_id = ? \
     AND DATE_FORMAT(schedule_date, '%Y-%c') BETWEEN '?-?' AND '?-?' \
-    SELECT * FROM schedule WHERE user_id = ?
     `,
     [
       dto.userId,
@@ -72,7 +71,7 @@ const getDetailScheduleDao = (dto, callback) => {
       if (err) {
         return callback(err);
       } else {
-        return callback(null, rows);
+        return callback(null, rows[0]);
       }
     },
   );
@@ -82,25 +81,15 @@ const getDetailScheduleDao = (dto, callback) => {
 const postScheduleDao = (dto, callback) => {
   db.query(
     `
-      INSERT INTO schedule(user_id, schedule_title, schedule_date, schedule_priority, schedule_description ) \
-      VALUES(?, ?, '?-?-? ?:?:00', ?, ?
+      INSERT INTO schedule(user_id, schedule_title, schedule_description, schedule_date, schedule_priority) \
+      VALUES(?, ?, ?, ?, ?)
       `,
-    [
-      dto.userId,
-      dto.title,
-      dto.year,
-      dto.month,
-      dto.day,
-      dto.hour,
-      dto.minute,
-      dto.priority,
-      dto.decription,
-    ],
+    [dto.userId, dto.title, dto.description, dto.date, dto.priority],
     (err, rows, fields) => {
       if (err) {
         return callback(err);
       } else {
-        return callback(null, rows);
+        return callback(null, dto);
       }
     },
   );
@@ -109,22 +98,11 @@ const postScheduleDao = (dto, callback) => {
 // 일정 수정
 const putScheduleDao = (dto, callback) => {
   db.query(
-    `UPDATE schedule SET schedule_title = ?, schedule_date = '?-?-? ?:?:00', \
+    `UPDATE schedule SET schedule_title = ?, schedule_date = ?, \
       schedule_check = ?, schedule_priority = ?,\
       schedule_description = ? WHERE schedule_id = ?
       `,
-    [
-      dto.title,
-      dto.year,
-      dto.month,
-      dto.day,
-      dto.hour,
-      dto.minute,
-      dto.check,
-      dto.priority,
-      dto.decription,
-      dto.id,
-    ],
+    [dto.title, dto.date, dto.check, dto.priority, dto.description, dto.id],
     (err, rows, fields) => {
       if (err) {
         return callback(err);
