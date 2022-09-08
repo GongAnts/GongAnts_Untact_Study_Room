@@ -5,7 +5,7 @@ const service = require('../service/schedule');
 const getAllScheduleController = (req, res) => {
   const dto = { userId: req.user.user_id };
   if (!dto.userId) {
-    return res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
+    res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
   }
 
   service.getAllScheduleService(dto, (err, data) => {
@@ -25,10 +25,11 @@ const getMonthlyScheduleController = (req, res) => {
     month: req.query.month,
   };
   if (!dto.userId) {
-    return res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
+    res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
   }
-  if (!dto.year || !dto.month)
-    return res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  if (!dto.year || !dto.month) {
+    res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  }
 
   service.getMonthlyScheduleService(dto, (err, data) => {
     if (err) {
@@ -43,7 +44,7 @@ const getMonthlyScheduleController = (req, res) => {
 const getTodayScheduleController = (req, res) => {
   const dto = { userId: req.user.user_id };
   if (!dto.userId) {
-    return res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
+    res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
   }
 
   service.getTodayScheduleService(dto, (err, data) => {
@@ -59,7 +60,7 @@ const getTodayScheduleController = (req, res) => {
 const getDetailScheduleController = (req, res) => {
   const dto = { scheduleId: req.query.id };
   if (!dto.scheduleId) {
-    return res.status(statusCode.BAD_REQUEST).send('Bad Request');
+    res.status(statusCode.BAD_REQUEST).send('Bad Request');
   }
 
   service.getDetailScheduleService(dto, (err, data) => {
@@ -91,10 +92,12 @@ const postScheduleController = (req, res) => {
     priority: req.body.priority,
   };
 
-  if (!dto.userId)
-    return res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
-  if (!dto.date || !dto.title || !dto.description || !dto.priority)
-    return res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  if (!dto.userId) {
+    res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
+  }
+  if (!dto.date || !dto.title || !dto.description || !dto.priority) {
+    res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  }
 
   service.postScheduleService(dto, (err, data) => {
     if (err) {
@@ -125,7 +128,9 @@ const putScheduleController = (req, res) => {
     check: req.body.check,
     priority: req.body.priority,
   };
-  if (!dto.id) return res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  if (!dto.id) {
+    res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  }
 
   service.putScheduleService(dto, (err, data) => {
     if (err) {
@@ -141,7 +146,9 @@ const deleteScheduleController = (req, res) => {
   const dto = {
     id: req.query.id,
   };
-  if (!dto.id) return res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  if (!dto.id) {
+    res.status(statusCode.BAD_REQUEST).send('Bad Request');
+  }
 
   service.deleteScheduleService(dto, (err, data) => {
     if (err) {

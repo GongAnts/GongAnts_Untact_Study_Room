@@ -12,7 +12,7 @@ const postSignupController = (req, res) => {
     password: req.body.user_password,
   };
   if (!dto.id || !dto.name || !dto.email || !dto.password) {
-    return res.status(statusCode.BAD_REQUEST).send('Bad Request');
+    res.status(statusCode.BAD_REQUEST).send('Bad Request');
   }
 
   service.postSignupService(dto, (err, data) => {
