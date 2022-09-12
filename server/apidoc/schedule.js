@@ -109,8 +109,8 @@
  * @apiName 일정 추가
  * @apiGroup Schedule
  * @apiDescription 새로운 일정을 추가합니다. (로그인 상태에서만 가능합니다. | check 완료 -> 1, 미완료 -> 0)
- * @apiBody {String} date 일정 년월일(*)(ex. "20220505")
- * @apiBody {String} time 일정 시분(*)(ex. "0216")
+ * @apiBody {String} date 일정 년월일(*)(ex. "2022-05-05")
+ * @apiBody {String} time 일정 시분(*)(ex. "02:16")
  * @apiBody {String} title 일정 제목(*)
  * @apiBody {String} description 일정 설명
  * @apiBody {String} check 일정 완료 여부
@@ -141,8 +141,8 @@
  * @apiGroup Schedule
  * @apiDescription 기존 일정을 수정합니다. (로그인 상태에서만 가능합니다. | check 완료 -> 1, 미완료 -> 0)
  * @apiBody {String} id 일정 아이디
- * @apiBody {String} date 일정 년월일(*)(ex. "20220505")
- * @apiBody {String} time 일정 시분(*)(ex. "0216")
+ * @apiBody {String} date 일정 년월일(*)(ex. "2022-05-05")
+ * @apiBody {String} time 일정 시분(*)(ex. "02:16")
  * @apiBody {String} title 일정 제목(*)
  * @apiBody {String} description 일정 설명
  * @apiBody {String} check 일정 완료 여부(*)
