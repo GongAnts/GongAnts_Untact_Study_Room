@@ -2,7 +2,7 @@ import React from 'react';
 
 import Paper from '@mui/material/Paper';
 
-export default function Friends() {
+export default function Friends({ user_email, user_name }) {
   return (
     <Paper
       variant="outlined"
@@ -15,8 +15,8 @@ export default function Friends() {
     >
       <img src="https://picsum.photos/50/50" />
       <div className="mx-3">
-        <p>친구 이름</p>
-        <p>abc@naver.com</p>
+        <p>{user_name}</p>
+        <p>{user_email}</p>
       </div>
     </Paper>
   );

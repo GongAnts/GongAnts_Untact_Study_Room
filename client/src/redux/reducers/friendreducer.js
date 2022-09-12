@@ -15,9 +15,9 @@ const initialState = {
 
 const friendreducer = (state = initialState, action) => {
   switch (action.type) {
-    case FRIENDS_SEARCH_REQUEST:
+    case FRIENDS_SEARCH_SUCCESS:
       return {
-        friendsSearch: action.payload,
+        friendsSearch: [action.payload],
       };
     default:
       return {

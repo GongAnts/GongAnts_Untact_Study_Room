@@ -11,13 +11,13 @@ import {
 } from '../types';
 
 // friends search
-const friendsearchAPI = (data) => {
+const friendsearchAPI = (email) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  return axios.get(`/friend/search?email=${data.email}`, config);
+  return axios.get(`/friend/search?email=${email}`, config);
 };
 
 function* friendsearch(action) {
