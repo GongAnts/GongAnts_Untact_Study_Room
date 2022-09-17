@@ -23,9 +23,3 @@ client/.env
 ### server ###
 server/node_modules/
 server/.env
-server/*.bak
-server/public
-
-### github actions ###
-.github/workflows/sync-gitlab.yml
-
