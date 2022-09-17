@@ -18,7 +18,6 @@ const initialState = {
   fullSchedule: [],
   thisMonthSchedule: [],
   thisMonth: [],
-  isOpenEditPopup: false,
   currentSchedule: null,
   isFilter: false,
 };

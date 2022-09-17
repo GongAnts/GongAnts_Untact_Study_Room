@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Datepicker from './Datepicker';
 
+// UI Components //
 import { LeftOutlined } from '@ant-design/icons';
 import TextField from '@mui/material/TextField';
 
@@ -15,6 +16,7 @@ const AddSchedule = ({ history }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [titleError, setTitleError] = useState(false);
+  const [priority, setPriority] = useState('중');
   const dispatch = useDispatch();
 
   const checkValid = () => {
@@ -29,8 +31,7 @@ const AddSchedule = ({ history }) => {
   const onAddSchedule = () => {
     const yyyymmdd = date.split('T')[0].replaceAll('-', '');
     const time = date.split('T')[1].replaceAll(':', '');
-    // console.log(date);
-    const data = { date: yyyymmdd, time, title, description };
+    const data = { date: yyyymmdd, time, title, description, priority };
     if (checkValid() == false) {
       // console.log(data);
       dispatch({
@@ -71,6 +72,20 @@ const AddSchedule = ({ history }) => {
         )}
         <br />
         <Datepicker setDate={setDate} date={date} />
+        <select
+          className="select w-64 mt-4"
+          value={priority}
+          onChange={(e) => {
+            setPriority(e.target.value);
+          }}
+        >
+          <option disabled selected>
+            중요도를 선택하세요
+          </option>
+          <option value="상">상</option>
+          <option value="중">중</option>
+          <option value="하">하</option>
+        </select>
         <textarea
           className="textarea mt-4"
           placeholder="상세 메모"
