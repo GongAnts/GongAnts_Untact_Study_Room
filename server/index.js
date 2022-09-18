@@ -24,7 +24,7 @@ socketadmin.instrument(wsServer, {
 });
 
 // routing
-const signupRouter = require('./src/route/auth');
+const authRouter = require('./src/route/auth');
 const scheduleRouter = require('./src/route/schedule');
 const studytimeRouter = require('./src/route/studytime');
 const todoRouter = require('./src/route/todo');
@@ -246,11 +246,11 @@ app.post(
     req.session.user = req.user;
     req.session.save();
     console.log('session store..', req.user);
-    // res.redirect('/auth');
+    res.status(200).send(req.session.user);
   },
 );
 
-app.use('/auth', signupRouter);
+app.use('/auth', authRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
