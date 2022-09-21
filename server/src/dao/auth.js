@@ -1,7 +1,24 @@
 const db = require('../config/db');
 
-// 회원가입 - user_id 중복 확인
-const getSignupNameDao = (dto, callback) => {
+// 로그인 - 유저 정보 확인
+const getAuthDao = (dto, callback) => {
+  db.query(
+    `
+    SELECT * FROM user WHERE user_id = ?
+    `,
+    [dto.id],
+    (err, rows, fields) => {
+      if (err) {
+        return callback(err);
+      } else {
+        return callback(null, rows[0]);
+      }
+    },
+  );
+};
+
+// 회원가입 - user_id 확인
+const getSignupIdDao = (dto, callback) => {
   db.query(
     `
     SELECT COUNT(*) AS result FROM user WHERE user_id = ?
@@ -53,7 +70,8 @@ const postSignupDao = (dto, callback) => {
 };
 
 module.exports = {
-  getSignupNameDao,
+  getAuthDao,
+  getSignupIdDao,
   getSignupEmailDao,
   postSignupDao,
 };
