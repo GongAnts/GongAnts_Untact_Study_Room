@@ -39,14 +39,13 @@ const postFriendRequestService = (dto, callback) => {
 
 // 친구 수락
 const putFriendRequestService = (dto, callback) => {
+  if (dto.state == 1) {
+    dao.postFriendDao(dto, function (err, data) {
+      if (err) return callback(err);
+    });
+  }
   dao.putFriendRequestDao(dto, function (err, data) {
-    if (dto.state === 1) {
-      dao.postFriendDao(dto, function (err, data) {
-        return callback(err, data);
-      });
-    } else {
-      return callback(err, data);
-    }
+    return callback(err, data);
   });
 };
 

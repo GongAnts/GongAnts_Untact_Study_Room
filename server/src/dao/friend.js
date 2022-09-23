@@ -110,7 +110,7 @@ const putFriendRequestDao = (dto, callback) => {
 const postFriendDao = (dto, callback) => {
   db.query(
     `
-    INSERT INTO friend(user_email, friend_email) VALUES(?, ?)
+    INSERT INTO friend(user_email, friend_email) VALUES(?, ?), (?, ?)
     `,
     [dto.friendEmail, dto.userEmail, dto.userEmail, dto.friendEmail],
     (err, rows, fields) => {
