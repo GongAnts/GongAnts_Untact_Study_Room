@@ -60,7 +60,7 @@ const postFriendRequestController = (req, res) => {
     if (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     } else {
-      res.status(statusCode.OK);
+      res.status(statusCode.OK).send();
     }
   });
 };
