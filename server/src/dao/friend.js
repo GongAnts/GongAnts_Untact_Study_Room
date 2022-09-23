@@ -89,7 +89,7 @@ const postFriendRequestDao = (dto, callback) => {
   );
 };
 
-// 친구 수락
+// 친구 요청 처리
 const putFriendRequestDao = (dto, callback) => {
   db.query(
     `
@@ -106,7 +106,7 @@ const putFriendRequestDao = (dto, callback) => {
   );
 };
 
-// 친구 수락시 친구 추가
+// 친구 요청 승인 -> friend 테이블에 컬럼 추가
 const postFriendDao = (dto, callback) => {
   db.query(
     `

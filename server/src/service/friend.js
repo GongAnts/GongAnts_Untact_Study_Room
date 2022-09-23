@@ -37,8 +37,9 @@ const postFriendRequestService = (dto, callback) => {
   });
 };
 
-// 친구 수락
+// 친구 요청 처리
 const putFriendRequestService = (dto, callback) => {
+  // 친구 요청 승인 -> 친구 테이블에 친구 컬럼 추가하는 과정
   if (dto.state == 1) {
     dao.postFriendDao(dto, function (err, data) {
       if (err) return callback(err);

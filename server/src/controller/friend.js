@@ -65,7 +65,7 @@ const postFriendRequestController = (req, res) => {
   });
 };
 
-// 친구 수락
+// 친구 요청 처리
 const putFriendRequestController = (req, res) => {
   const dto = {
     userEmail: req.user.user_email,
