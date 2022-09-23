@@ -7,5 +7,6 @@ router.get('/list', controller.getFriendListController);
 router.get('/request', controller.getFriendRequestController);
 router.post('/request', controller.postFriendRequestController);
 router.put('/request', controller.putFriendRequestController);
+router.delete('/', controller.deleteFriendController);
 
 module.exports = router;

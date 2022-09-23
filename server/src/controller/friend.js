@@ -85,10 +85,27 @@ const putFriendRequestController = (req, res) => {
   });
 };
 
+// 친구 삭제
+const deleteFriendController = (req, res) => {
+  const dto = { userEmail: req.user.user_email, friendEmail: req.query.email };
+  if (!dto.userEmail | !dto.friendEmail) {
+    res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
+  }
+
+  service.deleteFriendService(dto, (err, data) => {
+    if (err) {
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
+    } else {
+      res.status(statusCode.OK).send();
+    }
+  });
+};
+
 module.exports = {
   getSearchFriendController,
   getFriendListController,
   getFriendRequestController,
   postFriendRequestController,
   putFriendRequestController,
+  deleteFriendController,
 };

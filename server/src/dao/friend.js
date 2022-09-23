@@ -123,6 +123,24 @@ const postFriendDao = (dto, callback) => {
   );
 };
 
+// 친구 삭제
+const deleteFriendDao = (dto, callback) => {
+  db.query(
+    `
+    DELETE FROM friend WHERE user_email = ? AND friend_email = ?;
+    DELETE FROM friend WHERE user_email = ? AND friend_email = ? 
+    `,
+    [dto.friendEmail, dto.userEmail, dto.userEmail, dto.friendEmail],
+    (err, rows, fields) => {
+      if (err) {
+        return callback(err);
+      } else {
+        return callback(null, rows);
+      }
+    },
+  );
+};
+
 module.exports = {
   getFriendStateDao,
   getSearchFriendDao,
@@ -131,4 +149,5 @@ module.exports = {
   postFriendRequestDao,
   putFriendRequestDao,
   postFriendDao,
+  deleteFriendDao,
 };

@@ -50,10 +50,18 @@ const putFriendRequestService = (dto, callback) => {
   });
 };
 
+// 친구 삭제
+const deleteFriendService = (dto, callback) => {
+  dao.deleteFriendDao(dto, function (err, data) {
+    return callback(err, data);
+  });
+};
+
 module.exports = {
   getSearchFriendService,
   getFriendListService,
   getFriendRequestService,
   postFriendRequestService,
   putFriendRequestService,
+  deleteFriendService,
 };
