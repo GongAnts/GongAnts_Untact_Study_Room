@@ -89,7 +89,7 @@ const postFriendRequestDao = (dto, callback) => {
   );
 };
 
-// 친구 수락
+// 친구 요청 처리
 const putFriendRequestDao = (dto, callback) => {
   db.query(
     `
@@ -106,11 +106,29 @@ const putFriendRequestDao = (dto, callback) => {
   );
 };
 
-// 친구 수락시 친구 추가
+// 친구 요청 승인 -> friend 테이블에 컬럼 추가
 const postFriendDao = (dto, callback) => {
   db.query(
     `
-    INSERT INTO friend(user_email, friend_email) VALUES(?, ?)
+    INSERT INTO friend(user_email, friend_email) VALUES(?, ?), (?, ?)
+    `,
+    [dto.friendEmail, dto.userEmail, dto.userEmail, dto.friendEmail],
+    (err, rows, fields) => {
+      if (err) {
+        return callback(err);
+      } else {
+        return callback(null, rows);
+      }
+    },
+  );
+};
+
+// 친구 삭제
+const deleteFriendDao = (dto, callback) => {
+  db.query(
+    `
+    DELETE FROM friend WHERE user_email = ? AND friend_email = ?;
+    DELETE FROM friend WHERE user_email = ? AND friend_email = ? 
     `,
     [dto.friendEmail, dto.userEmail, dto.userEmail, dto.friendEmail],
     (err, rows, fields) => {
@@ -131,4 +149,5 @@ module.exports = {
   postFriendRequestDao,
   putFriendRequestDao,
   postFriendDao,
+  deleteFriendDao,
 };
