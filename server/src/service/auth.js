@@ -1,10 +1,11 @@
+require('dotenv').config();
 const dao = require('../dao/auth');
 const bcrypt = require('bcrypt');
 
 // 회원가입
 const postSignupService = async (dto, callback) => {
   const saltRounds = 10;
-  dao.getSignupNameDao(dto, function (err, data) {
+  dao.getSignupIdDao(dto, function (err, data) {
     if (err) {
       return callback(err);
     } else {
@@ -24,7 +25,7 @@ const postSignupService = async (dto, callback) => {
             if (!err) {
               dto.hash = hash;
               dao.postSignupDao(dto, function (err, data) {
-                return callback(err, dto);
+                return callback(null, dto);
               });
             } else {
               return callback(err);
