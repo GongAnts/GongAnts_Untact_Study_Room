@@ -95,7 +95,7 @@ const postScheduleController = (req, res) => {
   if (!dto.userId) {
     res.status(statusCode.UNAUTHORIZED).send('Unauthorized');
   }
-  if (!dto.date || !dto.title || !dto.description || !dto.priority) {
+  if (!dto.date || !dto.title || !dto.description) {
     res.status(statusCode.BAD_REQUEST).send('Bad Request');
   }
 
@@ -154,7 +154,7 @@ const deleteScheduleController = (req, res) => {
     if (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     } else {
-      res.status(statusCode.OK);
+      res.status(statusCode.OK).send();
     }
   });
 };
