@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const httpServer = require('http').createServer(app);
 const socketio = require('socket.io');
 const socketadmin = require('@socket.io/admin-ui');
 const cors = require('cors');
@@ -113,7 +112,7 @@ app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
 app.use('/friend', friendRouter);
 
-httpServer.listen(process.env.SERVER_PORT, () => {
+app.listen(process.env.SERVER_PORT, () => {
   console.log(
     `Server On : http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/`,
   );
