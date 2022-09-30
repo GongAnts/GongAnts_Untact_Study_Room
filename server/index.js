@@ -5,6 +5,8 @@ const socketio = require('socket.io');
 const socketadmin = require('@socket.io/admin-ui');
 const cors = require('cors');
 const flash = require('connect-flash');
+const morgan = require('morgan');
+const logger = require('./src/config/logger');
 
 // db setting
 const session_db = {
@@ -43,6 +45,9 @@ app.use(
 );
 
 const passport = require('./src/config/passport/passport')(app);
+
+const morganFormat = process.env.NODE_ENV !== 'production' ? 'dev' : 'combined';
+app.use(morgan(morganFormat, { stream: logger.stream })); // morgan
 
 // admin-socket.io
 // const wsServer = new socketio.Server(httpServer, {
@@ -113,7 +118,7 @@ app.use('/todo', todoRouter);
 app.use('/friend', friendRouter);
 
 app.listen(process.env.SERVER_PORT, () => {
-  console.log(
+  logger.info(
     `Server On : http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/`,
   );
 });
