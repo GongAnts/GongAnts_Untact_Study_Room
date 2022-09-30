@@ -1,6 +1,7 @@
 require('dotenv').config();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const dao = require('../../dao/auth');
+const logger = require('../logger');
 
 // Google AOuth Passport 정의
 module.exports = new GoogleStrategy(
@@ -25,27 +26,28 @@ module.exports = new GoogleStrategy(
     try {
       dao.getSignupEmailDao(dto, function (err, data) {
         if (err) {
+          logger.error(`[googleLogin] ${err}`);
           return cb(err);
         } else {
           // 동일 user_email 존재
           if (data.result > 0) {
-            console.log('이미 존재하는 user_email 입니다.');
+            logger.error('[googleLogin] 이미 존재하는 user_email 입니다.');
             return cb(null, userdata);
           } else {
             dao.postSignupDao(dto, function (err, data) {
               if (err) {
-                console.log('DB 저장 실패');
+                logger.error(`[googleLogin] DB 저장 실패 | ${err}`);
                 return cb(err);
               } else {
-                console.log('DB 저장 성공');
                 return cb(null, userdata);
               }
             });
           }
         }
       });
-    } catch (error) {
-      return cb(error);
+    } catch (err) {
+      logger.error(`[googleLogin] ${err}`);
+      return cb(err);
     }
   },
 );
