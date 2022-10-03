@@ -12,9 +12,9 @@ module.exports = new GoogleStrategy(
   function (accessToken, refreshToken, profile, cb) {
     const userdata = {
       user_id: 'g' + profile.id,
+      user_type: 'google',
       user_name: profile.displayName,
       user_email: profile.emails[0].value,
-      user_google: true,
     };
     const dto = {
       id: 'g' + profile.id,

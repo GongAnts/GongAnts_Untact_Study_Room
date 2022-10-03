@@ -4,7 +4,7 @@ const db = require('../config/db');
 const getSearchFriendDao = (dto, callback) => {
   db.query(
     `
-    SELECT * FROM user WHERE user_email = ?
+    SELECT user_id, user_name, user_email FROM user WHERE user_email = ?
     `,
     [dto.friendEmail],
     (err, rows, fields) => {
@@ -38,7 +38,7 @@ const getFriendStateDao = (dto, callback) => {
 const getFriendListDao = (dto, callback) => {
   db.query(
     `
-    SELECT u.user_email, u.user_name FROM user u \
+    SELECT u.user_id, u.user_name, u.user_email, state FROM user u \
     INNER JOIN friend f ON u.user_email = f.friend_email \
     WHERE f.user_email = ?
     `,
@@ -57,7 +57,7 @@ const getFriendListDao = (dto, callback) => {
 const getFriendRequestDao = (dto, callback) => {
   db.query(
     `
-    SELECT u.user_email, u.user_name FROM user u \
+    SELECT u.user_id, u.user_name, u.user_email FROM user u \
     INNER JOIN friendrequest f ON u.user_email = f.send_email \
     WHERE f.receive_email = ? AND state = 0
     `,
