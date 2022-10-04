@@ -7,7 +7,7 @@
   "sampleUrl": " ",
   "header": {
     "title": "🎉 Welcome GongAnts API",
-    "filename": "./src/apidoc/apidocHeader.md"
+    "filename": "./src/apidoc/header.md"
   },
   "order": [
     "Auth",
