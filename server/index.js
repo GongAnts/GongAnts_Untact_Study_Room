@@ -1,11 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const httpServer = require('http').createServer(app);
 const socketio = require('socket.io');
 const socketadmin = require('@socket.io/admin-ui');
 const cors = require('cors');
 const flash = require('connect-flash');
+const morgan = require('morgan');
+const morganFormat = process.env.NODE_ENV !== 'production' ? 'dev' : 'combined';
+
+const logger =
+  process.env.NODE_ENV === 'production'
+    ? require('./src/config/productionLogger')
+    : require('./src/config/devLogger');
 
 // db setting
 const session_db = {
@@ -45,60 +51,7 @@ app.use(
 
 const passport = require('./src/config/passport/passport')(app);
 
-// admin-socket.io
-// const wsServer = new socketio.Server(httpServer, {
-//   cors: {
-//     origin: ['https://admin.socket.io'],
-//     credentials: true,
-//   },
-// });
-
-// socketadmin.instrument(wsServer, {
-//   auth: false, // pw
-// });
-
-// function publicRooms() {
-//   // const sids = wsServer.sockets.adapter.sids;
-//   // const rooms = wsServer.sockets.adapter.rooms;
-
-//   console.log(wsServer.sockets.adapter.rooms);
-//   const {
-//     sockets: {
-//       adapter: { sids, rooms },
-//     },
-//   } = wsServer;
-
-//   const publicRooms = [];
-//   rooms.forEach((_, key) => {
-//     // key 가 있으면 public room
-//     if (sids.get(key) === undefined) {
-//       publicRooms.push(key);
-//     }
-//   });
-//   return publicRooms;
-// }
-
-// function countRoom(roomName) {
-//   return wsServer.sockets.adapter.rooms.get(roomName)?.size;
-// }
-// wsServer.on('connection', (socket) => {
-//   // console.log(wsServer.sockets.adapter);
-//   socket.on('join_room', (roomName, done) => {
-//     socket.join(roomName);
-//     socket.to(roomName).emit('welcome');
-//   });
-
-//   socket.on('offer', (offer, roomName) => {
-//     socket.to(roomName).emit('offer', offer);
-//   });
-
-//   socket.on('answer', (answer, roomName) => {
-//     socket.to(roomName).emit('answer', answer);
-//   });
-//   socket.on('ice', (ice, roomName) => {
-//     socket.to(roomName).emit('ice', ice);
-//   });
-// }app.use(express.json());
+app.use(morgan(morganFormat, { stream: logger.stream }));
 
 // routing
 const authRouter = require('./src/route/auth')(passport);
@@ -113,8 +66,8 @@ app.use('/studytime', studytimeRouter);
 app.use('/todo', todoRouter);
 app.use('/friend', friendRouter);
 
-httpServer.listen(process.env.SERVER_PORT, () => {
-  console.log(
+app.listen(process.env.SERVER_PORT, () => {
+  logger.info(
     `Server On : http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/`,
   );
 });

@@ -15,6 +15,7 @@
   "dependencies": {
     "@socket.io/admin-ui": "^0.4.0",
     "apidoc": "^0.51.0",
+    "app-root-path": "^3.1.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -29,13 +30,17 @@
     "google-auth-library": "^7.9.2",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "passport": "^0.5.0",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
-    "pm2": "^5.2.0",
+    "s3-streamlogger": "^1.7.0",
     "session-file-store": "^1.5.0",
     "socket.io": "^4.5.1",
+    "strftime": "^0.10.1",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1",
     "ws": "^8.8.0"
   },
   "devDependencies": {
