@@ -17,9 +17,9 @@ import { Button, Select } from 'antd';
 
 const SERVER_HOST = process.env.SERVER_HOST || 'localhost';
 const SERVER_PORT = process.env.SERVER_PORT || 4000;
-const socket = io(`http://${SERVER_HOST}:${SERVER_PORT}`, {
-  transports: ['websocket', 'polling', 'flashsocket'],
-});
+// const socket = io(`http://${SERVER_HOST}:${SERVER_PORT}`, {
+// transports: ['websocket', 'polling', 'flashsocket'],
+// });
 
 function RoomEnter(req) {
   const myFaceSrc = useRef(null);
@@ -119,51 +119,51 @@ function RoomEnter(req) {
     return;
   }
 
-  async function handleCameraChange() {
-    await getMedia(camerasSelect.value);
-    console.log('handle!');
-    if (myPeerConnection) {
-      const videoTrack = myStream.getVideoTracks()[0];
-      const videoSender = myPeerConnection
-        .getSenders()
-        .find((sender) => sender.track.kind == 'video');
-      videoSender.replaceTrack(videoTrack);
-    }
-  }
+  // async function handleCameraChange() {
+  //   await getMedia(camerasSelect.value);
+  //   console.log('handle!');
+  //   if (myPeerConnection) {
+  //     const videoTrack = myStream.getVideoTracks()[0];
+  //     const videoSender = myPeerConnection
+  //       .getSenders()
+  //       .find((sender) => sender.track.kind == 'video');
+  //     videoSender.replaceTrack(videoTrack);
+  //   }
+  // }
 
-  async function initCall() {
-    console.log('room-name', roomName);
-    socket.emit('join_room', roomName);
-    await getMedia();
-    makeConnection();
-  }
+  // async function initCall() {
+  //   console.log('room-name', roomName);
+  //   // socket.emit('join_room', roomName);
+  //   await getMedia();
+  //   makeConnection();
+  // }
 
-  socket.on('welcome', async () => {
-    const offer = await myPeerConnection.createOffer();
-    myPeerConnection.setLocalDescription(offer);
-    console.log('someone joined!');
-    console.log('sent the offer');
-    socket.emit('offer', offer, roomName);
-  });
+  // socket.on('welcome', async () => {
+  //   const offer = await myPeerConnection.createOffer();
+  //   myPeerConnection.setLocalDescription(offer);
+  //   console.log('someone joined!');
+  //   console.log('sent the offer');
+  //   socket.emit('offer', offer, roomName);
+  // });
 
-  socket.on('offer', async (offer) => {
-    console.log('received the offer');
-    myPeerConnection.setRemoteDescription(offer);
-    const answer = await myPeerConnection.createAnswer();
-    myPeerConnection.setLocalDescription(answer);
-    socket.emit('answer', answer, roomName);
-    console.log('sent the answer');
-  });
+  // socket.on('offer', async (offer) => {
+  //   console.log('received the offer');
+  //   myPeerConnection.setRemoteDescription(offer);
+  //   const answer = await myPeerConnection.createAnswer();
+  //   myPeerConnection.setLocalDescription(answer);
+  //   socket.emit('answer', answer, roomName);
+  //   console.log('sent the answer');
+  // });
 
-  socket.on('answer', (answer) => {
-    console.log('received the answer');
-    myPeerConnection.setRemoteDescription(answer);
-  });
+  // socket.on('answer', (answer) => {
+  //   console.log('received the answer');
+  //   myPeerConnection.setRemoteDescription(answer);
+  // });
 
-  socket.on('ice', (ice) => {
-    console.log('received candidate');
-    myPeerConnection.addIceCandidate(ice);
-  });
+  // socket.on('ice', (ice) => {
+  //   console.log('received candidate');
+  //   myPeerConnection.addIceCandidate(ice);
+  // });
 
   // RTC Code
 
@@ -178,7 +178,7 @@ function RoomEnter(req) {
   }
 
   function handleIce(data) {
-    socket.emit('ice', data.candidate, roomName);
+    // socket.emit('ice', data.candidate, roomName);
     console.log('sent candidate');
   }
 
