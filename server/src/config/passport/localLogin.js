@@ -1,7 +1,10 @@
 const LocalStrategy = require('passport-local').Strategy;
 const dao = require('../../dao/auth');
 const bcrypt = require('bcrypt');
-const logger = require('../logger');
+const logger =
+  process.env.NODE_ENV === 'production'
+    ? require('../productionLogger')
+    : require('..//devLogger');
 
 // Local Passport 정의
 module.exports = new LocalStrategy(

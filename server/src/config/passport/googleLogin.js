@@ -1,7 +1,10 @@
 require('dotenv').config();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const dao = require('../../dao/auth');
-const logger = require('../logger');
+const logger =
+  process.env.NODE_ENV === 'production'
+    ? require('../productionLogger')
+    : require('../devLogger');
 
 // Google AOuth Passport 정의
 module.exports = new GoogleStrategy(
