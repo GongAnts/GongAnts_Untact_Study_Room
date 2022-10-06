@@ -2,18 +2,13 @@ require('dotenv').config();
 const winston = require('winston');
 const winstonDaily = require('winston-daily-rotate-file');
 const S3StreamLogger = require('s3-streamlogger').S3StreamLogger;
-const strftime = require('strftime');
-
-const strftimeKOR = strftime.timezone('+0900');
 
 function s3_stream(level) {
-  const time_data = strftimeKOR('%F %T', new Date()); // set Time in Seoul, South Korea
-
   return new S3StreamLogger({
     bucket: `${process.env.BUCKET_NAME}`,
     tags: { type: 'log', version: `${process.env.VERSION}` },
     folder: `${level}`,
-    name_format: `${time_data}.log`,
+    rotate_every: 86400000,
     access_key_id: `${process.env.ACCESS_KEY_ID}`,
     secret_access_key: `${process.env.SECRET_ACCESS_KEY}`,
   });
