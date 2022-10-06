@@ -8,6 +8,7 @@ function s3_stream(level) {
     bucket: `${process.env.BUCKET_NAME}`,
     tags: { type: 'log', version: `${process.env.VERSION}` },
     folder: `${level}`,
+    name_format: '%F %T.log',
     rotate_every: 86400000,
     access_key_id: `${process.env.ACCESS_KEY_ID}`,
     secret_access_key: `${process.env.SECRET_ACCESS_KEY}`,
