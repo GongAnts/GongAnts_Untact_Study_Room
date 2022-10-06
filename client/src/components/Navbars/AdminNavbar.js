@@ -77,6 +77,14 @@ function Header() {
     setAnchorEl(null);
   };
 
+  const onClickProfile = () => {
+    if (history.location.pathname === '/profile') {
+      handleClose();
+    } else {
+      history.push('/profile');
+    }
+  };
+
   return (
     <div class="drawer-content flex flex-col">
       <div class="w-full navbar bg-base-200 drop-shadow-lg">
@@ -133,7 +141,7 @@ function Header() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={onClickProfile}>Profile</MenuItem>
             <MenuItem onClick={onLogout}>Logout</MenuItem>
           </Menu>
         </div>
