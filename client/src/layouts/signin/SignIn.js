@@ -17,7 +17,7 @@ import iconImage from 'assets/img/ms-icon-70x70.png';
 
 function SignIn(req) {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const serverURL = `${process.env.SERREACT_APP_BASIC_SERVER_URL}/auth/google`;
+  const serverURL = `${process.env.REACT_APP_BASIC_SERVER_URL}/auth/google`;
 
   const [form, setValue] = useState({
     user_id: '',
