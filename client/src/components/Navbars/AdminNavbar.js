@@ -26,14 +26,17 @@ import { push } from 'react-router-redux';
 import axios from 'axios';
 import routes from 'routes.js';
 
+import SearchModal from 'components/Search/SearchModal';
+import NotificaitonModal from 'components/Friends/NotificaitonModal';
+
 // UI Components //
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { pointColor } from 'styles/color';
-import SearchModal from 'components/Search/SearchModal';
 
 // Icon //
 import GongImg from 'assets/img/ms-icon-70x70.png';
@@ -77,14 +80,6 @@ function Header() {
     setAnchorEl(null);
   };
 
-  const onClickProfile = () => {
-    if (history.location.pathname === '/profile') {
-      handleClose();
-    } else {
-      history.push('/profile');
-    }
-  };
-
   return (
     <div class="drawer-content flex flex-col">
       <div class="w-full navbar bg-base-200 drop-shadow-lg">
@@ -112,6 +107,15 @@ function Header() {
           </a>
         </div>
         <div class="flex-none hidden lg:block">
+          <span>
+            <label for="notification-modal" class="modal-button">
+              <NotificationsNoneIcon
+                className="cursor-pointer mx-3"
+                style={{ fontSize: '1.7em', color: pointColor }}
+              />
+            </label>
+            <NotificaitonModal />
+          </span>
           <span>
             <label for="search-modal" class="modal-button">
               <SearchIcon
@@ -141,7 +145,7 @@ function Header() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={onClickProfile}>Profile</MenuItem>
+            <MenuItem>Profile</MenuItem>
             <MenuItem onClick={onLogout}>Logout</MenuItem>
           </Menu>
         </div>

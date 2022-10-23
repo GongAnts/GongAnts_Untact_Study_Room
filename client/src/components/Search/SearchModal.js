@@ -21,19 +21,22 @@ export default function SearchModal() {
     });
   };
 
-  const friendSearchList = friendsSearch.map((fs) => (
-    <Friends
-      key={fs.user_id}
-      user_email={fs.user_email}
-      user_name={fs.user_name}
-    />
-  ));
+  const friendSearchList = friendsSearch
+    ? friendsSearch.map((fs) => (
+        <Friends
+          key={fs.user_id}
+          user_email={fs.user_email}
+          user_name={fs.user_name}
+          state={fs.state}
+        />
+      ))
+    : () => {};
 
   return (
     <>
-      <input type="checkbox" id="search-modal" class="modal-toggle" />
-      <label for="search-modal" class="modal cursor-pointer">
-        <label class="modal-box relative" for="">
+      <input type="checkbox" id="search-modal" className="modal-toggle" />
+      <label for="search-modal" className="modal cursor-pointer">
+        <label className="modal-box relative" for="">
           <Paper
             component="form"
             elevation={0}
@@ -63,7 +66,7 @@ export default function SearchModal() {
               />
             </IconButton>
           </Paper>
-          <p class="py-4">{friendsSearch && friendSearchList}</p>
+          <p className="py-4">{friendsSearch && friendSearchList}</p>
         </label>
       </label>
     </>

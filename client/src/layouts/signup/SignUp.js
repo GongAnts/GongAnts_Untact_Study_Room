@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { REGISTER_REQUEST } from 'redux/types.js';
 
+import { useLocation } from 'react-router-dom';
+
 // UI components //
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LockIcon from '@mui/icons-material/Lock';
@@ -10,6 +12,7 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import Button from '@mui/material/Button';
 
 function SignUp() {
+  const location = useLocation();
   const [form, setValue] = useState({
     user_id: '',
     user_name: '',
@@ -42,6 +45,8 @@ function SignUp() {
           type: REGISTER_REQUEST,
           payload: user,
         });
+
+        location.pathname = '/auth/signin';
       }
     },
     [form, dispatch],

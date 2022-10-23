@@ -14,7 +14,6 @@ import AdminLayout from 'layouts/Admin.js';
 import SignIn from 'layouts/signin/SignIn.js';
 import SignUp from 'layouts/signup/SignUp.js';
 import AddSchedule from 'views/Calendar/AddSchedule';
-import Profile from 'layouts/Profile/Profile';
 import PrivateRoute from 'components/Auth/PrivateRoute';
 
 // Theme //
@@ -48,7 +47,6 @@ const App = () => {
           {isAuthenticated ? <Redirect to="/admin/dashboard" /> : <SignIn />}
         </Route>
         <Route path="/addschedule" component={AddSchedule} />
-        <Route path="/profile" component={Profile} />
       </Switch>
     </ThemeProvider>
   );
