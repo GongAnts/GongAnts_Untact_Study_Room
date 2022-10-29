@@ -25,16 +25,16 @@ const friendreducer = (state = initialState, action) => {
       };
     case FRIENDS_LIST_SUCCESS:
       return {
+        ...state,
         friendsList: action.payload,
       };
     case FRIENDS_RQLIST_SUCCESS:
       return {
+        ...state,
         friendsRequest: action.payload,
       };
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };
 

@@ -58,7 +58,7 @@ const friendSendAPI = (body) => {
 function* friendSend(action) {
   try {
     const result = yield call(friendSendAPI, action.payload);
-    console.log(result.data);
+
     yield put({
       type: FRIENDS_SEND_SUCCESS,
       payload: result.data,
@@ -88,6 +88,7 @@ const friendRQlistAPI = (body) => {
 function* friendRQlist(action) {
   try {
     const result = yield call(friendRQlistAPI, action.payload);
+    console.log(result.data);
     yield put({
       type: FRIENDS_RQLIST_SUCCESS,
       payload: result.data,
@@ -112,7 +113,6 @@ const friendlistAPI = () => {
 function* friendlist(action) {
   try {
     const result = yield call(friendlistAPI, action.payload);
-    console.log(result.data);
     yield put({
       type: FRIENDS_LIST_SUCCESS,
       payload: result.data,

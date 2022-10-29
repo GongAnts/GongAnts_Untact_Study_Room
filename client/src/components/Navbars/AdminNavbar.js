@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component, useState, useCallback } from 'react';
+import React, { Component, useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 
@@ -108,7 +108,7 @@ function Header() {
         </div>
         <div class="flex-none hidden lg:block">
           <span>
-            <label for="notification-modal" class="modal-button">
+            <label for="notification-modal" className="modal-button">
               <NotificationsNoneIcon
                 className="cursor-pointer mx-3"
                 style={{ fontSize: '1.7em', color: pointColor }}
@@ -117,7 +117,7 @@ function Header() {
             <NotificaitonModal />
           </span>
           <span>
-            <label for="search-modal" class="modal-button">
+            <label for="search-modal" className="modal-button">
               <SearchIcon
                 className="cursor-pointer"
                 style={{ fontSize: '1.7em', color: pointColor }}

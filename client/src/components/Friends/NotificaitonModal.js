@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FRIENDS_RQLIST_REQUEST } from 'redux/types';
+import Paper from '@mui/material/Paper';
 
 export default function NotificaitonModal() {
   const dispatch = useDispatch();
   const { friendsRequest } = useSelector((state) => state.friend);
 
-  useEffect(() => {
-    dispatch({
-      type: FRIENDS_RQLIST_REQUEST,
-    });
-  }, []);
-
-  const FriendsRequestList = friendsRequest
-    ? friendsRequest.map((f, idx) => {
-        return <div key={idx}>{f.user_name}</div>;
-      })
-    : () => {};
+  const FriendsRequestList = friendsRequest?.map((f, idx) => {
+    return (
+      <Paper
+        key={idx}
+        variant="outlined"
+        sx={{
+          padding: '12px 20px',
+          display: 'flex',
+          alignItems: 'center',
+          width: 460,
+        }}
+      >
+        <div key={idx}>{f.user_name}님이 친구신청을 했습니다.</div>
+      </Paper>
+    );
+  });
 
   return (
     <>
