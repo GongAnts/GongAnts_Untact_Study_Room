@@ -14,6 +14,12 @@ import {
   FRIENDS_RQLIST_REQUEST,
   FRIENDS_RQLIST_SUCCESS,
   FRIENDS_RQLIST_FAILURE,
+  FRIENDS_DELETE_REQUEST,
+  FRIENDS_DELETE_SUCCESS,
+  FRIENDS_DELETE_FAILURE,
+  FRIENDS_PROCESS_REQUEST,
+  FRIENDS_PROCESS_SUCCESS,
+  FRIENDS_PROCESS_FAILURE,
 } from '../types';
 
 // friends search
@@ -129,11 +135,61 @@ function* watchlistfriends() {
   yield takeEvery(FRIENDS_LIST_REQUEST, friendlist);
 }
 
+// friends delete
+const friendsdeleteAPI = (data) => {
+  return axios.delete(`/friend?email=${data.email}`);
+};
+
+function* friendsDelete(action) {
+  try {
+    const result = yield call(friendsdeleteAPI, action.payload);
+    yield put({
+      type: FRIENDS_DELETE_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: FRIENDS_DELETE_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchfreindsdelete() {
+  yield takeEvery(FRIENDS_DELETE_REQUEST, friendsDelete);
+}
+
+// friends 요청 처리
+const friendsRequestAPI = (data) => {
+  return axios.put(`/friend?email=${data.email}&state=${data.state}`);
+};
+
+function* friendsRequest(action) {
+  try {
+    const result = yield call(friendsRequestAPI, action.payload);
+    yield put({
+      type: FRIENDS_PROCESS_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: FRIENDS_PROCESS_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchfreindsRequest() {
+  yield takeEvery(FRIENDS_PROCESS_REQUEST, friendsRequest);
+}
+
 export default function* friendsaga() {
   yield all([
     fork(watchsearchfriends),
     fork(watchsendfriends),
     fork(watchRQlistfriends),
     fork(watchlistfriends),
+    fork(watchfreindsdelete),
+    fork(watchfreindsRequest),
   ]);
 }

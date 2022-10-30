@@ -8,6 +8,7 @@ import {
   FRIENDS_LIST_REQUEST,
   FRIENDS_LIST_SUCCESS,
   FRIENDS_LIST_FAILURE,
+  FRIENDS_PROCESS_SUCCESS,
 } from 'redux/types';
 
 const initialState = {
