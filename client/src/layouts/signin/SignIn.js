@@ -125,7 +125,7 @@ function SignIn(req) {
                       type="submit"
                       className="w-3/5"
                       variant="contained"
-                      href="/signup"
+                      href="/auth/signup"
                     >
                       회원가입
                     </Button>
