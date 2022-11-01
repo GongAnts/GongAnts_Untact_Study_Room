@@ -29,9 +29,17 @@ const AddSchedule = ({ history }) => {
 
   // 스케줄 추가하기
   const onAddSchedule = () => {
-    const yyyymmdd = date.split('T')[0].replaceAll('-', '');
-    const time = date.split('T')[1].replaceAll(':', '');
-    const data = { date: yyyymmdd, time, title, description, priority };
+    const yyyymmdd = date.split('T')[0];
+    const time = date.split('T')[1];
+    const data = {
+      date: yyyymmdd,
+      time,
+      title,
+      description,
+      check: '0',
+      priority,
+    };
+
     if (checkValid() == false) {
       // console.log(data);
       dispatch({

@@ -17,6 +17,7 @@ import iconImage from 'assets/img/ms-icon-70x70.png';
 
 function SignIn(req) {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const serverURL = `${process.env.REACT_APP_BASIC_SERVER_URL}/auth/google`;
 
   const [form, setValue] = useState({
     user_id: '',
@@ -114,7 +115,7 @@ function SignIn(req) {
                       variant="outlined"
                       color="point"
                       startIcon={<GoogleIcon />}
-                      href="http://localhost:4000/auth/google"
+                      href={serverURL}
                     >
                       구글로 로그인하기
                     </Button>
@@ -124,7 +125,7 @@ function SignIn(req) {
                       type="submit"
                       className="w-3/5"
                       variant="contained"
-                      href="/signup"
+                      href="/auth/signup"
                     >
                       회원가입
                     </Button>

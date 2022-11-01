@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component, useState, useCallback } from 'react';
+import React, { Component, useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 
@@ -26,14 +26,17 @@ import { push } from 'react-router-redux';
 import axios from 'axios';
 import routes from 'routes.js';
 
+import SearchModal from 'components/Search/SearchModal';
+import NotificaitonModal from 'components/Friends/NotificaitonModal';
+
 // UI Components //
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { pointColor } from 'styles/color';
-import SearchModal from 'components/Search/SearchModal';
 
 // Icon //
 import GongImg from 'assets/img/ms-icon-70x70.png';
@@ -105,7 +108,16 @@ function Header() {
         </div>
         <div class="flex-none hidden lg:block">
           <span>
-            <label for="search-modal" class="modal-button">
+            <label for="notification-modal" className="modal-button">
+              <NotificationsNoneIcon
+                className="cursor-pointer mx-3"
+                style={{ fontSize: '1.7em', color: pointColor }}
+              />
+            </label>
+            <NotificaitonModal />
+          </span>
+          <span>
+            <label for="search-modal" className="modal-button">
               <SearchIcon
                 className="cursor-pointer"
                 style={{ fontSize: '1.7em', color: pointColor }}
@@ -133,7 +145,7 @@ function Header() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem>Profile</MenuItem>
             <MenuItem onClick={onLogout}>Logout</MenuItem>
           </Menu>
         </div>

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { openEditPopup } from 'redux/reducers/modules/calendar';
 import CalendarEditModal from 'components/Calendar/CalendarEditModal';
 
-import { baseColor, pointColor } from '../../styles/color';
+import { baseColor, pointColor, serveColor } from '../../styles/color';
 import { D, Plan, PlanArea } from './styles';
 
 const Day = ({ dateInfo, className }) => {
   const [openModal, setOpenModal] = useState(false);
 
-  // const dispatch = useDispatch();
   const schedule = dateInfo.daySch;
 
   schedule.sort((a, b) => a.time - b.time);
@@ -18,7 +16,13 @@ const Day = ({ dateInfo, className }) => {
     return (
       <PlanArea
         key={idx}
-        color={pointColor}
+        color={
+          s.schedule_priority == '상'
+            ? pointColor
+            : s.schedule_priority == '중'
+            ? serveColor
+            : baseColor
+        }
         onClick={() => {
           setOpenModal(true);
         }}
