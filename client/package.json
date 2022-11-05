@@ -21,6 +21,7 @@
     "connected-react-router": "^6.9.1",
     "dotenv": "16.0.1",
     "http-proxy-middleware": "2.0.6",
+    "mediasoup-client": "^3.6.57",
     "moment": "^2.29.1",
     "pm2": "^5.2.0",
     "react": "17.0.1",

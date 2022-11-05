@@ -30,6 +30,7 @@
     "google-auth-library": "^7.9.2",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
+    "mediasoup": "^3.10.10",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "passport": "^0.5.0",
