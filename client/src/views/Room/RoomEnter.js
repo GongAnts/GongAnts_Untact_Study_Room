@@ -1,5 +1,6 @@
 require('dotenv').config();
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, createRef } from 'react';
+import ReactDOM from 'react-dom';
 import { useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
 // import io from 'socket.io-client';
@@ -22,12 +23,29 @@ const SERVER_PORT = process.env.SERVER_PORT || 4000;
 // });
 
 function RoomEnter(req) {
-  const myFaceSrc = useRef(null);
+  let videoRef = useRef(null);
+  let remoteVideoRef = useRef(null);
+  let myFaceSrc = useRef(null);
   const peerFaceSrc = useRef(null);
   const [muted, setmuted] = useState(true);
   const [muteBtn, setmuteBtn] = useState('UnMute');
   const [cameraOff, setcameraOff] = useState(true);
   const [cameraBtn, setcameraBtn] = useState('Turn Camera Off');
+
+  // useEffect(() => {
+  //   const getUserMedia = async () => {
+  //     try {
+  //       const stream = await navigator.mediaDevices.getUserMedia({
+  //         video: true,
+  //       });
+  //       videoRef.current.srcObject = stream;
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getUserMedia();
+  // }, []);
+
   // let options = [];
   //   const location = useLocation();
   //   const roomName = location.state.roomName;
@@ -543,32 +561,10 @@ function RoomEnter(req) {
           },
         ];
 
-        // create a new div element for the new consumer media
-        const newElem = document.createElement('div');
-        newElem.setAttribute('id', `${remoteProducerId}`);
-
-        if (params.kind == 'audio') {
-          //append to the audio container
-          newElem.innerHTML =
-            '<audio id="' + remoteProducerId + '" autoplay></audio>';
-        } else {
-          //append to the video container
-          newElem.setAttribute('class', 'remoteVideo');
-          newElem.innerHTML =
-            '<video id="' +
-            remoteProducerId +
-            '" autoplay class="video" ></video>';
-        }
-
-        videoContainer.appendChild(newElem);
-
         // destructure and retrieve the video track from the producer
         const { track } = consumer;
 
-        document.getElementById(remoteProducerId).srcObject = new MediaStream([
-          track,
-        ]);
-
+        remoteVideoRef.current.srcObject = new MediaStream([track]);
         // the server consumer started with media paused
         // so we need to inform the server to resume
         socket.emit('consumer-resume', {
@@ -596,21 +592,6 @@ function RoomEnter(req) {
     videoContainer.removeChild(document.getElementById(`${remoteProducerId}`));
   });
 
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const getUserMedia = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
-        videoRef.current.srcObject = stream;
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserMedia();
-  }, []);
   // mediasoup end
 
   return (
@@ -666,16 +647,22 @@ function RoomEnter(req) {
           <div className="float-left w-6/12">
             <div class="remoteColumn">
               <h3> remoteColumn </h3>
-              <div id="videoContainer"></div>
+              <div id="videoContainer">
+                <div
+                  className="flex-initial w-full min-w-min"
+                  style={{ flexBasis: '330px', flexGrow: 0, flexShrink: 0 }}
+                >
+                  <video
+                    ref={remoteVideoRef}
+                    autoPlay={cameraOff}
+                    playsInline
+                    muted={muted}
+                    width="330"
+                    height="330"
+                  />
+                </div>
+              </div>
             </div>
-            {/* <video
-              ref={peerFaceSrc}
-              autoPlay
-              playsInline
-              muted
-              width="400"
-              height="400"
-            /> */}
           </div>
         </div>
         <div class="divider w-full h-px"></div>
