@@ -81,32 +81,20 @@ function Header() {
   };
 
   return (
-    <div class="drawer-content flex flex-col">
-      <div class="w-full navbar bg-base-200 drop-shadow-lg">
-        {/* <div class="flex-none lg:hidden">
-          <label for="my-drawer-3" class="btn btn-square btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              class="inline-block w-6 h-6 stroke-current"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          </label>
-        </div> */}
-        <div class="flex-1 px-2 mx-2">
+    <div className="flex flex-col shadow-none bg-white">
+      <div className="w-full navbar bg-white shadow-none">
+        <div className="flex-1 px-2 mx-2">
           <a href="/">
             <img src={GongImg} style={{ width: '30px', float: 'left' }} />
-            GongAnts
+            <span
+              className="mx-1"
+              style={{ fontFamily: 'GmarketSansMedium', fontWeight: '700' }}
+            >
+              GongAnts
+            </span>
           </a>
         </div>
-        <div class="flex-none hidden lg:block">
+        <div className="flex-none hidden lg:block">
           <span>
             <label for="notification-modal" className="modal-button">
               <NotificationsNoneIcon

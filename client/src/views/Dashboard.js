@@ -11,8 +11,11 @@ function Dashboard() {
 
   return (
     <>
-      <div className="mt-5">
-        <RoomTable userName={userName} />
+      <div
+        className="pt-5 min-h-screen z-0"
+        style={{ backgroundColor: '#404756' }}
+      >
+        {/* <RoomTable userName={userName} /> */}
         <TodoList />
         <FriendsList />
       </div>
