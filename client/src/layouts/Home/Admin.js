@@ -56,14 +56,11 @@ function Admin() {
 
   return (
     <>
-      <div className="wrapper relative">
-        <div
-          className="drawer"
-          style={{ boxShadow: '6px 4px 5px 3px #EAEEF1', padding: '0' }}
-        >
+      <div className="wrapper">
+        <div className="z-10 relative">
           <AdminNavbar />
         </div>
-        <div className="flex h-max mt-2" ref={mainPanel}>
+        <div className="flex h-max mt-2 absolute" ref={mainPanel}>
           <div className="flex-initial h-max">
             <Sidebar
               color={color}
